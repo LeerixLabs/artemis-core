@@ -1,4 +1,4 @@
-import {Parser} from '../src/artemis-parser.js'
+import {Parser} from '../src/parser/artemis-parser.js'
 
 describe("Parse Test", function(){
     "use strict";
@@ -16,6 +16,9 @@ describe("Parse Test", function(){
 
         expect(ast[3]['type']).toEqual('elm-type');
         expect(ast[3]['value']).toEqual('button');
+        
+console.log(" _simple query ast_ ");
+
     });
 
     it("relation query ast", function(){
@@ -34,10 +37,15 @@ describe("Parse Test", function(){
 
         expect(ast[2]['target'][1]['type']).toEqual('elm-type');
         expect(ast[2]['target'][1]['value']).toEqual('button');
+        
+console.log(" _relation query ast_ ");
+
     });
 
     it("bad query", function(){
         let ast = parser.parse("verybadquery");
+        
+        console.log(" _bad query_ ");
     });
 
 
