@@ -9,7 +9,7 @@ module.exports = {
     ],
     output:{
         publicPath: '/',
-        filename: 'dist/main.js'
+        filename: 'dist/artemis.js'
     },
     debug:'true',
     devtool: 'source-map',
