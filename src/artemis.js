@@ -1,7 +1,7 @@
 "use strict";
 import "babel-polyfill";// must be first
-import {Parser} from './artemis-parser';
-import {Modeler} from './artemis-modeler.js';
+import {Parser} from './parser/artemis-parser';
+import {Modeler} from './modeler/artemis-modeler.js';
 
 /**
  * Execute artemis query returning a list of element with rank

@@ -1,3 +1,5 @@
+// TODO this functions dotn't attach to prodject
+
 import {numeric} from '../src/numeric-1.2.6.js'
 class FeatureMap{
 
