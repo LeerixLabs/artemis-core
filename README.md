@@ -2,13 +2,14 @@
 
 ## Installation
 
+    npm i -g gulp
     
     npm install 
     
     
 ## Running Tests
 
-    npm test
+    gulp test
     
 ## Running Build
 
