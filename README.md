@@ -13,6 +13,6 @@
     
 ## Running Build
 
-    webpack     
+    gulp webpack     
 
 #
