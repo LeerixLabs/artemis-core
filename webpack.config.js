@@ -3,13 +3,18 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry:[
-        'babel-polyfill',
-        './src/artemis'
-    ],
+    // entry:[
+    //     'babel-polyfill',
+    //     './src/artemis'
+    // ],
+    entry: { 
+        "artemis.core": './src/artemis.core.js'
+    },
     output:{
         publicPath: '/',
-        filename: 'dist/artemis.js'
+        filename: 'dist/[name].js',
+        library: "core"
+        // filename: 'dist/artemis.js'
     },
     debug:'true',
     devtool: 'source-map',
