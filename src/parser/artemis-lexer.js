@@ -3,6 +3,10 @@
  * Definition of the tokens
  * Token are define by regex, Type and a function that extract value
  */
+
+let elemTarget = new RegExp('element|button|link|checkbox|label|image|panel|toolabr|tab', 'i');
+
+
 let TokensType = [
     //Order Matters!
     [/^[ \t]*/, 'Space', (m)=>""],//will be ignore
@@ -10,7 +14,7 @@ let TokensType = [
     [/^(1)st|(2)nd|(3)rd|([0-9]+)th/i,'Order', (m)=>m[1]],
     [/^(small|medium|large)/i, 'Size', (m)=>m[0]],
     [/^(red|orange|yellow|green|blue|purple|pink|brown|black|white|gray)/i, 'Color', (m)=>m[0]],
-    [/^(element|button|link|checkbox|label|image|panel|toolabr|tab)/i, 'Target', (m)=>m[0]],
+    [elemTarget, 'Target', (m)=>m[0]],
     //TODO: remove the spaceing...
     [/^at[ \t\r\n]+the[ \t\r\n]+(top|bottom|middle)|on[ \t\r\n]+the[ \t\r\n]+(left|right|)/i, 'Position', (m)=>m[1]],
     [/^with/i, 'With', (m)=>m[1]],

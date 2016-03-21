@@ -16,7 +16,7 @@ class Manager {
     	let parser = new Parser();
 		let ast = parser.parse(query);
         
-        console.log("Hello");
+        console.log("Hello!!");
         console.log( JSON.stringify(ast,null,5) );
 
 		// Modeler elems
