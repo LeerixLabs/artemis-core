@@ -1,6 +1,6 @@
 'use strict';
 import "babel-polyfill";// must be first
-// import {Parser} from './parser/artemis-parser';
+import {Parser} from './parser/artemis-parser';
 
 /**
  * Execute artemis query returning a list of element with rank
@@ -13,10 +13,11 @@ class Manager {
 
 	main(query) {
 		// Parser str
-  //   	let parser = new Parser();
-		// let ast = parser.parse(query);
+    	let parser = new Parser();
+		let ast = parser.parse(query);
         
-  //       console.log( JSON.stringify(ast,null,5) );
+        console.log("Hello");
+        console.log( JSON.stringify(ast,null,5) );
 
 		// Modeler elems
 		// Scorer DOM elems
