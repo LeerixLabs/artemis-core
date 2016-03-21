@@ -16,14 +16,14 @@ class Manager {
     	let parser = new Parser();
 		let ast = parser.parse(query);
         
-        console.log("Hello!!");
+        console.log("Buy!!");
         console.log( JSON.stringify(ast,null,5) );
 
 		// Modeler elems
 		// Scorer DOM elems
 		// Marker DOM
-		document.querySelector(query).style.backgroundColor = "#98EB98";
-		document.querySelector(query).setAttribute("artemis-score", "1");
+		// document.querySelector(query).style.backgroundColor = "#98EB98";
+		// document.querySelector(query).setAttribute("artemis-score", "1");
 		
         console.log('DBG Manager.main! ');
      
