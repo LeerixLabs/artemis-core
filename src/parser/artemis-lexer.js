@@ -1,5 +1,3 @@
-import settings from '../settings.json';
-
 /**
  * Definition of the tokens
  * Token are define by regex, Type and a function that extract value
@@ -46,6 +44,8 @@ export class Lexer{
 
 }
 
+
+
 /**
  * A Token
  */
@@ -58,8 +58,9 @@ export class Token{
     }
 
     static TokensType() {
+
         function getRegExp(type){
-            let elemTarget = Object.keys(  JSON.parse(settings)[type]  ).join("|");
+            let elemTarget = Object.keys(  document.setttingsJSON[type]  ).join("|");
             return new RegExp(elemTarget, 'i');
         }
 

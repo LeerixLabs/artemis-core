@@ -8,7 +8,19 @@ import {Parser} from './parser/artemis-parser';
  */
 class Manager {
 	constructor(){
+		fetch('settings.json')
+          .then(function(response) {
+            return response.json();
+           })
+          .then(function(settings) {
+             document.setttingsJSON =  settings;
+          })
+          .catch( function(settings) {
+            throw new Error("Error: Can not read settings.json");
+          }); 
+
 		document.leerixFindElem = this.main;
+
 	}
 
 	main(query) {
@@ -16,8 +28,7 @@ class Manager {
     	let parser = new Parser();
 		let ast = parser.parse(query);
         
-        console.log("Buy!!");
-        console.log( JSON.stringify(ast,null,5) );
+        console.log( "RESULT ", JSON.stringify(ast,null,5) );
 
 		// Modeler elems
 		// Scorer DOM elems
