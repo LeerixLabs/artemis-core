@@ -69,7 +69,7 @@ export class Token{
             [/^[ \t]*/, 'Space', (m)=>""],//will be ignore
             [/^\n/, 'Newline', (m)=>""],// will be ignore
             [/^(1)st|(2)nd|(3)rd|([0-9]+)th/i,'Order', (m)=>m[1]],
-            [getRegExp('Size'), 'Size', (m)=>m[0]],
+            [getRegExp('SizeElem'), 'SizeElem', (m)=>m[0]],
             [getRegExp('Color'), 'Color', (m)=>m[0]],
             [getRegExp('Target'), 'Target', (m)=>m[0]],
             //TODO: remove the spaceing...

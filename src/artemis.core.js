@@ -1,6 +1,7 @@
 'use strict';
 import "babel-polyfill";// must be first
 import {Parser} from './parser/artemis-parser';
+import {Scorer} from './scorer/artemis-scorer';
 
 /**
  * Execute artemis query returning a list of element with rank
@@ -27,14 +28,22 @@ class Manager {
 		// Parser str
     	let parser = new Parser();
 		let ast = parser.parse(query);
-        
-        console.log( "RESULT ", JSON.stringify(ast,null,5) );
+        // throw new Error(document.setttingsJSON);
+     
+        // console.log( "RESULT ", JSON.stringify(ast,null,5) );
+        // console.log( "RESULT ", JSON.stringify(ast,null,5));
 
 		// Modeler elems
 		// Scorer DOM elems
+		let scoreElems = new Scorer().score(query);
+
 		// Marker DOM
-		// document.querySelector(query).style.backgroundColor = "#98EB98";
-		// document.querySelector(query).setAttribute("artemis-score", "1");
+		for (let elem of scoreElems){
+			if(elem.score == 1){
+				elem.domElm.style.backgroundColor = "#98EB98";
+			}
+		}
+		
 		
         console.log('DBG Manager.main! ');
      
@@ -42,3 +51,4 @@ class Manager {
 }
 
 exports.leerix = new Manager();
+

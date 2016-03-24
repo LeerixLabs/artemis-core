@@ -5,9 +5,10 @@
     <title>Test Page for Artemis Parser</title>
     <script src="dist/artemis.core.js"></script>
     <script src="dist/artemis.core.js.map"></script>
+    <!-- <script src="dist/settings.json"></script> -->
     <style type="text/css">
     input, button {
-    	font-size: 1.2em;    	
+    	font-size: 1.2em;    
     }
     input {
     	height: 30px;
@@ -17,15 +18,22 @@
     </style>
 </head>
 <body>
- <h1 class="gettext">Artemis Core</h1>
+ <h1 class="gettext artemis-mark-green">Artemis Core</h1>
 
-<input type="text" id="myText" value="button smth" placeholder="Set some text">
-<button onclick="myFunction()">Try it</button>
+<input type="text" id="myText" value="input" placeholder="Set some text">
+<button type="submit" onclick="myFunction()">Try it</button>
 
-<p id="demo"></p>
+<p id="demo" artemis-score="1">
+    <input type="button" value="input" placeholder="Set some text">
+
+</p>
 
 
 <script type="text/javascript">
+
+// var inp  = document.getElementById("myText");
+// console.log(inp.getAttribute("type"));
+
 function myFunction() {
     var inputValue = document.getElementById("myText").value;
     document.leerixFindElem(inputValue);

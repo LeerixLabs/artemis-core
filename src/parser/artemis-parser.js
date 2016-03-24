@@ -23,7 +23,7 @@ class MainState extends State{
             case 'Order':
                 context.push({type:'elm-ordinal', value: token.value});
                 return 'Main';
-            case 'Size':
+            case 'SizeElem':
                 context.push({type:'elm-size', value: token.value});
                 return 'Main';
             case 'Color':
