@@ -13,7 +13,6 @@ class Manager {
 	constructor(){
 		document.leerixFindElem = this.main;
 		document.setttingsJSON =  settings;
-		console.log("zxczx",settings);
 	}
 
 	main(query) {
@@ -23,7 +22,6 @@ class Manager {
         // throw new Error(document.setttingsJSON);
      
         console.log( "RESULT ", JSON.stringify(ast,null,5) );
-        // console.log( "RESULT ", JSON.stringify(ast,null,5));
 
 		// Modeler elems
 		// Scorer DOM elems
