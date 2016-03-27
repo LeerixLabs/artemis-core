@@ -1,4 +1,4 @@
-{
+export let settings = {
 	"Target": {
 		"button": {
 			"button": "1",
@@ -61,4 +61,4 @@
 		"near":{},
 		"inside":{}
 	}
-}
+};

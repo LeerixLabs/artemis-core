@@ -2,6 +2,8 @@
 import "babel-polyfill";// must be first
 import {Parser} from './parser/artemis-parser';
 import {Scorer} from './scorer/artemis-scorer';
+import {settings} from './settings';
+
 
 /**
  * Execute artemis query returning a list of element with rank
@@ -9,19 +11,9 @@ import {Scorer} from './scorer/artemis-scorer';
  */
 class Manager {
 	constructor(){
-		fetch('settings.json')
-          .then(function(response) {
-            return response.json();
-           })
-          .then(function(settings) {
-             document.setttingsJSON =  settings;
-          })
-          .catch( function(settings) {
-            throw new Error("Error: Can not read settings.json");
-          }); 
-
 		document.leerixFindElem = this.main;
-
+		document.setttingsJSON =  settings;
+		console.log("zxczx",settings);
 	}
 
 	main(query) {
@@ -30,7 +22,7 @@ class Manager {
 		let ast = parser.parse(query);
         // throw new Error(document.setttingsJSON);
      
-        // console.log( "RESULT ", JSON.stringify(ast,null,5) );
+        console.log( "RESULT ", JSON.stringify(ast,null,5) );
         // console.log( "RESULT ", JSON.stringify(ast,null,5));
 
 		// Modeler elems
