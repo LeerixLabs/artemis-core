@@ -13,8 +13,9 @@ export class Parser {
              'value':text.match(new RegExp(results[0].phrase))[0]
            };
        }else{
-         return null;  
+         json = null;  
        }
+       return json;
        
     }
 
