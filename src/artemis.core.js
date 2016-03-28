@@ -3,8 +3,8 @@ import "babel-polyfill";// must be first
 import {Parser} from './parser/artemis-parser';
 import {Modeler} from './modeler/artemis-modeler';
 import {Scorer} from './scorer/artemis-scorer';
-// import {settings} from './settings';
-import {settings} from './settings_v0)';
+import {settings} from './settings';
+// import {settings} from './settings_v0';
 
 
 /**
@@ -20,27 +20,20 @@ class Manager {
 	main(query) {
 		// Parser str
 
-/*
-[
-     {
-          "type": "elm-type",
-          "value": "button"
-     }
-]
-*/
-    	let parser = new Parser();
-		let ast = parser.parse(query);
-     
-        console.log( "RESULT ", JSON.stringify(ast,null,5) );
+  //   	let parser = new Parser();
+		// let ast = parser.parse(query);   
+  //       console.log( "RESULT ", JSON.stringify(ast,null,5) );
   		let parserRes = [
 		     {
 		          "type": "elm-type",
 		          "value": "button"
 		     }
 		];
+		
 		// Modeler elems
-		// let modelerJson = new Modeler().model(parserRes);
-		// console.log('modelerJson',modelerJson);
+		let modelerJson = new Modeler().model(parserRes);
+		console.log('modelerJson',modelerJson);
+
 		// Scorer DOM elems
 		let scoreElems = new Scorer().score(query);
 
