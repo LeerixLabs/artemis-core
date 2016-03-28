@@ -42,7 +42,7 @@ export let settings = {
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": "(\\S*)",
+			"phrase": '".*?"',
 			"type": "free-text"
 		},
 		{
