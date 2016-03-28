@@ -20,15 +20,10 @@ class Manager {
 	main(query) {
 		// Parser str
 
-  //   	let parser = new Parser();
-		// let ast = parser.parse(query);   
-  //       console.log( "RESULT ", JSON.stringify(ast,null,5) );
-  		let parserRes = [
-		     {
-		          "type": "elm-type",
-		          "value": "button"
-		     }
-		];
+     	let parser = new Parser();
+		let parserRes = parser.parse(query);   
+         console.log( "RESULT ", parserRes );
+
 		
 		// Modeler elems
 		let modelerJson = new Modeler().model(parserRes);

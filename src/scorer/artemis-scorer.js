@@ -138,7 +138,7 @@ export class Scorer{
      */
     score(model){
         "use strict";
-        console.log("model",model);
+        //console.log("model",model);
         let html = new HtmlDOM();
         let domElems = html.getRelevantDomElms(html.getAllDomElms());
         let i=0,arrElems = [];
