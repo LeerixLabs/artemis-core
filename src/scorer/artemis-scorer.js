@@ -95,7 +95,7 @@ class Element {
     set score(score) {
         this.domElm.setAttribute(ARETEMIS_SCORE_ATTR, score);
     }
-    
+
     //use: elem.weight
     get weight() {
         return this._weight;
@@ -149,7 +149,6 @@ export class Scorer{
      */
     score(model){
         "use strict";
-        // console.log("score model",model);
         let html = new HtmlDOM();
         let domElems = html.getRelevantDomElms(html.getAllDomElms());
         let i=0,arrElems = [];
@@ -157,14 +156,23 @@ export class Scorer{
         for(let domElem of domElems){
             let elem = new Element(i,domElem);
             elem.removeAttributeScore();
-            //Parse JSON and analize
+            //Parse JSON plan and analize
             elem.weight = this.analyze(elem, JSON.parse(model));
             console.log("ELEM weight: ",elem.tagName,elem.weight);
             arrElems.push(elem);
             i++;
         }
-        return arrElems;
 
+        //Get maximum Weight
+        let arrWeights = arrElems.map(elm => elm.weight);
+        let maxWeight = Math.max.apply( null, arrWeights );
+
+        //Set endScore to element
+        for (let i = 0; i < arrElems.length; i++) {
+            arrElems[i].score = arrElems[i].weight / maxWeight;
+        } 
+             
+        return arrElems;
     }
 
     analyze(elem,model){
