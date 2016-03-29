@@ -9,15 +9,16 @@ export class Parser {
        })
        if(results.length){
            results.forEach(res => {
-              json.push({
-               'type':res.type,
-               'value':text.match(new RegExp(res.phrase))[0]
-              })
+              let matches = text.match(new RegExp(res.phrase,'g'));
+              matches.forEach(match => {
+                json.push({
+                'type':res.type,
+                'value':match
+                });
+              });
            });
-       }else{
-         json = null;  
        }
-       return json;
+       return JSON.stringify(json, null, ' ');
        
     }
 
