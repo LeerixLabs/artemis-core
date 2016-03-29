@@ -13,8 +13,12 @@ export class Modeler{
     model(inputJson){
         "use strict";
         let jsonRes = [];
-        for (let item of inputJson) {
-            jsonRes.push(this.__model_node(item));
+        let jsonIncoming = JSON.parse(inputJson);
+        for (let item of jsonIncoming) {
+            let plan = this.__model_node(item);
+            if(plan){
+                jsonRes.push(plan);
+            }
         }
         return JSON.stringify( {"and":jsonRes}, null, ' ');
     }
@@ -25,6 +29,7 @@ export class Modeler{
                 return plan.plan;
             }
         }
+        console.error("settings doesn't contain plan for this string:",json);
     }
 }
 

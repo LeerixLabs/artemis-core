@@ -22,12 +22,7 @@ class Manager {
   //   	let parser = new Parser();
 		// let ast = parser.parse(query);   
   //       console.log( "RESULT ", JSON.stringify(ast,null,5) );
-  		let parserRes = [
-		     {
-		          "type": "elm-type",
-		          "value": "button"
-		     }
-		];
+  		let parserRes = JSON.stringify( [{"type": "elm-type", "value": "input"},{"type": "elm-type", "value": "button"}], null, ' ');
 		
 		// Modeler elems
 		let modelerJson = new Modeler().model(parserRes);
