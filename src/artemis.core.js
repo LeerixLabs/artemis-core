@@ -24,8 +24,7 @@ class Manager {
 //let parserRes = JSON.stringify( [{"type": "elm-type", "value": "input"},{"type": "elm-type", "value": "button"}], null, ' ');		
 		// Modeler elems
 		let modelerJson = new Modeler().model(parserRes);
-		console.log("modelerJson", modelerJson);
-
+		// console.log("modelerJson", modelerJson);
 
 		// Scorer DOM elems
 		let scoreElems = new Scorer().score(modelerJson);

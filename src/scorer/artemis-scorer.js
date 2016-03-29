@@ -167,7 +167,7 @@ export class Scorer{
 
         //Set endScore to element
         for (let i = 0; i < arrElems.length; i++) {
-            arrElems[i].score = arrElems[i].weight / maxWeight;
+            arrElems[i].score = (arrElems[i].weight / maxWeight).toFixed(2);
         } 
 
         return arrElems;
@@ -219,27 +219,65 @@ class do regex with classes
             case 'html-tag':
                 return model.param == elem.tagName ? 1: 0;
             case 'css-class':
-                //TODO include RegExp for find like this "mybtn" or "myButtonFirst". need return  0...1
-                for(let cssClass of model.param){
-                    for(let i=0; i<elem.classes.length; i++){
-                        if(cssClass == elem.classes[i]){
-                            return 1;
-                        }
-                    }
-                }
-                return 0;
+                return this.__stringMatchScores(elem.classes,model.param,true);
             case 'html-attr-key-and-value':
                 for(let i=0; i<elem.attrs.length; i++){
                     if(elem.attrs[i]["name"] == model.param[0] &&  elem.attrs[i]["value"] == model.param[1]){
                         return 1;
-                    }
-                     
+                    } 
                 }
                 return 0;
             default :
                 throw new Error("Unexpected Plan scorer: " + scorer);
 
         }
+    }
+
+    __stringMatchScores(datas, standard, allowPartialMatch) {
+        var i;
+        var score = 0;
+        if(standard instanceof Array ) {
+            standard.forEach(param =>  {
+                for (i = 0; i < datas.length; i++) {
+                    score = Math.max(score, this.__stringMatchScore(datas[i], param, allowPartialMatch));
+                };
+            });   
+            return score;
+        }
+        for (i = 0; i < datas.length; i++) {
+            score = Math.max(score, this.__stringMatchScore(datas[i], standard, allowPartialMatch));
+        }
+        return score;
+    }
+
+    __stringMatchScore(data, standard, allowPartialMatch) {
+        var score = 0;
+        if (!data) {
+            return 0;
+        }
+        var dat = this.__pascalCase(data).toLowerCase();
+        var str = this.__pascalCase(standard).toLowerCase();
+        if (dat.indexOf(str) === -1) {
+            return 0;
+        }
+        if (allowPartialMatch) {
+            score = str.length / dat.length;
+            if (score < 0.1) {
+                score = 0;
+            }
+        } else if (str.length === dat.length) {
+            score = 1;
+        }
+        return score;
+    }
+
+    __pascalCase(str) {
+        if (!str) {
+            return '';
+        }
+        return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+            return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
+        }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
     }
 
 }
