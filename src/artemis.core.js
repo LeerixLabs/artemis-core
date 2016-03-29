@@ -19,7 +19,6 @@ class Manager {
 
 	main(query) {
 		// Parser str
-
   //   	let parser = new Parser();
 		// let ast = parser.parse(query);   
   //       console.log( "RESULT ", JSON.stringify(ast,null,5) );
@@ -32,10 +31,11 @@ class Manager {
 		
 		// Modeler elems
 		let modelerJson = new Modeler().model(parserRes);
-		console.log('modelerJson',modelerJson);
+		// console.log("modelerJson", modelerJson);
+
 
 		// Scorer DOM elems
-		let scoreElems = new Scorer().score(query);
+		let scoreElems = new Scorer().score(modelerJson);
 
 		// Marker DOM
 		for (let elem of scoreElems){
@@ -45,7 +45,7 @@ class Manager {
 		}
 		
 		
-        console.log('DBG Manager.main! ');
+        console.log('END ');
      
     }
 }
