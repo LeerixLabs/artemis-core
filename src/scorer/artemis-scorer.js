@@ -158,7 +158,6 @@ export class Scorer{
             elem.removeAttributeScore();
             //Parse JSON plan and analize
             elem.weight = this.analyze(elem, JSON.parse(model));
-            console.log("ELEM weight: ",elem.tagName,elem.weight);
             arrElems.push(elem);
             i++;
         }
@@ -171,10 +170,16 @@ export class Scorer{
         for (let i = 0; i < arrElems.length; i++) {
             arrElems[i].score = arrElems[i].weight / maxWeight;
         } 
-             
+
         return arrElems;
     }
 
+/*
+
+max ( 1* [0], 1 * ( 1*[1]* 1*[1]))  * max ( 1* [0], 1 * ( 1*[1]* 1*[1])) 
+class do regex with classes
+
+*/
     analyze(elem,model){
         let keysModel = Object.keys(model);
         let condition = keysModel[0];
@@ -203,15 +208,6 @@ export class Scorer{
             return Math.max.apply(null, partScore);
         }
         throw new Error("Error Scrorer.analize in model contains: "+model);
-
-
-/*
-
-max ( 1* [0], 1 * ( 1*[1]* 1*[1])) 
-* max ( 1* [0], 1 * ( 1*[1]* 1*[1])) 
-class do regex with classes
-
-*/
     }
 
     __isMatch(model, elem){
@@ -240,110 +236,6 @@ class do regex with classes
                 throw new Error("Unexpected Plan scorer: " + scorer);
 
         }
-    }
-
-
-
-
-    __analyzeOLD(elem,model){
-        
-      /*  let pointJson = {
-                        "and": [
-                            {
-                                "scorer": "html-tag",
-                                "param": "input",
-                                "weight": 0.8
-                            },
-                            {
-                                "scorer": "html-attr-key-and-value",
-                                "param": ["type", "button"],
-                                "weight": 1
-                            }
-                        ],
-                        "weight": 1
-                    };
-
-        let condition = Object.keys(pointJson)[0];
-        let resWeight = 1;
-        console.log(" !");
-        if(condition=="and"){
-            for(let simpleJson of pointJson[condition]){
-                let elemType = this.__isMatch(simpleJson, elem);
-                console.log("elemType!",elemType);
-                resWeight *=elemType;
-            }
-            
-        }
-console.log("resWeight!",resWeight);
-        */
-        function factorial(n, acc = 1) {
-           
-            if (n <= 1) return acc;
-            return factorial(n - 1, n * acc);
-        }
-        let rec = factorial(100);
-        console.log( rec );
-        console.log("resWeight!",resWeight);
-
-/*
-
-max ( 1* [0], 1 * ( 1*[1]* 1*[1])) 
-* max ( 1* [0], 1 * ( 1*[1]* 1*[1])) 
-class do regex with classes
-
-*/
-
-
-        // console.log("condition",  condition   );
-        let testjson ={
-                                "scorer": "css-class",
-                                "param": ["button", "btn"],
-                                "weight": 1
-                            };
-        
-// console.log("pointJson", pointJson[condition]   );
-// console.log("testjson",   Object.keys(testjson)    );
-
-// console.log( true condition false ); 
-
-        
-
-
-
-
-            // if(elemType){
-            //    
-            // }
-        // if( elemType instanceof Object ){
-        //     for(let i=0; i<elemType.length; i++){
-        //         if(elemType[i]["name"] == ){
-
-        //         }
-        //         console.log("itemType",  elemType[i]["name"]   );
-        //     }
-
-        //     console.log("elemType",  elemType   );
-        //     console.log("testjson",  testjson.param   );
-        // }
-//typeof this.__getScorerElem(testjson.scorer, elem)) == Object
-        // for(let itemModel of model){
-        //     let condition = Object.keys(itemModel)[0];
-        //     //itemModel[condition]
-        //     //if Obj doesn't have group Obj
-        //     if (Object.keys( itemModel[condition])[0] == 0) {
-
-        //     }
-        //     console.log("itemModel",itemModel[condition]);
-        //     console.log("analyze", Object.keys( itemModel[condition])[0] == 0);
-        // }
-
-        console.log("analyze");
-        if(model=="input" && elem.tagName == model && elem.domElm.getAttribute("type") == "text"){
-            // return 1;
-        }  
-        if(model=="button" && elem.tagName == model && elem.domElm.getAttribute("type") == "submit"){
-            // return 1;
-        } 
     }
 
 }
