@@ -19,14 +19,12 @@ class Manager {
 
 	main(query) {
 		// Parser str
-  //   	let parser = new Parser();
-		// let ast = parser.parse(query);   
-  //       console.log( "RESULT ", JSON.stringify(ast,null,5) );
-  		let parserRes = JSON.stringify( [{"type": "elm-type", "value": "input"},{"type": "elm-type", "value": "button"}], null, ' ');
-		
+     	let parser = new Parser();
+		let parserRes = parser.parse(query);   
+//let parserRes = JSON.stringify( [{"type": "elm-type", "value": "input"},{"type": "elm-type", "value": "button"}], null, ' ');		
 		// Modeler elems
 		let modelerJson = new Modeler().model(parserRes);
-		// console.log("modelerJson", modelerJson);
+		console.log("modelerJson", modelerJson);
 
 
 		// Scorer DOM elems

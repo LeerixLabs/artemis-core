@@ -152,7 +152,6 @@ export class Scorer{
         let html = new HtmlDOM();
         let domElems = html.getRelevantDomElms(html.getAllDomElms());
         let i=0,arrElems = [];
-
         for(let domElem of domElems){
             let elem = new Element(i,domElem);
             elem.removeAttributeScore();
@@ -188,7 +187,12 @@ class do regex with classes
         if(!(condition == "and" || condition == "or")) {
             return this.__isMatch(model, elem) * weight;
         }
+        
         model = model[condition];
+        if(model.length == 0){
+            return 0;
+        }
+        
         if(condition == "and"){
             let partScore = 1;
             for (var i = 0; i < model.length; i++) {
