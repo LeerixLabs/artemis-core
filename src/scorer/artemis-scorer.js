@@ -48,15 +48,29 @@ class HtmlDOM {
         return this.body.getElementsByTagName('*');
     }
 
-    getRelevantDomElms(allDomElms) {
-        var relevantDomElms = [];
+    getRelevantElms(){
+        var relevantElms = [];
+        let allDomElms = this.getAllDomElms();
+
         for (var i = 0; i < allDomElms.length; i++) {
             if (this.isRelevantElem(allDomElms[i])) {
-                relevantDomElms.push(allDomElms[i]);
+                let elem = new Element(i,allDomElms[i]);
+                elem.removeAttributeScore();
+                relevantElms.push(elem);
             }
         }
-        return relevantDomElms;
+        return relevantElms;
     }
+
+    // getRelevantDomElms(allDomElms) {
+    //     var relevantDomElms = [];
+    //     for (var i = 0; i < allDomElms.length; i++) {
+    //         if (this.isRelevantElem(allDomElms[i])) {
+    //             relevantDomElms.push(allDomElms[i]);
+    //         }
+    //     }
+    //     return relevantDomElms;
+    // }
 
     isRelevantElem(domElm){
         return !IGNORED_TAGS.includes(domElm.tagName.toLowerCase()) && this.isDomElmVisible(domElm);
@@ -150,26 +164,26 @@ export class Scorer{
     score(model){
         "use strict";
         let html = new HtmlDOM();
-        let domElems = html.getRelevantDomElms(html.getAllDomElms());
+        let elems = html.getRelevantElms();
         let i=0,arrElems = [];
-        for(let domElem of domElems){
-            let elem = new Element(i,domElem);
-            elem.removeAttributeScore();
-            //Parse JSON plan and analize
-            elem.weight = this.analyze(elem, JSON.parse(model));
+
+        //Weigh each element
+        for(let elem of elems){
+            //Parse JSON plan and weigh element         
+            elem.weight = this.recursiveScore( JSON.parse(model), elems, elem);
             arrElems.push(elem);
             i++;
         }
 
-        //Get maximum Weight
+        //Get maximum Score
         let arrWeights = arrElems.map(elm => elm.weight);
         let maxWeight = Math.max.apply( null, arrWeights );
 
         //Set endScore to element
         for (let i = 0; i < arrElems.length; i++) {
             arrElems[i].score = (arrElems[i].weight / maxWeight).toFixed(2);
+            console.log( arrElems[i].tagName, arrElems[i].score);
         } 
-
         return arrElems;
     }
 
@@ -179,43 +193,73 @@ max ( 1* [0], 1 * ( 1*[1]* 1*[1]))  * max ( 1* [0], 1 * ( 1*[1]* 1*[1]))
 class do regex with classes
 
 */
-    analyze(elem,model){
-        let keysModel = Object.keys(model);
-        let condition = keysModel[0];
-        let weight = model.weight;
+    recursiveScore(planNode, allElms, elem){
+        let weight = planNode.weight;
+        let score = 1;
 
-        if(!(condition == "and" || condition == "or")) {
-            return this.__isMatch(model, elem) * weight;
+        //start node
+        if(planNode.target && !planNode.scorer){
+            score = score * this.recursiveScore(planNode.target, allElms, elem);
         }
-        
-        model = model[condition];
-        if(model.length == 0){
-            return 0;
+        //end node
+        else if(planNode.scorer && !planNode.target) {
+            if(!weight && weight!==0){
+                throw new Error("Not found weight in Node Plans: "+ planNode);
+            }
+            score = this.__isMatch(planNode, elem) * weight;
         }
-        
-        if(condition == "and"){
-            let partScore = 1;
-            for (var i = 0; i < model.length; i++) {
-                partScore *= this.analyze(elem,model[i]);
+        //node with node.and
+        else if(planNode.and){
+            for (var i = 0; i < planNode.and.length; i++) {
+                score = score * this.recursiveScore(planNode.and[i], allElms, elem);
+            // console.log( "and", score, weight, planNode.and);
             }
             if(weight > 0){
-                partScore *= weight;
+                score *= weight;
             }
-            return partScore;
         }
-        if(condition == "or"){
+        //node with node.or
+        else if (planNode.or){
             let partScore = [];
-            for (var i = 0; i < model.length; i++) {
-                let result = this.analyze(elem,model[i]);
+            for (var i = 0; i < planNode.or.length; i++) {
+                let result = this.recursiveScore(planNode.or[i], allElms, elem);
                 partScore.push(result);
             }
-            return Math.max.apply(null, partScore);
+            score = Math.max.apply(null, partScore);
+            if (elem.tagName === "button") {
+                // console.log( "or", elem.tagName, score);
+
+            }
         }
-        throw new Error("Error Scrorer.analize in model contains: "+model);
+        //next node with target
+        else if(planNode.scorer && planNode.target){
+            if(!weight && weight!==0){
+                throw new Error("Not found weight in Node Plans: "+ planNode);
+            }
+
+            let maxScore = 0;
+            // let param = ;
+            for (i=0; i<allElms.length; i++) {
+                let secondaryElm = allElms[i];
+                if (elem !== secondaryElm) {
+                    planNode.targetElem = secondaryElm;
+                    let relationScore = this.__isMatch(planNode, elem);
+                    let planItemNode = planNode.target;
+                    let secondaryScore = this.recursiveScore(planItemNode, allElms, secondaryElm);               
+                    maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
+                }
+            }
+            score = weight * maxScore;  
+        }
+
+        return score;
     }
 
     __isMatch(model, elem){
         switch (model.scorer){
+            case 'target-relation':
+                //TODO create function 
+                return this.targetRelation(model, elem);
             case 'html-tag':
                 return model.param == elem.tagName ? 1: 0;
             case 'css-class':
@@ -232,7 +276,13 @@ class do regex with classes
 
         }
     }
+    
+    targetRelation(model, elem){
 
+         // console.log("model.targetElem", model.targetElem);
+         // console.log("elem", elem.tagName);
+        return 1;
+    }
     __stringMatchScores(datas, standard, allowPartialMatch) {
         var i;
         var score = 0;
