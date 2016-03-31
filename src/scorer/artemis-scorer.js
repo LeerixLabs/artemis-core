@@ -1,34 +1,5 @@
-// TODO this functions dotn't attach to prodject
-
-// import {numeric} from '../src/numeric-1.2.6.js'
+import {ParamAnalyze} from './artemis-paramanalyze.js'
 "use strict";
-class FeatureMap{
-
-
-    constructor(){
-        this.latest = 0;
-        this.map = {};
-        this.revmap = {};
-    }
-
-    addFeature(k){
-        "use strict";
-        this.map[k] =  this.latest;
-        this.revmap[this.latest] = k;
-        this.latest++;
-    }
-
-    toInt(k){
-        "use strict";
-        return this.map[k];
-    }
-
-    toKey(i){
-        "use strict";
-        return this.revmap[i];
-    }
-}
-
 
 const IGNORED_TAGS = ['script', 'noscript'];
 const ARETEMIS_SCORE_ATTR = "artemis-score";
@@ -43,6 +14,7 @@ class HtmlDOM {
         this.body = this.document.body;
 
     }
+
 
     getAllDomElms() {
         return this.body.getElementsByTagName('*');
@@ -61,16 +33,6 @@ class HtmlDOM {
         }
         return relevantElms;
     }
-
-    // getRelevantDomElms(allDomElms) {
-    //     var relevantDomElms = [];
-    //     for (var i = 0; i < allDomElms.length; i++) {
-    //         if (this.isRelevantElem(allDomElms[i])) {
-    //             relevantDomElms.push(allDomElms[i]);
-    //         }
-    //     }
-    //     return relevantDomElms;
-    // }
 
     isRelevantElem(domElm){
         return !IGNORED_TAGS.includes(domElm.tagName.toLowerCase()) && this.isDomElmVisible(domElm);
@@ -97,7 +59,6 @@ class Element {
         this._rect = this.setRect();
 
     }
-
     //return position rectangle element; use: elem.rect
     get rect() {
         return this._rect;
@@ -111,7 +72,7 @@ class Element {
         rectElm.rightPage = rectElm.right + window.scrollX; 
         return rectElm;
     }
-    
+
     //use: elem.score
     get score() {
         if(this.domElm.hasAttribute(ARETEMIS_SCORE_ATTR)){
@@ -197,20 +158,15 @@ export class Scorer{
         //Set endScore to element
         for (let i = 0; i < arrElems.length; i++) {
             arrElems[i].score = (arrElems[i].weight / maxWeight).toFixed(2);
-            console.log( arrElems[i].tagName, arrElems[i].score, arrElems[i].rect);
+            // console.log( arrElems[i].tagName, arrElems[i].score, arrElems[i].rect );
         } 
         return arrElems;
     }
 
-/*
-
-max ( 1* [0], 1 * ( 1*[1]* 1*[1]))  * max ( 1* [0], 1 * ( 1*[1]* 1*[1])) 
-class do regex with classes
-
-*/
     recursiveScore(planNode, allElms, elem){
         let weight = planNode.weight;
         let score = 1;
+        let paramAnalyze = new ParamAnalyze();
 
         //start node
         if(planNode.target && !planNode.scorer){
@@ -221,7 +177,9 @@ class do regex with classes
             if(!weight && weight!==0){
                 throw new Error("Not found weight in Node Plans: "+ planNode);
             }
-            score = this.__isMatch(planNode, elem) * weight;
+            // score = this.__isMatch(planNode, elem) * weight;
+            let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem);
+            score = weight * relationScore;
         }
         //node with node.and
         else if(planNode.and){
@@ -241,10 +199,6 @@ class do regex with classes
                 partScore.push(result);
             }
             score = Math.max.apply(null, partScore);
-            if (elem.tagName === "button") {
-                // console.log( "or", elem.tagName, score);
-
-            }
         }
         //next node with target
         else if(planNode.scorer && planNode.target){
@@ -258,7 +212,8 @@ class do regex with classes
                 let secondaryElm = allElms[i];
                 if (elem !== secondaryElm) {
                     planNode.targetElem = secondaryElm;
-                    let relationScore = this.__isMatch(planNode, elem);
+                    // let relationScore = this.__isMatch(planNode, elem);
+                    let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem);
                     let planItemNode = planNode.target;
                     let secondaryScore = this.recursiveScore(planItemNode, allElms, secondaryElm);               
                     maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
@@ -270,81 +225,7 @@ class do regex with classes
         return score;
     }
 
-    __isMatch(model, elem){
-        switch (model.scorer){
-            case 'target-relation':
-                //TODO create function 
-                return this.targetRelation(model, elem);
-            case 'html-tag':
-                return model.param == elem.tagName ? 1: 0;
-            case 'css-class':
-                return this.__stringMatchScores(elem.classes,model.param,true);
-            case 'html-attr-key-and-value':
-                for(let i=0; i<elem.attrs.length; i++){
-                    if(elem.attrs[i]["name"] == model.param[0] &&  elem.attrs[i]["value"] == model.param[1]){
-                        return 1;
-                    } 
-                }
-                return 0;
-            default :
-                throw new Error("Unexpected Plan scorer: " + scorer);
-
-        }
-    }
-
-    targetRelation(model, elem){
-
-         // console.log("model.targetElem", model.targetElem);
-         // console.log("elem", elem.tagName);
-        return 1;
-    }
-    __stringMatchScores(datas, standard, allowPartialMatch) {
-        var i;
-        var score = 0;
-        if(standard instanceof Array ) {
-            standard.forEach(param =>  {
-                for (i = 0; i < datas.length; i++) {
-                    score = Math.max(score, this.__stringMatchScore(datas[i], param, allowPartialMatch));
-                };
-            });   
-            return score;
-        }
-        for (i = 0; i < datas.length; i++) {
-            score = Math.max(score, this.__stringMatchScore(datas[i], standard, allowPartialMatch));
-        }
-        return score;
-    }
-
-    __stringMatchScore(data, standard, allowPartialMatch) {
-        var score = 0;
-        if (!data) {
-            return 0;
-        }
-        var dat = this.__pascalCase(data).toLowerCase();
-        var str = this.__pascalCase(standard).toLowerCase();
-        if (dat.indexOf(str) === -1) {
-            return 0;
-        }
-        if (allowPartialMatch) {
-            score = str.length / dat.length;
-            if (score < 0.1) {
-                score = 0;
-            }
-        } else if (str.length === dat.length) {
-            score = 1;
-        }
-        return score;
-    }
-
-    __pascalCase(str) {
-        if (!str) {
-            return '';
-        }
-        return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-            return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
-        }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
-    }
-
 }
+
 
 
