@@ -20,22 +20,23 @@ class Manager {
 	main(query) {
 		// Parser str
      	let parser = new Parser();
-		let parserRes = parser.parse(query);   
+		let parserRes = parser.parse(query);
+		//console.log('res - ',parserRes)   
 //let parserRes = JSON.stringify( [{"type": "elm-type", "value": "input"},{"type": "elm-type", "value": "button"}], null, ' ');		
 		// Modeler elems
-		let modelerJson = new Modeler().model(parserRes);
-		console.log("modelerJson", modelerJson);
+		let modelerJson = new Modeler().model(JSON.stringify(parserRes, null, ' '));
+    	console.log("modelerJson", modelerJson);
 
 
 		// Scorer DOM elems
-		let scoreElems = new Scorer().score(modelerJson);
+		/*let scoreElems = new Scorer().score(modelerJson);
 
 		// Marker DOM
 		for (let elem of scoreElems){
 			if(elem.score == 1){
 				elem.domElm.style.backgroundColor = "#98EB98";
 			}
-		}
+		}*/
 		
 		
         console.log('END ');

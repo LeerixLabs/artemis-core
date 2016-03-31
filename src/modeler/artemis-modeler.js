@@ -14,13 +14,58 @@ export class Modeler{
         "use strict";
         let jsonRes = [];
         let jsonIncoming = JSON.parse(inputJson);
-        for (let item of jsonIncoming) {
-            let plan = this.__model_node(item);
-            if(plan){
-                jsonRes.push(plan);
+       // console.log('INCOM: ',jsonIncoming)
+        let plan = {
+           "target": {
+            "and": []
+          }
+        };
+        
+        let getLastInPlan = function(){
+            if(!plan.target.and.length){
+                return null;
             }
+            return plan.target.and[plan.target.and.length-1];
         }
-        return JSON.stringify( {"and":jsonRes}, null, ' ');
+        let isRelation  = function(){
+          let last = getLastInPlan();
+          
+          if(last && last.scorer === 'target-relation'){
+              return  true;
+          }
+          
+          return false;
+        };
+        
+        jsonIncoming = jsonIncoming.map((word)=>{
+           return word.replace(/-/,'');
+        });
+    //     console.log('INCOM: ',jsonIncoming)
+        //jsonIncoming => ['button', 'left of', 'button', 'right of', 'button' ]
+        jsonIncoming.forEach((word)=>{
+            let buttonPlan  = this.plans[0].plan; 
+            
+            let relationType = word;
+            let relationPlan = {
+                    "scorer": "target-relation",
+                    "param": relationType,
+                    "weight": 1,
+                    "target": null
+            };           
+            if(word=='button'){
+                
+                if(isRelation()){//relation type
+                   getLastInPlan().target = word;
+                }else{
+                   plan.target.and.push(buttonPlan); 
+                }
+            }else{//new relation 
+                plan.target.and.push(relationPlan);
+            }
+        }) 
+       //console.log('PLAN: ',plan)
+        
+        return JSON.stringify(plan, null, ' ');
     }
     
     __model_node(json){
