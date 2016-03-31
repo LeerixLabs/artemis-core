@@ -94,9 +94,24 @@ class Element {
         this.scoreAttr = '';
         this.attrs = this.domElm.attributes;
         this._weight = 0;
+        this._rect = this.setRect();
 
     }
 
+    //return position rectangle element; use: elem.rect
+    get rect() {
+        return this._rect;
+    }
+
+    setRect() {
+        let rectElm = this.domElm.getBoundingClientRect();
+        rectElm.topPage = rectElm.top + window.scrollY;
+        rectElm.bottomPage = rectElm.bottom + window.scrollY;
+        rectElm.leftPage = rectElm.left + window.scrollX;
+        rectElm.rightPage = rectElm.right + window.scrollX; 
+        return rectElm;
+    }
+    
     //use: elem.score
     get score() {
         if(this.domElm.hasAttribute(ARETEMIS_SCORE_ATTR)){
@@ -182,7 +197,7 @@ export class Scorer{
         //Set endScore to element
         for (let i = 0; i < arrElems.length; i++) {
             arrElems[i].score = (arrElems[i].weight / maxWeight).toFixed(2);
-            console.log( arrElems[i].tagName, arrElems[i].score);
+            console.log( arrElems[i].tagName, arrElems[i].score, arrElems[i].rect);
         } 
         return arrElems;
     }
@@ -276,7 +291,7 @@ class do regex with classes
 
         }
     }
-    
+
     targetRelation(model, elem){
 
          // console.log("model.targetElem", model.targetElem);
