@@ -57,7 +57,7 @@ export class Modeler{
             if(word=='button'){
                 
                 if(isInsideRelation()){//relation type
-                   getLastInPlan().target = word;
+                   getLastInPlan().target = buttonPlan;
                 }else{
                    plan.target.and.push(buttonPlan); 
                 }
