@@ -27,16 +27,18 @@ export class Modeler{
             }
             return plan.target.and[plan.target.and.length-1];
         }
-        let isRelation  = function(){
+        let isInsideRelation  = function(){
           let last = getLastInPlan();
           
           if(last && last.scorer === 'target-relation'){
               return  true;
           }
-          
-          return false;
+
         };
-        
+        let isRelation = function(word){
+              
+          return new RegExp("(above|below|left of|right of|inside)").test(word.replace('-',' '));
+        }
         jsonIncoming = jsonIncoming.map((word)=>{
            return word.replace(/-/,'');
         });
@@ -54,12 +56,12 @@ export class Modeler{
             };           
             if(word=='button'){
                 
-                if(isRelation()){//relation type
+                if(isInsideRelation()){//relation type
                    getLastInPlan().target = word;
                 }else{
                    plan.target.and.push(buttonPlan); 
                 }
-            }else{//new relation 
+            }else if(isRelation(word)){//new relation 
                 plan.target.and.push(relationPlan);
             }
         }) 
