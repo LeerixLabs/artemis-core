@@ -12,7 +12,16 @@ class HtmlDOM {
         this.document = document;
         this.head = this.document.head;
         this.body = this.document.body;
+        this.bodyRect = this.setRect();
+    }
 
+    setRect() {
+        let rectElm = this.body.getBoundingClientRect();
+        rectElm.topPage = rectElm.top + window.scrollY;
+        rectElm.bottomPage = rectElm.bottom + window.scrollY;
+        rectElm.leftPage = rectElm.left + window.scrollX;
+        rectElm.rightPage = rectElm.right + window.scrollX; 
+        return rectElm;
     }
 
 
@@ -137,16 +146,19 @@ export class Scorer{
      *  return top ranking elements
      * @param model
      */
+    constructor(){
+        this.html = new HtmlDOM();
+        this.allElms = this.html.getRelevantElms();
+    }
+
     score(model){
         "use strict";
-        let html = new HtmlDOM();
-        let elems = html.getRelevantElms();
         let i=0,arrElems = [];
 
         //Weigh each element
-        for(let elem of elems){
+        for(let elem of this.allElms){
             //Parse JSON plan and weigh element         
-            elem.weight = this.recursiveScore( JSON.parse(model), elems, elem);
+            elem.weight = this.recursiveScore( JSON.parse(model), elem);
             arrElems.push(elem);
             i++;
         }
@@ -157,35 +169,35 @@ export class Scorer{
 
         //Set endScore to element
         for (let i = 0; i < arrElems.length; i++) {
-            arrElems[i].score = (arrElems[i].weight / maxWeight).toFixed(2);
-            // console.log( arrElems[i].tagName, arrElems[i].score, arrElems[i].rect );
+            let d =(arrElems[i].weight / maxWeight).toFixed(2);
+            arrElems[i].score = maxWeight ? ((arrElems[i].weight / maxWeight).toFixed(2)) : 0;
         } 
         return arrElems;
     }
 
-    recursiveScore(planNode, allElms, elem){
+    recursiveScore(planNode, elem){
         let weight = planNode.weight;
-        let score = 1;
+        let score = null;
         let paramAnalyze = new ParamAnalyze();
-
+        
         //start node
         if(planNode.target && !planNode.scorer){
-            score = score * this.recursiveScore(planNode.target, allElms, elem);
+            score = (score !== null) ? score * this.recursiveScore(planNode.target, elem)
+                : this.recursiveScore(planNode.target, elem);
         }
         //end node
         else if(planNode.scorer && !planNode.target) {
             if(!weight && weight!==0){
                 throw new Error("Not found weight in Node Plans: "+ planNode);
             }
-            // score = this.__isMatch(planNode, elem) * weight;
             let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem);
             score = weight * relationScore;
         }
         //node with node.and
         else if(planNode.and){
             for (var i = 0; i < planNode.and.length; i++) {
-                score = score * this.recursiveScore(planNode.and[i], allElms, elem);
-            // console.log( "and", score, weight, planNode.and);
+                score = (score !== null) ? score * this.recursiveScore(planNode.and[i], elem)
+                : this.recursiveScore(planNode.and[i], elem);
             }
             if(weight > 0){
                 score *= weight;
@@ -195,7 +207,7 @@ export class Scorer{
         else if (planNode.or){
             let partScore = [];
             for (var i = 0; i < planNode.or.length; i++) {
-                let result = this.recursiveScore(planNode.or[i], allElms, elem);
+                let result = this.recursiveScore(planNode.or[i], elem);
                 partScore.push(result);
             }
             score = Math.max.apply(null, partScore);
@@ -203,25 +215,22 @@ export class Scorer{
         //next node with target
         else if(planNode.scorer && planNode.target){
             if(!weight && weight!==0){
-                throw new Error("Not found weight in Node Plans: "+ planNode);
+                throw new Error("Not found weight in Node Plans: " + planNode);
             }
 
             let maxScore = 0;
-            // let param = ;
-            for (i=0; i<allElms.length; i++) {
-                let secondaryElm = allElms[i];
+            for (i=0; i<this.allElms.length; i++) {
+                let secondaryElm = this.allElms[i];
                 if (elem !== secondaryElm) {
                     planNode.targetElem = secondaryElm;
-                    // let relationScore = this.__isMatch(planNode, elem);
-                    let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem);
+                    let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem, secondaryElm, this.html.bodyRect);
                     let planItemNode = planNode.target;
-                    let secondaryScore = this.recursiveScore(planItemNode, allElms, secondaryElm);               
+                    let secondaryScore = this.recursiveScore(planItemNode, secondaryElm);               
                     maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
                 }
             }
             score = weight * maxScore;  
         }
-
         return score;
     }
 

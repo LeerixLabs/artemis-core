@@ -22,14 +22,14 @@ class Manager {
 
 		// Modeler elems
 		let modelerJson = new Modeler().model(JSON.stringify(parserRes, null, ' '));
-    	// console.log("modelerJson", modelerJson);
+    	console.log("modelerJson", modelerJson);
 
 		// Scorer DOM elems
 		let scoreElems = new Scorer().score(modelerJson);
 
 		// Marker DOM
 		for (let elem of scoreElems){
-			if(elem.score == 1){
+			if(+elem.score === 1){
 				elem.domElm.style.backgroundColor = "#98EB98";
 			}
 		}
