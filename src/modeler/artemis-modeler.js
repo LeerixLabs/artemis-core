@@ -2,6 +2,7 @@
 export class Modeler{
     constructor(){
         this.plans = document.setttingsJSON.plans;
+        this.elemRegex = document.setttingsJSON.phrases.find(x => x.location === "target-type").phrase;
     }
 
     /**
@@ -13,6 +14,9 @@ export class Modeler{
     findPlan(term){
        let plan =   this.plans.find(pln => pln.type === "elm-type" && pln.value === term);   
        return plan ? plan.plan : null;    
+    }
+    isOneOfElements(term){
+      return new RegExp("(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)").test(term);
     }
     model(inputJson){
         "use strict";
@@ -39,13 +43,12 @@ export class Modeler{
           }
 
         };
-        let isRelation = function(word){
-              
+        let isRelation = function(word){              
           return new RegExp("(above|below|left of|right of|inside)").test(word.replace('-',' '));
         }
-        jsonIncoming = jsonIncoming.map((word)=>{
-           return word.replace(/-/,'');
-        });
+        
+        jsonIncoming = jsonIncoming.map(d=>d.replace(/^-/,''));
+        
     //     console.log('INCOM: ',jsonIncoming)
         //jsonIncoming => ['button', 'left of', 'button', 'right of', 'button' ]
         jsonIncoming.forEach((word)=>{
@@ -57,10 +60,15 @@ export class Modeler{
                     "param": relationType,
                     "weight": 1,
                     "target": null
-            };    
-            let currPlan = this.findPlan(word);       
-            if(!isRelation(word)){
-                
+            }; 
+            let freeTextPlan =  {
+                "scorer": "free-text",
+                "param": "",
+                "weight": 1
+            };   
+            let currPlan;       
+            if(this.isOneOfElements(word)){
+                currPlan = this.findPlan(word);   
                 if(isInsideRelation()){//relation type
                    getLastInPlan().target = currPlan;
                 }else{
@@ -68,19 +76,17 @@ export class Modeler{
                 }
             }else if(isRelation(word)){//new relation 
                 plan.target.and.push(relationPlan);
+            }else{
+                freeTextPlan.param = word;
+                plan.target.and.push(freeTextPlan)
             }
         }) 
-       //console.log('PLAN: ',plan)
-        
+
         return JSON.stringify(plan, null, ' ');
     }
     
-    __model_node(json){
-        for (let plan of this.plans) {
-            if (plan.type == json.type && plan.value == json.value) {
-                return plan.plan;
-            }
-        }
+    __model_node(json) {
+        return this.plans.find(x => x.type === json.type && x.value === json.value);
         console.error("settings doesn't contain plan for this string:",json);
     }
 }
