@@ -10,6 +10,10 @@ export class Modeler{
      * @return json to Scorer with plans how to score elements from settings
      * TODO: include analize "rel-location"
      */
+    findPlan(term){
+       let plan =   this.plans.find(pln => pln.type === "elm-type" && pln.value === term);   
+       return plan ? plan.plan : null;    
+    }
     model(inputJson){
         "use strict";
         let jsonRes = [];
@@ -45,7 +49,7 @@ export class Modeler{
     //     console.log('INCOM: ',jsonIncoming)
         //jsonIncoming => ['button', 'left of', 'button', 'right of', 'button' ]
         jsonIncoming.forEach((word)=>{
-            let buttonPlan  = this.plans[0].plan; 
+            
             
             let relationType = word;
             let relationPlan = {
@@ -53,13 +57,14 @@ export class Modeler{
                     "param": relationType,
                     "weight": 1,
                     "target": null
-            };           
-            if(word=='button'){
+            };    
+            let currPlan = this.findPlan(word);       
+            if(!isRelation(word)){
                 
                 if(isInsideRelation()){//relation type
-                   getLastInPlan().target = buttonPlan;
+                   getLastInPlan().target = currPlan;
                 }else{
-                   plan.target.and.push(buttonPlan); 
+                   plan.target.and.push(currPlan); 
                 }
             }else if(isRelation(word)){//new relation 
                 plan.target.and.push(relationPlan);
