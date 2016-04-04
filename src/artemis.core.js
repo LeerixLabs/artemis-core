@@ -13,6 +13,17 @@ class Manager {
 	constructor(){
 		document.leerixFindElem = this.main;
 		document.setttingsJSON =  settings;
+        //listening to chrome extention
+        if (chrome && chrome.runtime && chrome.runtime.onMessage) {
+             chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
+               if(request.target){
+                   let query = request.target;
+                   this.main(query);
+               }
+             });
+	    }
+        
+        
 	}
 
 	main(query) {
