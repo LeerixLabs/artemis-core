@@ -35,6 +35,18 @@ class Manager {
 		let modelerJson = new Modeler().model(JSON.stringify(parserRes, null, ' '));
     	console.log("modelerJson", modelerJson);
 
+let ee = {
+  "target": {
+    "and": [
+      {
+        "scorer": "free-text",
+        "param": "Core",
+        "weight": 1
+      }
+    ]
+  }
+};
+		modelerJson = JSON.stringify(ee);
 		// Scorer DOM elems
 		let scoreElems = new Scorer().score(modelerJson);
 
