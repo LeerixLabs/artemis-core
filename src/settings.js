@@ -101,94 +101,263 @@ export let settings = {
 			"type": "target-relation"
 		},
 	],
-	"plans" : [
-		{
-			"type": "elm-type",
-			"value": "button",
-			"plan": {
-				"or": [
-					{
-						"scorer": "html-tag",
-						"param": "button",
-						"weight": 1
-					},
-					{
-						"and": [
-							{
-								"scorer": "html-tag",
-								"param": "input",
-								"weight": 1
-							},
-							{
-								"scorer": "html-attr-key-and-value",
-								"param": ["type", "button"],
-								"weight": 1
-							}
-						],
-						"weight": 1
-					},
-					{
-						"and": [
-							{
-								"scorer": "html-tag",
-								"param": "input",
-								"weight": 1
-							},
-							{
-								"scorer": "html-attr-key-and-value",
-								"param": ["type", "submit"],
-								"weight": 1
-							}
-						],
-						"weight": 1
-					},
-					{
-						"and": [
-							{
-								"scorer": "html-tag",
-								"param": "a",
-								"weight": 1
-							},
-							{
-								"scorer": "css-class",
-								"param": ["button", "btn"],
-								"weight": 1
-							}
-						],
-						"weight": 0.8
-					},
-					{
-						"and": [
-							{
-								"scorer": "html-tag",
-								"param": "img",
-								"weight": 1
-							},
-							{
-								"scorer": "css-class",
-								"param": ["button", "btn"],
-								"weight": 1
-							}
-						],
-						"weight": 0.6
-					},
-					{
-						"and": [
-							{
-								"scorer": "html-tag",
-								"param": "div",
-								"weight": 1
-							},
-							{
-								"scorer": "css-class",
-								"param": ["button", "btn"],
-								"weight": 1
-							}
-						],
-						"weight": 0.4
-					}
-				]
-			}
-		}
-	]
+	 "plans": [
+    {
+      "type": "elm-type",
+      "value": "button",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "param": "button",
+            "weight": 1
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "input",
+                "weight": 1
+              },
+              {
+                "scorer": "html-attr-key-and-value",
+                "param": [
+                  "type",
+                  "button"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "input",
+                "weight": 1
+              },
+              {
+                "scorer": "html-attr-key-and-value",
+                "param": [
+                  "type",
+                  "submit"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "a",
+                "weight": 1
+              },
+              {
+                "scorer": "css-class",
+                "param": [
+                  "button",
+                  "btn"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 0.8
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "img",
+                "weight": 1
+              },
+              {
+                "scorer": "css-class",
+                "param": [
+                  "button",
+                  "btn"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 0.6
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "div",
+                "weight": 1
+              },
+              {
+                "scorer": "css-class",
+                "param": [
+                  "button",
+                  "btn"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "input",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "param": "textarea",
+            "weight": 0.7
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "input",
+                "weight": 1
+              },
+              {
+                "scorer": "html-attr-key-and-value",
+                "param": [
+                  "type",
+                  "text"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "link",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "param": "a",
+            "weight": 0.7
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "a",
+                "weight": 1
+              },
+              {
+                "scorer": "html-attr-key",
+                "param": "href",
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "button",
+                "weight": 1
+              },
+              {
+                "scorer": "css-class",
+                "param": "btn-link",
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          },
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "div",
+                "weight": 0.9
+              },
+              {
+                "scorer": "css-class",
+                "param": "btn-link",
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "checkbox",
+      "plan": {
+        "or": [
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "input",
+                "weight": 1
+              },
+              {
+                "scorer": "html-attr-key-and-value",
+                "param": [
+                  "type",
+                  "checkbox"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "radio",
+      "plan": {
+        "or": [
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "param": "input",
+                "weight": 1
+              },
+              {
+                "scorer": "html-attr-key-and-value",
+                "param": [
+                  "type",
+                  "radio"
+                ],
+                "weight": 1
+              }
+            ],
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "label",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "param": "label",
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
 };

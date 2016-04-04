@@ -1,5 +1,5 @@
 'use strict';
-import "babel-polyfill";// must be first
+// import "babel-polyfill";// must be first
 import {Parser} from './parser/artemis-parser';
 import {Modeler} from './modeler/artemis-modeler';
 import {Scorer} from './scorer/artemis-scorer';
