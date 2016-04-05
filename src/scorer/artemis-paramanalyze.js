@@ -8,7 +8,8 @@ export class ParamAnalyze {
             {"name":ElementAttributeScorer.name, "giveclass": ElementAttributeScorer },
             {"name":CssClassScorer.name, "giveclass": CssClassScorer },
             {"name":RelPositionScorer.name, "giveclass": RelPositionScorer },
-            {"name":TextScorer.name, "giveclass": TextScorer }
+            {"name":TextScorer.name, "giveclass": TextScorer },
+            {"name":ElementAttributeKeyScorer.name, "giveclass": ElementAttributeKeyScorer }
         ];
     }
 
@@ -92,9 +93,7 @@ class TextScorer {
     }
 
     scorer(param,elem){
-        let ff = ParamAnalyze.stringMatchScores([elem.domElm.text, elem.domElm.value, elem.domElm.innerText, elem.domElm.textContent], param, true);
-       console.log("ff",elem.tagName, ff);
-       return ff;
+        return ParamAnalyze.stringMatchScores([elem.domElm.text, elem.domElm.value, elem.domElm.innerText, elem.domElm.textContent], param, true);
     }
 }
 
@@ -106,6 +105,20 @@ class ElementAttributeScorer {
     scorer(param,elem){
         for(let i=0; i<elem.attrs.length; i++){
             if(elem.attrs[i]["name"] === param[0] &&  elem.attrs[i]["value"] === param[1]){
+                return 1;
+            } 
+        }
+        return 0;
+    }
+}
+class ElementAttributeKeyScorer {
+
+    static get name() {
+        return "html-attr-key";
+    }
+    scorer(param,elem){
+        for(let i=0; i<elem.attrs.length; i++){
+            if(elem.attrs[i]["name"] === param[0]){
                 return 1;
             } 
         }
@@ -180,54 +193,7 @@ class CssClassScorer {
         return "css-class";
     }
 
-    scorer(param,elem){
-       return this.__stringMatchScores(elem.classes, param, true);
-    }
-
-    __stringMatchScores(datas, standard, allowPartialMatch) {
-        var i;
-        var score = 0;
-        if(standard instanceof Array ) {
-            standard.forEach(param =>  {
-                for (i = 0; i < datas.length; i++) {
-                    score = Math.max(score, this.__stringMatchScore(datas[i], param, allowPartialMatch));
-                };
-            });   
-            return score;
-        }
-        for (i = 0; i < datas.length; i++) {
-            score = Math.max(score, this.__stringMatchScore(datas[i], standard, allowPartialMatch));
-        }
-        return score;
-    }
-
-    __stringMatchScore(data, standard, allowPartialMatch) {
-        var score = 0;
-        if (!data) {
-            return 0;
-        }
-        var dat = this.__pascalCase(data).toLowerCase();
-        var str = this.__pascalCase(standard).toLowerCase();
-        if (dat.indexOf(str) === -1) {
-            return 0;
-        }
-        if (allowPartialMatch) {
-            score = str.length / dat.length;
-            if (score < 0.1) {
-                score = 0;
-            }
-        } else if (str.length === dat.length) {
-            score = 1;
-        }
-        return score;
-    }
-
-    __pascalCase(str) {
-        if (!str) {
-            return '';
-        }
-        return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-            return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
-        }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
+    scorer(param,elem){ 
+       return ParamAnalyze.stringMatchScores(elem.classes, param, true);
     }
 }

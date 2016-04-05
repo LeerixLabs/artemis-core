@@ -34,7 +34,7 @@ class Manager {
 
 		// Modeler elems
 		let modelerJson = new Modeler().model(JSON.stringify(parserRes, null, ' '));
-    	// console.log("modelerJson", modelerJson);
+    	console.log("modelerJson", modelerJson);
 
 // let ee = {
 //   "target": {
