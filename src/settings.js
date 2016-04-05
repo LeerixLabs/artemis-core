@@ -358,6 +358,19 @@ export let settings = {
           }
         ]
       }
+    },
+    {
+      "type": "elm-type",
+      "value": "element",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "param": "element",
+            "weight": 1
+          }
+        ]
+      }
     }
   ],
   "colors": [

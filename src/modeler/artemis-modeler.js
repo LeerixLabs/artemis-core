@@ -68,6 +68,7 @@ export class Modeler{
             };   
             let currPlan;       
             if(this.isOneOfElements(word)){
+                
                 currPlan = this.findPlan(word);   
                 if(isInsideRelation()){//relation type
                    getLastInPlan().target = currPlan;
