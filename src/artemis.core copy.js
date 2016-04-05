@@ -32,7 +32,7 @@ class Manager {
         
   //       console.log( "RESULT ", JSON.stringify(ast,null,5) );
 
-		// Modeler elems
+		// Planner elems
 		// Scorer DOM elems
 		// Marker DOM
 		document.querySelector(query).style.backgroundColor = "#98EB98";

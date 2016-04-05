@@ -7,20 +7,20 @@ describe("Planner Test", function(){
     // let parser = new Parser();
     // let planner = new Planner();
 
-//     it("simple modeler test", function(){
+//     it("simple planner test", function(){
 //         let ast = parser.parse('1st small green button');
-//         let model = modeler.model(ast);
+//         let model = planner.model(ast);
 //         expect(model.attributes.length).toEqual(4);
-// console.log(" _simple modeler test_ ");
+// console.log(" _simple planner test_ ");
 
 //     });
 
-//     it("advance modeler test", function(){
+//     it("advance planner test", function(){
 //         let ast = parser.parse('1st small button above red link ');
-//         let model = modeler.model(ast);
+//         let model = planner.model(ast);
 //         expect(model.attributes.length).toEqual(3);
 //         expect(model.edges.length).toEqual(1);
 //         expect(model.edges[0].to.attributes.length).toEqual(2);
-// console.log(" _advance modeler test _ ");
+// console.log(" _advance planner test _ ");
 //     });
 });

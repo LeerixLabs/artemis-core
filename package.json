@@ -1,7 +1,7 @@
 {
   "name": "artemis-core",
   "version": "1.0.0",
-  "description": "The Artemis core, contain the Parser, Modeler and Socrer.",
+  "description": "The Artemis core, contains the Parser, Planner, Socrer, and Parser.",
   "main": "index.js",
   "scripts": {
     "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js",

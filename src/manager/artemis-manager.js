@@ -1,6 +1,6 @@
 import {settings} from '../settings';
 import {Parser} from '../parser/artemis-parser';
-import {Modeler} from '../planner/artemis-planner';
+import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
 import {Marker} from '../marker/artemis-marker';
 
@@ -28,9 +28,9 @@ class Manager {
     let parser = new Parser();
     let parserRes = parser.parse(query);
 
-    // Modeler elems
-    let modelerJson = new Modeler().model(JSON.stringify(parserRes, null, ' '));
-    // console.log("modelerJson", modelerJson);
+    // Planner elems
+    let plannerJson = new Planner().model(JSON.stringify(parserRes, null, ' '));
+    // console.log("plannerJson", plannerJson);
 
 // let ee = {
 //   "target": {
@@ -43,9 +43,9 @@ class Manager {
 //     ]
 //   }
 // };
-// 		modelerJson = JSON.stringify(ee);
+// 		plannerJson = JSON.stringify(ee);
     // Scorer DOM elems
-    let scoreElems = new Scorer().score(modelerJson);
+    let scoreElems = new Scorer().score(plannerJson);
 
     // Marker DOM
     new Marker(scoreElems);

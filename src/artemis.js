@@ -8,7 +8,7 @@ import {Planner} from './planner/artemis-planner.js';
  */
 export function find(query){
     let parser = new Parser();
-    let planner = new Modeler();
+    let planner = new Planner();
     let ast = parser.parse(query);
     let model = planner.model(ast);
 }

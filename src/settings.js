@@ -99,7 +99,7 @@ export let settings = {
 			"location": "post-target-type",
 			"phrase": "(above|below|left of|right of|inside)",
 			"type": "target-relation"
-		},
+		}
 	],
 	 "plans": [
     {
