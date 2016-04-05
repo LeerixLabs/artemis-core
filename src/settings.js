@@ -359,5 +359,12 @@ export let settings = {
         ]
       }
     }
+  ],
+  "colors": [
+    {"1": "green"},
+    {"0.95-1": "lightgreen"},
+    {"0.85-0.95": "YellowGreen"},
+    {"0.7-0.85": "yellow"},
+    {"0.1-0.7": "LightGoldenRodYellow"}    
   ]
 };

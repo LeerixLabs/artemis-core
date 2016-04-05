@@ -1,11 +1,5 @@
-const REL_LOCATION_TYPE = {
-            RIGHT_OF:           'right-of',
-            LEFT_OF:            'left-of',
-            ABOVE:              'above',
-            BELOW:              'below',
-            NEAR:               'near',
-            INSIDE:             'inside'
-        };
+import {REL_LOCATION_TYPE} from '../constants';
+"use strict";
 
 export class ParamAnalyze {
     constructor(){
@@ -13,7 +7,8 @@ export class ParamAnalyze {
             {"name":ElementTagScorer.name, "giveclass": ElementTagScorer },
             {"name":ElementAttributeScorer.name, "giveclass": ElementAttributeScorer },
             {"name":CssClassScorer.name, "giveclass": CssClassScorer },
-            {"name":RelPositionScorer.name, "giveclass": RelPositionScorer }
+            {"name":RelPositionScorer.name, "giveclass": RelPositionScorer },
+            {"name":TextScorer.name, "giveclass": TextScorer }
         ];
     }
 
@@ -29,6 +24,54 @@ export class ParamAnalyze {
         }
         return new ClassScorer().scorer(param, elem, comparingElement, bodyRect);
     }
+
+    static stringMatchScores(datas, standard, allowPartialMatch) {
+        var i;
+        var score = 0;
+        if(standard instanceof Array ) {
+            standard.forEach(param =>  {
+                for (i = 0; i < datas.length; i++) {
+                    score = Math.max(score, ParamAnalyze.stringMatchScore(datas[i], param, allowPartialMatch));
+                };
+            });   
+            return score;
+        }
+        for (i = 0; i < datas.length; i++) {
+            score = Math.max(score, ParamAnalyze.stringMatchScore(datas[i], standard, allowPartialMatch));
+        }
+        return score;
+    }
+
+    static stringMatchScore(data, standard, allowPartialMatch) {
+        var score = 0;
+        if (!data) {
+            return 0;
+        }
+        var dat = ParamAnalyze.pascalCase(data).toLowerCase();
+        var str = ParamAnalyze.pascalCase(standard).toLowerCase();
+        if (dat.indexOf(str) === -1) {
+            return 0;
+        }
+        if (allowPartialMatch) {
+            score = str.length / dat.length;
+            if (score < 0.1) {
+                score = 0;
+            }
+        } else if (str.length === dat.length) {
+            score = 1;
+        }
+        return score;
+    }
+
+    static pascalCase(str) {
+        if (!str) {
+            return '';
+        }
+        return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+            return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
+        }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
+    }
+
 }
 
 class ElementTagScorer {
@@ -39,6 +82,19 @@ class ElementTagScorer {
 
     scorer(param,elem){
        return param === elem.tagName ? 1: 0;
+    }
+}
+
+class TextScorer {
+    
+    static get name() {
+        return "free-text";
+    }
+
+    scorer(param,elem){
+        let ff = ParamAnalyze.stringMatchScores([elem.domElm.text, elem.domElm.value, elem.domElm.innerText, elem.domElm.textContent], param, true);
+       console.log("ff",elem.tagName, ff);
+       return ff;
     }
 }
 

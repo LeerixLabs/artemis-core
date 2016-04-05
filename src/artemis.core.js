@@ -1,8 +1,9 @@
 'use strict';
-// import "babel-polyfill";// must be first
+// import "babel-polyfill";// must be first d
 import {Parser} from './parser/artemis-parser';
 import {Modeler} from './modeler/artemis-modeler';
 import {Scorer} from './scorer/artemis-scorer';
+import {Marker} from './marker/artemis-marker';
 import {settings} from './settings';
 
 /**
@@ -33,30 +34,26 @@ class Manager {
 
 		// Modeler elems
 		let modelerJson = new Modeler().model(JSON.stringify(parserRes, null, ' '));
-    	console.log("modelerJson", modelerJson);
+    	// console.log("modelerJson", modelerJson);
 
-let ee = {
-  "target": {
-    "and": [
-      {
-        "scorer": "free-text",
-        "param": "Core",
-        "weight": 1
-      }
-    ]
-  }
-};
-		modelerJson = JSON.stringify(ee);
+// let ee = {
+//   "target": {
+//     "and": [
+//       {
+//         "scorer": "free-text",
+//         "param": "Try it",
+//         "weight": 1
+//       }
+//     ]
+//   }
+// };
+// 		modelerJson = JSON.stringify(ee);
 		// Scorer DOM elems
 		let scoreElems = new Scorer().score(modelerJson);
 
 		// Marker DOM
-		for (let elem of scoreElems){
-			if(+elem.score === 1){
-				elem.domElm.style.backgroundColor = "#98EB98";
-			}
-		}
-			
+    new Marker(scoreElems);
+
         console.log('END ');
      
     }

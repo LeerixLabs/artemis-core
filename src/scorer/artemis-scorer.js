@@ -1,9 +1,8 @@
 import {ParamAnalyze} from './artemis-paramanalyze.js'
+import {IGNORED_TAGS} from '../constants';
+import {ARETEMIS_SCORE_ATTR} from '../constants';
+import {ARETEMIS_CLASS} from '../constants';
 "use strict";
-
-const IGNORED_TAGS = ['script', 'noscript'];
-const ARETEMIS_SCORE_ATTR = "artemis-score";
-const ARETEMIS_CLASS = "artemis-mark-";
 
 class HtmlDOM {
     constructor(){
@@ -106,7 +105,7 @@ class Element {
     }
 
     //use: elem.artemisClass
-    get artemisClass() {
+    get colorClass() {
         for(let classElem of this.classes){
             if(classElem.includes(ARETEMIS_CLASS)){
                 return classElem;
@@ -116,11 +115,11 @@ class Element {
     }
 
     //use: elem.artemisClass = "red";
-    set artemisClass(colorClass) {
+    set colorClass(colorClass) {
         this.classes.add(`${ARETEMIS_CLASS}${colorClass}`);
     }
 
-    removeArtemisClass(){
+    removeColorClass(){
         for(let classElem of this.classes){
             if(classElem.includes(ARETEMIS_CLASS)){
                 this.classes.remove(classElem);
@@ -130,9 +129,7 @@ class Element {
 
     removeAttributeScore(){
         this.domElm.removeAttribute(ARETEMIS_SCORE_ATTR);
-        this.removeArtemisClass();
-        //TODO delete under line, after artemis class add with style
-        this.domElm.style.backgroundColor="#ffffff";
+        this.removeColorClass();
     }
 }
 
