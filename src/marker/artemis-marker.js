@@ -29,14 +29,7 @@ export class Marker {
     get createSetCss(){
     	let css ="";
         this.settingColors.forEach((item,i) => {
-    		css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item["color"]};}`; 
-            if(i===0){
-                css +=`[type="checkbox"].${ARETEMIS_CLASS}${i+1}`;
-                css +=`{-webkit-box-shadow: 0 0 10px 0 ${item["color"]};
-                        -moz-box-shadow: 0 0 10px 0 ${item["color"]};
-                        box-shadow: 0 0 10px 0 ${item["color"]};}`;
-            }
-            // `[type="checkbox"].${ARETEMIS_CLASS}${i+1}`;
+    		css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item["color"]}; outline: 1px solid ${item["color"]};}`; 
     	});
 
 		let style = document.createElement('style');

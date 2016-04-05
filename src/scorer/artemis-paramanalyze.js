@@ -9,7 +9,8 @@ export class ParamAnalyze {
             {"name":CssClassScorer.name, "giveclass": CssClassScorer },
             {"name":RelPositionScorer.name, "giveclass": RelPositionScorer },
             {"name":TextScorer.name, "giveclass": TextScorer },
-            {"name":ElementAttributeKeyScorer.name, "giveclass": ElementAttributeKeyScorer }
+            {"name":ElementAttributeKeyScorer.name, "giveclass": ElementAttributeKeyScorer },
+            {"name":ElementAttributeValueScorer.name, "giveclass": ElementAttributeValueScorer }
         ];
     }
 
@@ -68,6 +69,7 @@ export class ParamAnalyze {
         if (!str) {
             return '';
         }
+        console.log(str);
         return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
             return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
         }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
@@ -115,6 +117,7 @@ class ElementAttributeScorer {
         return 0;
     }
 }
+
 class ElementAttributeKeyScorer {
 
     static get name() {
@@ -122,11 +125,25 @@ class ElementAttributeKeyScorer {
     }
     scorer(param,elem){
         for(let i=0; i<elem.attrs.length; i++){
-            if(elem.attrs[i]["name"] === param[0]){
+            if(elem.attrs[i]["name"] === param){
                 return 1;
             } 
         }
         return 0;
+    }
+}
+
+class ElementAttributeValueScorer {
+
+    static get name() {
+        return "html-attr-value";
+    }
+    scorer(param,elem){
+        let  attrs = [];
+        for (var i = 0; i < elem.attrs.length; i++) {
+            attrs.push(elem.attrs[i].value);
+        }
+        return ParamAnalyze.stringMatchScores(attrs, param, true);;
     }
 }
 

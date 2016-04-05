@@ -36,18 +36,32 @@ class Manager {
 		let modelerJson = new Modeler().model(JSON.stringify(parserRes, null, ' '));
     	// console.log("modelerJson", modelerJson);
 
-let ee = {
+// let ee = {"target":{"and":[{"or":[{"scorer":"html-tag","param":"element","weight":1}]},{"scorer":"target-relation","param":"left-of","weight":1,"target":{"scorer":"free-text","param":"Button 2","weight":1}}]}};
+		let ee = {
   "target": {
     "and": [
       {
-        "scorer": "html-tag",
-        "param": "element",
-        "weight": 1
+        "or": [
+          {
+            "scorer": "html-tag",
+            "param": "element",
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "or": [
+          {
+            "scorer": "html-attr-value",
+            "param": "gettext",
+            "weight": 1
+          }
+        ]
       }
     ]
   }
 };
-		modelerJson = JSON.stringify(ee);
+    modelerJson = JSON.stringify(ee);
 		// Scorer DOM elems
 		let scoreElems = new Scorer().score(modelerJson);
 
