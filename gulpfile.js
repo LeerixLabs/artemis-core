@@ -15,8 +15,8 @@ gulp.task("webpack", function(callback) {
     webpack(
        require('./webpack.config.js') 
     , function(err, stats) {
-        
-
         callback();
     });
+});
+gulp.task("default", ['webpack'], function() {
 });
