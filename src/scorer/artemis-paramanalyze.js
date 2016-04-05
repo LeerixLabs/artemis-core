@@ -82,7 +82,11 @@ class ElementTagScorer {
     }
 
     scorer(param,elem){
-       return param === elem.tagName ? 1: 0;
+        if (param === "element"){
+            return 1;
+        } else {
+            return param === elem.tagName ? 1: 0;
+        }
     }
 }
 
