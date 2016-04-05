@@ -1,6 +1,6 @@
 import {settings} from '../settings';
 import {Parser} from '../parser/artemis-parser';
-import {Modeler} from '../modeler/artemis-modeler';
+import {Modeler} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
 import {Marker} from '../marker/artemis-marker';
 

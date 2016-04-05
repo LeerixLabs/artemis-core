@@ -1,12 +1,11 @@
-"use strict";
-export class Modeler{
+export class Planner{
     constructor(){
         this.plans = document.setttingsJSON.plans;
         this.elemRegex = document.setttingsJSON.phrases.find(x => x.location === "target-type").phrase;
     }
 
     /**
-     * This method find plan in setttins and do json plans
+     * This method find plan in settings and do json plans
      * @param json from Parser
      * @return json to Scorer with plans how to score elements from settings
      * TODO: include analize "rel-location"
@@ -34,7 +33,7 @@ export class Modeler{
                 return null;
             }
             return plan.target.and[plan.target.and.length-1];
-        }
+        };
         let isInsideRelation  = function(){
           let last = getLastInPlan();
           
@@ -45,7 +44,7 @@ export class Modeler{
         };
         let isRelation = function(word){              
           return new RegExp("(above|below|left of|right of|inside)").test(word.replace('-',' '));
-        }
+        };
         
         jsonIncoming = jsonIncoming.map(d=>d.replace(/^-/,''));
         
@@ -80,7 +79,7 @@ export class Modeler{
                 freeTextPlan.param = word;
                 plan.target.and.push(freeTextPlan)
             }
-        }) 
+        });
 
         return JSON.stringify(plan, null, ' ');
     }
@@ -90,4 +89,3 @@ export class Modeler{
         console.error("settings doesn't contain plan for this string:",json);
     }
 }
-

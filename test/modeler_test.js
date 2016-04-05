@@ -1,11 +1,11 @@
 
 import {Parser} from '../src/parser/artemis-parser.js'
-import {Modeler} from '../src/modeler/artemis-modeler.js'
+import {Planner} from '../src/planner/artemis-planner.js'
 
-describe("Modeler Test", function(){
+describe("Planner Test", function(){
     "use strict";
     // let parser = new Parser();
-    // let modeler = new Modeler();
+    // let planner = new Planner();
 
 //     it("simple modeler test", function(){
 //         let ast = parser.parse('1st small green button');
