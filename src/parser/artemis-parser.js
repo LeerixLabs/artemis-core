@@ -9,7 +9,6 @@ export class Parser {
 
   parse(text) {
     let settings = this._settings;
-    let helper = new Helper();
     var words = [];
     var strs, str, wordLowerCase, i, insideQuotes, txt;
     txt = text;
@@ -37,12 +36,12 @@ export class Parser {
         if (str === '') {
             continue;
         }
-        if (helper.quoted(str)) {
+        if (Helper.quoted(str)) {
             words.push(str);
-        } else if (helper.quoteStart(str) && !helper.quoteEnd(str)) {
+        } else if (Helper.quoteStart(str) && !Helper.quoteEnd(str)) {
             words.push(str);
             insideQuotes = true;
-        } else if (helper.quoteEnd(str) && !helper.quoteStart(str)) {
+        } else if (Helper.quoteEnd(str) && !Helper.quoteStart(str)) {
             words[words.length - 1] += (' ' + str);
             insideQuotes = false;
         } else if (insideQuotes) {
@@ -52,8 +51,8 @@ export class Parser {
         }
     }
     for (i = 0; i < words.length; i++) {
-        if (helper.quoted(words[i])) {
-            words[i] = helper.unQuote(words[i]);
+        if (Helper.quoted(words[i])) {
+            words[i] = Helper.unQuote(words[i]);
             continue;
         }
         wordLowerCase = words[i].toLowerCase();

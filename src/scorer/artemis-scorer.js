@@ -23,7 +23,7 @@ export class Scorer{
     let relevantDomElms = this._html.getRelevantDomElms();
     this._allElms = [];
     for (let i = 0; i < relevantDomElms.length; i++) {
-      let elm = new Element(i, allDomElms[i]);
+      let elm = new Element(i, relevantDomElms[i]);
       elm.removeAttributeScore();
       this._allElms.push(elm);
     }
@@ -32,26 +32,25 @@ export class Scorer{
     for (let elem of this._allElms){
       //Parse JSON plan and weigh element
       elem.weight = this.recursiveScore( JSON.parse(scoringPlan), elem);
-      arrElms.push(elem);
+      scoringResult.elements.push(elem);
       i++;
     }
 
     //Get maximum Score
-    let arrWeights = arrElms.map(elm => elm.weight);
+    let arrWeights = scoringResult.elements.map(elm => elm.weight);
     let maxWeight = Math.max.apply( null, arrWeights );
 
     //Set endScore to element
-    for (let i = 0; i < arrElms.length; i++) {
-      let d =(arrElms[i].weight / maxWeight).toFixed(2);
-      arrElms[i].score = maxWeight ? ((arrElms[i].weight / maxWeight).toFixed(2)) : 0;
+    for (let i = 0; i < scoringResult.elements.length; i++) {
+      let d =(scoringResult.elements[i].weight / maxWeight).toFixed(2);
+      scoringResult.elements[i].score = maxWeight ? ((scoringResult.elements[i].weight / maxWeight).toFixed(2)) : 0;
     }
     //Set unique param to element
-    Scorer.isUniqueElement(arrElms);
+    Scorer.isUniqueElement(scoringResult.elements);
 
     let endTime = new Date();
 
     scoringResult.duration = endTime.getTime() - startTime.getTime();
-    scoringResult.elements = arrElms;
     return scoringResult;
   }
 
