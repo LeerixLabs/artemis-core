@@ -1,4 +1,4 @@
-import constants from './constants';
+import constants from './parser-constants';
 import {Helper} from './../common/common-helper';
 
 export class Parser {
