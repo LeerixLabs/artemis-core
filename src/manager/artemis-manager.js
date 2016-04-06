@@ -11,10 +11,7 @@ class Manager {
     this._init(settings);
   }
 
-  get settings() {
-    return this._settings;
-  }
-
+  get settings() { return this._settings; }
   set settings(settings) {
     // Settings can either be a JSON string, or an object
     if (typeof settings == 'string' || settings instanceof String) {
