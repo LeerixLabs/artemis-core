@@ -8,7 +8,7 @@ class Manager {
 
   constructor() {
     this._settings = {};
-    this.init(settings);
+    this._init(settings);
   }
 
   get settings() {
@@ -24,8 +24,8 @@ class Manager {
     }
   }
 
-  init(settings) {
-    this.settings = settings;
+  _init(settings) {
+    this.configure(settings);
     document.artemisLocate = this.locate;
 
     //TODO: core code should not be aware of its Chrome extension consumer
@@ -37,6 +37,10 @@ class Manager {
         }
       });
     }
+  }
+
+  configure(settings) {
+    this.settings = settings;
   }
 
   static locate(query) {
