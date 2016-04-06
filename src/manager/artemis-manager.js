@@ -23,13 +23,19 @@ class Manager {
     } else {
       this.settings = config;
     }
+    this.parser = new Parser(this.settings);
+    this.planner = new Planner(this.settings);
+    this.scorer = new Scorer(this.settings);
+    this.marker = new Marker(this.settings);
+
+    this.marker.addColorClassesToHtmlDocHead();
 
     //TODO: core code should not be aware of its Chrome extension consumer
     if (chrome && chrome.runtime && chrome.runtime.onMessage) {
       chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
         if (request.target) {
           let query = request.target;
-          this.main(query);
+          this.locate(query);
         }
       });
     }
@@ -37,20 +43,16 @@ class Manager {
 
   locate(query) {
     // Parse the query sentence
-    let parser = new Parser(this.settings);
-    let modeledQuery = parser.parse(query);
+    let modeledQuery = this.parser.parse(query);
 
     // Prepare a plan for the scorer
-    let planner = new Planner(this.settings);
-    let scoringPlan = planner.plan(modeledQuery);
+    let scoringPlan = this.planner.plan(modeledQuery);
 
     // Score the DOM elements
-    let scorer = new Scorer(this.settings);
-    let scoringResult = scorer.score(scoringPlan);
+    let scoringResult = this.scorer.score(scoringPlan);
 
     // Color the DOM elements according to their score
-    let marker = new Marker(this.settings);
-    marker.mark(scoringResult);
+    this.marker.mark(scoringResult);
 
     return scoringResult;
   }
