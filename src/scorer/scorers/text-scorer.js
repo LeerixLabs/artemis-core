@@ -1,5 +1,5 @@
 
-import {ParamAnalyze} from './artemis-paramanalyze';
+import {ParamAnalyze} from './../artemis-paramanalyze';
 
 export default class TextScorer {
 
