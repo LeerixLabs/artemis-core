@@ -1,3 +1,6 @@
+import {ARTEMIS_SCORE_ATTR} from './common-constants';
+import {ARTEMIS_CLASS} from './common-constants';
+
 export class Element {
 
   constructor(id, domElm){
@@ -28,15 +31,15 @@ export class Element {
 
   //use: elem.score
   get score() {
-    if(this.domElm.hasAttribute(ARETEMIS_SCORE_ATTR)){
-      return this.domElm.getAttribute(ARETEMIS_SCORE_ATTR);
+    if(this.domElm.hasAttribute(ARTEMIS_SCORE_ATTR)){
+      return this.domElm.getAttribute(ARTEMIS_SCORE_ATTR);
     }
     return 0;
   }
 
   //use: elem.score = 0.2;
   set score(score) {
-    this.domElm.setAttribute(ARETEMIS_SCORE_ATTR, score);
+    this.domElm.setAttribute(ARTEMIS_SCORE_ATTR, score);
   }
 
   //use: elem.weight
@@ -52,7 +55,7 @@ export class Element {
   //use: elem.artemisClass
   get colorClass() {
     for(let classElem of this.classes){
-      if(classElem.includes(ARETEMIS_CLASS)){
+      if(classElem.includes(ARTEMIS_CLASS)){
         return classElem;
       }
     }
@@ -61,19 +64,19 @@ export class Element {
 
   //use: elem.artemisClass = "red";
   set colorClass(colorClass) {
-    this.classes.add(`${ARETEMIS_CLASS}${colorClass}`);
+    this.classes.add(`${ARTEMIS_CLASS}${colorClass}`);
   }
 
   removeColorClass(){
     for(let classElem of this.classes){
-      if(classElem.includes(ARETEMIS_CLASS)){
+      if(classElem.includes(ARTEMIS_CLASS)){
         this.classes.remove(classElem);
       }
     }
   }
 
   removeAttributeScore(){
-    this.domElm.removeAttribute(ARETEMIS_SCORE_ATTR);
+    this.domElm.removeAttribute(ARTEMIS_SCORE_ATTR);
     this.removeColorClass();
   }
 }

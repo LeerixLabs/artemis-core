@@ -1,4 +1,4 @@
-import {ARETEMIS_CLASS} from '../common/common-constants';
+import {ARTEMIS_CLASS} from '../common/common-constants';
 
 export class Marker {
 
@@ -8,9 +8,9 @@ export class Marker {
 
   addColorClassesToHtmlDocHead() {
     let uniqueColor = this._settings.colors["single-match-color"];
-    let css = `.${ARETEMIS_CLASS}0{background-color: ${uniqueColor}; outline: 1px solid ${uniqueColor};}`;
+    let css = `.${ARTEMIS_CLASS}0{background-color: ${uniqueColor}; outline: 1px solid ${uniqueColor};}`;
     this._settings.colors["score-colors"].forEach((item,i) => {
-      css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item.color}; outline: 1px solid ${item.color};}`;
+      css += `.${ARTEMIS_CLASS}${i+1}{background-color: ${item.color}; outline: 1px solid ${item.color};}`;
     });
     let style = document.createElement('style');
     style.type = 'text/css';

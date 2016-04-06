@@ -1,8 +1,8 @@
 import {IGNORED_TAGS} from '../common/common-constants';
-import {ARETEMIS_SCORE_ATTR} from '../common/common-constants';
-import {ARETEMIS_CLASS} from '../common/common-constants';
+import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
+import {ARTEMIS_CLASS} from '../common/common-constants';
 import {HtmlDOM} from './html-dom';
-import {Element} from './element';
+import {Element} from './../common/element';
 import {ParamAnalyze} from './artemis-paramanalyze.js'
 
 export class Scorer{

@@ -28,7 +28,7 @@ export class Manager {
     this._scorer = new Scorer(this._settings);
     this._marker = new Marker(this._settings);
 
-    this.marker.addColorClassesToHtmlDocHead();
+    this._marker.addColorClassesToHtmlDocHead();
 
     //TODO: core code should not be aware of its Chrome extension consumer
     if (chrome && chrome.runtime && chrome.runtime.onMessage) {

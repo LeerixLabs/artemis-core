@@ -1,4 +1,5 @@
 import {IGNORED_TAGS} from '../common/common-constants';
+import {Element} from './../common/element';
 
 export class HtmlDOM {
 
@@ -27,7 +28,7 @@ export class HtmlDOM {
   getRelevantElms() {
     let relevantElms = [];
     let allDomElms = this.getAllDomElms();
-    for (var i = 0; i < allDomElms.length; i++) {
+    for (let i = 0; i < allDomElms.length; i++) {
       if (this.isRelevantElm(allDomElms[i])) {
         let elm = new Element(i, allDomElms[i]);
         elm.removeAttributeScore();
