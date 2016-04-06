@@ -1,18 +1,25 @@
-# Leerix-Core
+# artemis-core
 
-## Installation
+## For Developers
 
-    npm i -g gulp
-    
-    npm install 
-    
-    
-## Running Tests
+### DEV Machine Prerequisites
 
-    gulp test
+    Node.js - can be installed from https://nodejs.org
+    Gulp - can be installed by running npm i -g gulp
     
-## Running Build
+### One time Installation
 
-    gulp webpack     
+    Clone the GitHub repository to your local machine.
+    npm install
+
+### On Work Start
+
+    npm start // start the dev server on http://localhost:8080/webpack-dev-server/
+
+### Build
+
+    gulp //runs webpack
+
+##
 
 #
