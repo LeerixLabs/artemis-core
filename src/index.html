@@ -20,19 +20,47 @@
     </style>
 </head>
 <body>
- <h1 class="gettext artemis-mark-green">Artemis Core</h1>
+ <h1 style="border: 1px solid red" class="gettext artemis-mark-green">Artemis Core</h1>
 
-<input type="text" id="myText" value="button" placeholder="Set some text">
+<input type="text" id="myText" value="element left of 'Button 2'" placeholder="Set some text">
 <button type="submit" onclick="myFunction()">Try it</button>
 
 <p id="demo" class="sampleClass testClss btn" artemis-score="1">
     <a href="" class="btn">Button 1</a>
     <a href="" class="btn">Button 2</a>
     <a href="" class="btn">Button 3</a><br>
-    <div href="" class="btn">Button 4 <br><a href="" class="btn">Button 5</a><br></div>
+    <div class="btn">Button 4 <br><a href="" class="btn">Button 5</a><br></div>
     <!-- <input type="button" value="input" placeholder="Set some text"> -->
 
 </p>
+<form class="form-horizontal" method="POST">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Sign in</button>
+    </div>
+  </div>
+</form>
 
 
 <script type="text/javascript">
