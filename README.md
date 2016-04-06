@@ -14,7 +14,7 @@
 
 ### On Work Start
 
-    npm start // start the dev server on http://localhost:8080/webpack-dev-server/
+    npm start //starts the dev server on http://localhost:8080/webpack-dev-server/
 
 ### Build
 
