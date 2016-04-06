@@ -24,15 +24,14 @@ export class HtmlDOM {
     return this.body.getElementsByTagName('*');
   }
 
-  getRelevantElms(){
-    var relevantElms = [];
+  getRelevantElms() {
+    let relevantElms = [];
     let allDomElms = this.getAllDomElms();
-
     for (var i = 0; i < allDomElms.length; i++) {
       if (this.isRelevantElm(allDomElms[i])) {
-        let elem = new Element(i,allDomElms[i]);
-        elem.removeAttributeScore();
-        relevantElms.push(elem);
+        let elm = new Element(i, allDomElms[i]);
+        elm.removeAttributeScore();
+        relevantElms.push(elm);
       }
     }
     return relevantElms;

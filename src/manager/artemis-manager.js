@@ -4,7 +4,7 @@ import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
 import {Marker} from '../marker/artemis-marker';
 
-class Manager {
+export class Manager {
 
   constructor() {
     this._registerGlobalFunctions();
@@ -17,16 +17,16 @@ class Manager {
 
   init(config) {
     if (!config) {
-      this.settings = settings;
+      this._settings = settings;
     } else if (typeof config == 'string' || config instanceof String) {
-      this.settings = JSON.parse(config);
+      this._settings = JSON.parse(config);
     } else {
-      this.settings = config;
+      this._settings = config;
     }
-    this.parser = new Parser(this.settings);
-    this.planner = new Planner(this.settings);
-    this.scorer = new Scorer(this.settings);
-    this.marker = new Marker(this.settings);
+    this._parser = new Parser(this._settings);
+    this._planner = new Planner(this._settings);
+    this._scorer = new Scorer(this._settings);
+    this._marker = new Marker(this._settings);
 
     this.marker.addColorClassesToHtmlDocHead();
 
@@ -43,16 +43,16 @@ class Manager {
 
   locate(query) {
     // Parse the query sentence
-    let modeledQuery = this.parser.parse(query);
+    let modeledQuery = this._parser.parse(query);
 
     // Prepare a plan for the scorer
-    let scoringPlan = this.planner.plan(modeledQuery);
+    let scoringPlan = this._planner.plan(modeledQuery);
 
     // Score the DOM elements
-    let scoringResult = this.scorer.score(scoringPlan);
+    let scoringResult = this._scorer.score(scoringPlan);
 
     // Color the DOM elements according to their score
-    this.marker.mark(scoringResult);
+    this._marker.mark(scoringResult);
 
     return scoringResult;
   }

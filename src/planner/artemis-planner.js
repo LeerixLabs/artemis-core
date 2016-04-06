@@ -1,7 +1,7 @@
 export class Planner {
 
   constructor(settings) {
-    this.settings = settings;
+    this._settings = settings;
     this.plans = settings.plans;
   }
 

@@ -4,11 +4,11 @@ import {Helper} from './../common/common-helper';
 export class Parser {
 
   constructor(settings) {
-    this.settings = settings;
+    this._settings = settings;
   }
 
   parse(text) {
-    let settings = this.settings;
+    let settings = this._settings;
     let helper = new Helper();
     var words = [];
     var strs, str, wordLowerCase, i, insideQuotes, txt;

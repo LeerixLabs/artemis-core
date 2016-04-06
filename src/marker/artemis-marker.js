@@ -3,13 +3,13 @@ import {ARETEMIS_CLASS} from '../common/common-constants';
 export class Marker {
 
 	constructor(settings){
-    this.settings = settings;
+    this._settings = settings;
 	}
 
   addColorClassesToHtmlDocHead() {
-    let uniqueColor = this.settings.colors["single-match-color"];
+    let uniqueColor = this._settings.colors["single-match-color"];
     let css = `.${ARETEMIS_CLASS}0{background-color: ${uniqueColor}; outline: 1px solid ${uniqueColor};}`;
-    this.settings.colors["score-colors"].forEach((item,i) => {
+    this._settings.colors["score-colors"].forEach((item,i) => {
       css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item.color}; outline: 1px solid ${item.color};}`;
     });
     let style = document.createElement('style');

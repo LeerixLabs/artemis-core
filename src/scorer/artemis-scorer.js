@@ -7,9 +7,10 @@ import {ParamAnalyze} from './artemis-paramanalyze.js'
 
 export class Scorer{
 
-  constructor() {
-    this.html = new HtmlDOM();
-    this.allElms = this.html.getRelevantElms();
+  constructor(settings){
+    this._settings = settings;
+    this._html = new HtmlDOM();
+    this._allElms = this._html.getRelevantElms();
   }
 
   score(model){
@@ -20,7 +21,7 @@ export class Scorer{
     let arrElms = [];
 
     //Weigh each element
-    for (let elem of this.allElms){
+    for (let elem of this._allElms){
       //Parse JSON plan and weigh element
       elem.weight = this.recursiveScore( JSON.parse(model), elem);
       arrElms.push(elem);
@@ -97,11 +98,11 @@ export class Scorer{
           }
 
           let maxScore = 0;
-          for (i=0; i<this.allElms.length; i++) {
-              let secondaryElm = this.allElms[i];
+          for (i=0; i<this._allElms.length; i++) {
+              let secondaryElm = this._allElms[i];
               if (elem !== secondaryElm) {
                   planNode.targetElem = secondaryElm;
-                  let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem, secondaryElm, this.html.bodyRect);
+                  let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem, secondaryElm, this._html.bodyRect);
                   let planItemNode = planNode.target;
                   let secondaryScore = this.recursiveScore(planItemNode, secondaryElm);
                   maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
