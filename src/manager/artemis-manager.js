@@ -36,8 +36,8 @@ class Manager {
 //   "target": {
 //     "and": [
 //       {
-//         "scorer": "free-text",
-//         "param": "Try it",
+//         "scorer": "html-attr-value",
+//         "param": "gettext",
 //         "weight": 1
 //       }
 //     ]
