@@ -7,23 +7,22 @@ import {Marker} from '../marker/artemis-marker';
 class Manager {
 
   constructor() {
-    this._settings = {};
-    this._init(settings);
+    this._registerGlobalFunctions();
   }
 
-  get settings() { return this._settings; }
-  set settings(settings) {
-    // Settings can either be a JSON string, or an object
-    if (typeof settings == 'string' || settings instanceof String) {
-      this._settings = JSON.parse(settings);
-    } else {
-      this._settings = settings;
-    }
-  }
-
-  _init(settings) {
-    this.configure(settings);
+  _registerGlobalFunctions() {
+    document.artemisInit = this.init;
     document.artemisLocate = this.locate;
+  }
+
+  init(config) {
+    if (!config) {
+      this.settings = settings;
+    } else if (typeof config == 'string' || config instanceof String) {
+      this.settings = JSON.parse(config);
+    } else {
+      this.settings = config;
+    }
 
     //TODO: core code should not be aware of its Chrome extension consumer
     if (chrome && chrome.runtime && chrome.runtime.onMessage) {
@@ -34,10 +33,6 @@ class Manager {
         }
       });
     }
-  }
-
-  configure(settings) {
-    this.settings = settings;
   }
 
   locate(query) {
