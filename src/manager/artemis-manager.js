@@ -10,7 +10,7 @@ import {Marker} from '../marker/artemis-marker';
  */
 class Manager {
   constructor(){
-    document.leerixFindElem = this.main;
+    document.artemisFindElem = this.main;
     document.setttingsJSON =  settings;
     //listening to chrome extention
     if (chrome && chrome.runtime && chrome.runtime.onMessage) {
@@ -55,4 +55,4 @@ class Manager {
   }
 }
 
-exports.leerix = new Manager();
+exports.artemis = new Manager();
