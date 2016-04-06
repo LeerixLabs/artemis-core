@@ -11,6 +11,7 @@ module.exports = {
         "artemis.core": './src/artemis.core.js'
     },
     output:{
+        path:'/',
         publicPath: '/',
         filename: 'dist/[name].js',
         library: "core"
