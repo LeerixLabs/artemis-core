@@ -5,49 +5,56 @@ import {Scorer} from '../scorer/artemis-scorer';
 import {Marker} from '../marker/artemis-marker';
 
 class Manager {
-  constructor(){
-    document.artemisFindElem = this.main;
-    document.settingsJSON =  settings;
-    //listening to chrome extention
-    if (chrome && chrome.runtime && chrome.runtime.onMessage) {
-      chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
-        if(request.target){
-        let query = request.target;
-        this.main(query);
-      }
-    });
+
+  constructor() {
+    this._settings = {};
+    this.init(settings);
+  }
+
+  get settings() {
+    return this._settings;
+  }
+
+  set settings(settings) {
+    // Settings can either be a JSON string, or an object
+    if (typeof settings == 'string' || settings instanceof String) {
+      this._settings = JSON.parse(settings);
+    } else {
+      this._settings = settings;
     }
   }
 
-  static main(query) {
-    // Parser str
-    let parser = new Parser();
+  init(settings) {
+    this.settings = settings;
+    document.artemisLocate = this.locate;
+
+    //TODO: core code should not be aware of its Chrome extension consumer
+    if (chrome && chrome.runtime && chrome.runtime.onMessage) {
+      chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
+        if (request.target) {
+          let query = request.target;
+          this.main(query);
+        }
+      });
+    }
+  }
+
+  static locate(query) {
+    // Parse the query sentence
+    let parser = new Parser(this.settings);
     let parserRes = parser.parse(query);
 
-    // Planner elems
-    let plannerJson = new Planner().model(JSON.stringify(parserRes, null, ' '));
-    // console.log("plannerJson", plannerJson);
+    // Prepare a plan for the scorer
+    let planner = new Planner(this.settings);
+    let plannerJson = planner.model(JSON.stringify(parserRes, null, ' '));
 
-// let ee = {
-//   "target": {
-//     "and": [
-//       {
-//         "scorer": "html-attr-value",
-//         "param": "gettext",
-//         "weight": 1
-//       }
-//     ]
-//   }
-// };
-// 		plannerJson = JSON.stringify(ee);
-    // Scorer DOM elems
-    let scoreElems = new Scorer().score(plannerJson);
+    // Score the DOM elements
+    let scorer = new Scorer(this.settings);
+    let scoreElems = scorer.score(plannerJson);
 
-    // Marker DOM
-    new Marker(scoreElems);
-
-    console.log('END ');
-
+    // Color the DOM elements according to their score
+    let marker = new Marker(this.settings);
+    marker.mark(scoreElems);
   }
 }
 
