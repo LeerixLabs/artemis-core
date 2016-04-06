@@ -17,6 +17,7 @@ export class Planner{
     isOneOfElements(term){
       return new RegExp("(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)").test(term);
     }
+
     model(inputJson){
         "use strict";
         let jsonRes = [];
@@ -67,7 +68,9 @@ export class Planner{
             };   
             let currPlan;       
             if(this.isOneOfElements(word)){
-                currPlan = this.findPlan(word);   
+                
+                currPlan = this.findPlan(word);  
+                 
                 if(isInsideRelation()){//relation type
                    getLastInPlan().target = currPlan;
                 }else{
@@ -77,7 +80,13 @@ export class Planner{
                 plan.target.and.push(relationPlan);
             }else{
                 freeTextPlan.param = word;
-                plan.target.and.push(freeTextPlan)
+                currPlan =  freeTextPlan;
+                
+                if(isInsideRelation()){//relation type
+                   getLastInPlan().target = currPlan;
+                }else{
+                   plan.target.and.push(currPlan); 
+                }               
             }
         });
 

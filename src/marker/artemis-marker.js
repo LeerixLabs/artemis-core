@@ -10,12 +10,12 @@ export class Marker {
 
 	marker(scoreElems){
         for (let elem of scoreElems){
-            this.settingColors.forEach((item,i) => {
+            this.settingColors.forEach((color,i) => {
                 // Comparison of score and the color
                 if (elem.colorClass === "" 
                 	&& +elem.score === 1 
-                	|| elem.score >= Math.min.apply(null, item["score"]) 
-                	&& elem.score < Math.max.apply(null, item["score"])){
+                	|| elem.score >= Math.min.apply(null, color["score"]) 
+                	&& elem.score < Math.max.apply(null, color["score"])){
                     elem.colorClass = i+1;
                 }
             });
@@ -28,8 +28,8 @@ export class Marker {
 
     get createSetCss(){
     	let css ="";
-    	this.settingColors.forEach((item,i) => {
-    		css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item["color"]};}`; 
+        this.settingColors.forEach((item,i) => {
+    		css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item["color"]}; outline: 1px solid ${item["color"]};}`; 
     	});
 
 		let style = document.createElement('style');
