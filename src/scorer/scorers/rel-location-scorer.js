@@ -1,4 +1,4 @@
-import {REL_LOCATION_TYPE} from '../../constants';
+import {REL_LOCATION_TYPE} from '../../common/common-constants';
 
 export default class RelPositionScorer {
 

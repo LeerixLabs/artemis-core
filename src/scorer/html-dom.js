@@ -1,3 +1,5 @@
+import {IGNORED_TAGS} from '../common/common-constants';
+
 export class HtmlDOM {
 
   constructor(){

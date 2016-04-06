@@ -1,4 +1,4 @@
-import {ARETEMIS_CLASS} from '../constants';
+import {ARETEMIS_CLASS} from '../common/common-constants';
 
 export class Marker {
 
