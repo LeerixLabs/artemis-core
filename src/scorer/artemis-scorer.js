@@ -1,7 +1,7 @@
 import {IGNORED_TAGS} from '../common/common-constants';
 import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
 import {ARTEMIS_CLASS} from '../common/common-constants';
-import {HtmlDOM} from './html-dom';
+import {HtmlDOM} from './../common/html-dom';
 import {Element} from './../common/element';
 import {ParamAnalyzer} from './param-analyzer.js'
 

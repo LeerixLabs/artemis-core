@@ -1,5 +1,5 @@
-import {IGNORED_TAGS} from '../common/common-constants';
-import {Element} from './../common/element';
+import {IGNORED_TAGS} from 'common-constants';
+import {Element} from './element';
 
 export class HtmlDOM {
 
