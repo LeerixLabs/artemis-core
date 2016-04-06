@@ -1,41 +1,37 @@
 import {ARETEMIS_CLASS} from '../constants';
-"use strict";
 
 export class Marker {
-	constructor(scoreElems){
-        this.createSetCss;
-		return this.marker(scoreElems);
+
+	constructor(settings){
+    this.settings = settings;
 	}
 
-	marker(scoreElems){
-        for (let elem of scoreElems){
-                if(elem.colorClass === "" && elem.unicue){
-                    elem.colorClass = 0;
-                } else {
-                    let arrColor = document.settingsJSON.colors["score-colors"];
-                    // Comparison of score and the color
-                    arrColor.forEach((item,i) => {
-                        if (elem.colorClass === "" && elem.score >= item.value){
-                            elem.colorClass = i+1;
-                        }
-                    });
-                }
-
-
-        }
-	}
-
-    get createSetCss(){
-        let unicueColor = document.settingsJSON.colors["single-match-color"];
-        let css = `.${ARETEMIS_CLASS}0{background-color: ${unicueColor}; outline: 1px solid ${unicueColor};}`; 
-        
-        document.settingsJSON.colors["score-colors"].forEach((item,i) => {
-         css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item.color}; outline: 1px solid ${item.color};}`; 
+	mark(scoringResult) {
+    for (let elm of scoringResult.elements){
+      if (elm.colorClass === "" && elm.unique){
+        elm.colorClass = 0;
+      } else {
+        let arrColor = settings.colors["score-colors"];
+        // Comparison of score and the color
+        arrColor.forEach((item,i) => {
+          if (elm.colorClass === "" && CssClassScorer.score >= item.value){
+              elm.colorClass = i+1;
+          }
         });
-
-        let style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = css;
-        document.getElementsByTagName('head')[0].appendChild(style);
+      }
     }
+	}
+
+  addColorClassesToHtmlDocHead() {
+    let uniqueColor = this.settings.colors["single-match-color"];
+    let css = `.${ARETEMIS_CLASS}0{background-color: ${uniqueColor}; outline: 1px solid ${uniqueColor};}`;
+    this.settings.colors["score-colors"].forEach((item,i) => {
+      css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item.color}; outline: 1px solid ${item.color};}`;
+    });
+    let style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = css;
+    document.getElementsByTagName('head')[0].appendChild(style);
+  }
+
 }
