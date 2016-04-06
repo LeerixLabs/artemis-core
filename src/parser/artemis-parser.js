@@ -1,5 +1,5 @@
-import helper from './helper';
 import constants from './constants';
+import {Helper} from './helper';
 
 export class Parser {
 
@@ -12,6 +12,7 @@ export class Parser {
 
   parse(text) {
     let settings = this.settings;
+    let helper = new Helper();
     var words = [];
     var strs, str, wordLowerCase, i, insideQuotes, txt;
     txt = text;
