@@ -1,9 +1,9 @@
-import ScorerHelper from './../scorer-helper';
+import {ScorerHelper} from './../scorer-helper';
 
 export default class CssClassScorer {
 
-  static score(param, elem){
-    return ParamAnalyze.stringMatchScores(elem.classes, param, true);
+  static score(param, elm) {
+    return ScorerHelper.stringMatchScores(elem.classes, param, true);
   }
 
 }

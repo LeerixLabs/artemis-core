@@ -1,10 +1,10 @@
 export default class ElementTagScorer {
 
-  static score(param,elem){
+  static score(param, elm){
     if (param === "element"){
         return 1;
     } else {
-        return param === elem.tagName ? 1: 0;
+        return param === elm.tagName ? 1: 0;
     }
   }
 

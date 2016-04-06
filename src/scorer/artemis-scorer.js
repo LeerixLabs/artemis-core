@@ -3,7 +3,7 @@ import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
 import {ARTEMIS_CLASS} from '../common/common-constants';
 import {HtmlDOM} from './html-dom';
 import {Element} from './../common/element';
-import {ParamAnalyze} from './artemis-paramanalyze.js'
+import {ParamAnalyzer} from './param-analyzer.js'
 
 export class Scorer{
 
@@ -57,7 +57,7 @@ export class Scorer{
   recursiveScore(planNode, elem){
       let weight = planNode.weight;
       let score = null;
-      let paramAnalyze = new ParamAnalyze();
+      let paramAnalyzer = new ParamAnalyzer();
 
       //start node
       if(planNode.target && !planNode.scorer){
@@ -69,7 +69,7 @@ export class Scorer{
           if(!weight && weight!==0){
               throw new Error("Not found weight in Node Plans: "+ planNode);
           }
-          let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem);
+          let relationScore = paramAnalyzer.analyzeScorerParam(planNode.scorer, planNode.param, elem);
           score = weight * relationScore;
       }
       //node with node.and
@@ -102,7 +102,7 @@ export class Scorer{
               let secondaryElm = this._allElms[i];
               if (elem !== secondaryElm) {
                   planNode.targetElem = secondaryElm;
-                  let relationScore = paramAnalyze.analyzeScorerParam(planNode.scorer, planNode.param, elem, secondaryElm, this._html.bodyRect);
+                  let relationScore = paramAnalyzer.analyzeScorerParam(planNode.scorer, planNode.param, elem, secondaryElm, this._html.bodyRect);
                   let planItemNode = planNode.target;
                   let secondaryScore = this.recursiveScore(planItemNode, secondaryElm);
                   maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);

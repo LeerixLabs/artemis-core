@@ -1,13 +1,13 @@
-import ScorerHelper from './../scorer-helper';
+import {ScorerHelper} from './../scorer-helper';
 
 export default class ElementAttributeValueScorer {
 
-  static score(param,elem){
+  static score(param, elm){
       let  attrs = [];
-      for (var i = 0; i < elem.attrs.length; i++) {
-          attrs.push(elem.attrs[i].value);
+      for (var i = 0; i < elm.attrs.length; i++) {
+          attrs.push(elm.attrs[i].value);
       }
-      return ParamAnalyze.stringMatchScores(attrs, param, true);
+      return ScorerHelper.stringMatchScores(attrs, param, true);
   }
 
 }

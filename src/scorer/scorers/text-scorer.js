@@ -1,9 +1,8 @@
-
-import {ParamAnalyze} from './../artemis-paramanalyze';
+import {ScorerHelper} from './../scorer-helper';
 
 export default class TextScorer {
 
-    scorer(param,elem){
-        return ParamAnalyze.stringMatchScores([elem.domElm.text, elem.domElm.value, elem.domElm.innerText, elem.domElm.textContent], param, true);
+    static score(param, elm){
+        return ScorerHelper.stringMatchScores([elm.domElm.text, elm.domElm.value, elm.domElm.innerText, elm.domElm.textContent], param, true);
     }
 }

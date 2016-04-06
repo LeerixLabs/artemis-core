@@ -7,7 +7,7 @@ import RelPositionScorer from './scorers/rel-location-scorer.js';
 import CssClassScorer from './scorers/css-class-scorer.js';
 "use strict";
 
-export class ParamAnalyze {
+export class ParamAnalyzer {
 
     constructor() {
         this._types = [
@@ -29,7 +29,7 @@ export class ParamAnalyze {
             }
         }); 
         if(!ClassScorer){
-            throw new Error("ParamAnalyze didn't find Scorer class for scorer: " + nameScorer);
+            throw new Error("ParamAnalyzer didn't find Scorer class for scorer: " + nameScorer);
         }
         return new ClassScorer().scorer(param, elem, comparingElement, bodyRect);
     }

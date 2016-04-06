@@ -42,17 +42,6 @@ export class Helper {
     return str.slice(1, str.length - 1);
   }
 
-  static pascalCase(str) {
-    if (!str) {
-        return '';
-    }
-    return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g,  (letter, index) =>{
-        return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
-    }).replace(/\s+/g, '').replace(/^[a-z]/,  m => {
-        return m.toUpperCase();
-    });
-  }
-
   goHelp(displayAlert) {
     var msg = 'Artemis' + '\n\n---------- Execution ----------\nImmediate: Shift+a | Delayed: Shift+s' + '\n\n---------- Ordinal ----------\n1st | 2nd | 3rd\n' + '\n\n---------- Target Adjectives ----------\nsmall | medium | large\n<free text>' + '\n\n---------- Target Type ----------\nelement | button | link | input | checkbox | label | image | dropdown | item | panel | toolbar' + '\n\n---------- Target Properties----------\nwith tag X\nwith class X\nwith style X:Y\nwith attribute X\nwith attribute value X\nwith attribute X equals to Y\nwith type X\nwith identity X\nwith text X\nat the top | at the bottom\non the left | on the right | on the middle' + '\n\n---------- Target-to-Target Relations ----------\nleft of | right of | above | below | near | inside <other target phrase>' + '\n\n---------- Examples ----------\nelement with tag div and class selected-tab\nsave button at the top\nlarge address input\nimage left of filter label' + '\n\n* For multiple non-reserved keywords, surround with single quotes / double quotes / tildes, or separate words by dashes e.g. \'save all\' button, or save-all button.';
     this.___DBG(msg);

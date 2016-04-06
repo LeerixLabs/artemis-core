@@ -1,8 +1,8 @@
 export default class ElementAttributeScorer {
 
-  static score(param,elem){
-    for (let i=0; i<elem.attrs.length; i++) {
-      if (elem.attrs[i]["name"] === param[0] &&  elem.attrs[i]["value"] === param[1]) {
+  static score(param, elm){
+    for (let i=0; i<elm.attrs.length; i++) {
+      if (elm.attrs[i]["name"] === param[0] &&  elm.attrs[i]["value"] === param[1]) {
         return 1;
       }
     }
