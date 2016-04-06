@@ -40,22 +40,24 @@ class Manager {
     this.settings = settings;
   }
 
-  static locate(query) {
+  locate(query) {
     // Parse the query sentence
     let parser = new Parser(this.settings);
-    let parserRes = parser.parse(query);
+    let modeledQuery = parser.parse(query);
 
     // Prepare a plan for the scorer
     let planner = new Planner(this.settings);
-    let plannerJson = planner.model(JSON.stringify(parserRes, null, ' '));
+    let scoringPlan = planner.plan(modeledQuery);
 
     // Score the DOM elements
     let scorer = new Scorer(this.settings);
-    let scoreElems = scorer.score(plannerJson);
+    let scoringResult = scorer.score(scoringPlan);
 
     // Color the DOM elements according to their score
     let marker = new Marker(this.settings);
-    marker.mark(scoreElems);
+    marker.mark(scoringResult);
+
+    return scoringResult;
   }
 }
 
