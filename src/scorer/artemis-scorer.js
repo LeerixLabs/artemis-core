@@ -65,6 +65,7 @@ class Element {
         this.attrs = this.domElm.attributes;
         this._weight = 0;
         this._rect = this.setRect();
+        this.unicue = false;
 
     }
     //return position rectangle element; use: elem.rect
@@ -169,7 +170,16 @@ export class Scorer{
             let d =(arrElems[i].weight / maxWeight).toFixed(2);
             arrElems[i].score = maxWeight ? ((arrElems[i].weight / maxWeight).toFixed(2)) : 0;
         } 
+        //Set unice param to element
+        this.isUnicueElement(arrElems);
         return arrElems;
+    }
+
+    isUnicueElement(arrElems){
+        let isUnicue = arrElems.filter(elem => {
+            return +elem.score === 1;
+        });
+        isUnicue[0].unicue = isUnicue.length===1;
     }
 
     recursiveScore(planNode, elem){
