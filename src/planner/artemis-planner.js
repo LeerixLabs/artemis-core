@@ -5,11 +5,6 @@ export class Planner {
     this.plans = settings.plans;
   }
 
-  get settings() { return this._settings; }
-  set settings(settings) { this._settings = settings; }
-  get plans() { return this._plans; }
-  set plans(plans) { this._plans = plans; }
-
   findPlan(term){
      let plan = this.plans.find(pln => pln.type === "elm-type" && pln.value === term);
      return plan ? plan.plan : null;
