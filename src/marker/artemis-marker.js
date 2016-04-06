@@ -12,7 +12,7 @@ export class Marker {
                 if(elem.colorClass === "" && elem.unicue){
                     elem.colorClass = 0;
                 } else {
-                    let arrColor = document.setttingsJSON.colors["score-colors"];
+                    let arrColor = document.settingsJSON.colors["score-colors"];
                     // Comparison of score and the color
                     arrColor.forEach((item,i) => {
                         if (elem.colorClass === "" && elem.score >= item.value){
@@ -26,10 +26,10 @@ export class Marker {
 	}
 
     get createSetCss(){
-        let unicueColor = document.setttingsJSON.colors["single-match-color"];
+        let unicueColor = document.settingsJSON.colors["single-match-color"];
         let css = `.${ARETEMIS_CLASS}0{background-color: ${unicueColor}; outline: 1px solid ${unicueColor};}`; 
         
-        document.setttingsJSON.colors["score-colors"].forEach((item,i) => {
+        document.settingsJSON.colors["score-colors"].forEach((item,i) => {
          css += `.${ARETEMIS_CLASS}${i+1}{background-color: ${item.color}; outline: 1px solid ${item.color};}`; 
         });
 

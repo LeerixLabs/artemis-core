@@ -4,14 +4,10 @@ import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
 import {Marker} from '../marker/artemis-marker';
 
-/**
- * Execute artemis query returning a list of element with rank
- * @param query
- */
 class Manager {
   constructor(){
     document.artemisFindElem = this.main;
-    document.setttingsJSON =  settings;
+    document.settingsJSON =  settings;
     //listening to chrome extention
     if (chrome && chrome.runtime && chrome.runtime.onMessage) {
       chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
@@ -23,7 +19,7 @@ class Manager {
     }
   }
 
-  main(query) {
+  static main(query) {
     // Parser str
     let parser = new Parser();
     let parserRes = parser.parse(query);

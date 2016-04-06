@@ -1,7 +1,7 @@
 export class Planner{
     constructor(){
-        this.plans = document.setttingsJSON.plans;
-        this.elemRegex = document.setttingsJSON.phrases.find(x => x.location === "target-type").phrase;
+        this.plans = document.settingsJSON.plans;
+        this.elemRegex = document.settingsJSON.phrases.find(x => x.location === "target-type").phrase;
     }
 
     /**
