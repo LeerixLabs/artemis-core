@@ -1,4 +1,4 @@
-class Helpers {	    
+class Helper {
 		___LOG(msg) {
 	        // html.console.log('ARTEMIS ' + msg);
 	    }
@@ -9,31 +9,31 @@ class Helpers {
 	        this.___LOG('WRN ' + msg);
 	    }
 	
-	    startsWith(str1, str2) {
+	    static startsWith(str1, str2) {
 	        return _.isString(str1) && !_.isEmpty(str1) && _.isString(str2) && !_.isEmpty(str2) ? str1.indexOf(str2) === 0 : false;
 	    }
-	    endsWith(str1, str2) {
+	    static endsWith(str1, str2) {
 	        return _.isString(str1) && !_.isEmpty(str1) && _.isString(str2) && !_.isEmpty(str2) ? str1.indexOf(str2, str1.length - str2.length) !== -1 : false;
 	    }
-	    quoteStart(str) {
-	        return this.startsWith(str, '"') || this.startsWith(str, '\'') || this.startsWith(str, '~');
+	    static quoteStart(str) {
+	        return Helper.startsWith(str, '"') || Helper.startsWith(str, '\'') || Helper.startsWith(str, '~');
 	    }
-	    quoteEnd(str) {
-	        return this.endsWith(str, '"') || this.endsWith(str, '\'') || this.endsWith(str, '~');
+	    static quoteEnd(str) {
+	        return Helper.endsWith(str, '"') || Helper.endsWith(str, '\'') || Helper.endsWith(str, '~');
 	    }
-	    quoted(str) {
-	        return this.startsWith(str, '"') && this.endsWith(str, '"') || this.startsWith(str, '\'') && this.endsWith(str, '\'') || this.startsWith(str, '~') && this.endsWith(str, '~');
+	    static quoted(str) {
+	        return Helper.startsWith(str, '"') && Helper.endsWith(str, '"') || Helper.startsWith(str, '\'') && Helper.endsWith(str, '\'') || Helper.startsWith(str, '~') && Helper.endsWith(str, '~');
 	    }
-	    unQuote(str) {
+	    static unQuote(str) {
 	        if (!str) {
 	            return '';
 	        }
-	        if (!this.quoted(str)) {
+	        if (!Helper.quoted(str)) {
 	            return str;
 	        }
 	        return str.slice(1, str.length - 1);
 	    }
-	    pascalCase(str) {
+	    static pascalCase(str) {
 	        if (!str) {
 	            return '';
 	        }
@@ -43,13 +43,13 @@ class Helpers {
 	            return m.toUpperCase();
 	        });
 	    }
-	    stringMatchScore(data, string, allowPartialMatch) {
+	    static stringMatchScore(data, string, allowPartialMatch) {
 	        var score = 0;
 	        if (!data) {
 	            return 0;
 	        }
-	        var dat = this.pascalCase(data).toLowerCase();
-	        var str = this.pascalCase(string).toLowerCase();
+	        var dat = Helper.pascalCase(data).toLowerCase();
+	        var str = Helper.pascalCase(string).toLowerCase();
 	        if (dat.indexOf(str) === -1) {
 	            return 0;
 	        }
@@ -63,18 +63,18 @@ class Helpers {
 	        }
 	        return score;
 	    }
-	    stringMatchScores(datas, string, allowPartialMatch) {
+	    static stringMatchScores(datas, string, allowPartialMatch) {
 	        var i;
 	        var score = 0;
 	        for (i = 0; i < datas.length; i++) {
-	            score = Math.max(score, this.stringMatchScore(datas[i], string, allowPartialMatch));
+	            score = Math.max(score, Helper.stringMatchScore(datas[i], string, allowPartialMatch));
 	        }
 	        return score;
 	    }
-	    getBoundScore(score) {
+	    static getBoundScore(score) {
 	        return Math.min(Math.max(0, score), 1.0);
 	    }
-	    isElmInsideElm(elm1, elm2) {
+	    static isElmInsideElm(elm1, elm2) {
 	        var isInside = false;
 	        var elmRect1 = elm1.getRect();
 	        var elmRect2 = elm2.getRect();
@@ -86,7 +86,7 @@ class Helpers {
 	        }
 	        return isInside;
 	    }
-	    getPartialScore(value, maxValue, reversed) {
+	    static getPartialScore(value, maxValue, reversed) {
 	        var score = maxValue > 0 ? Math.min(Math.max(0, value / maxValue), 1.0) : 0;
 	        return reversed ? 1 - score : score;
 	    }
@@ -110,4 +110,5 @@ class Helpers {
 	        }
 	    }
 }
-export const helpers = new Helpers();		
+
+export default helper = new Helper();
