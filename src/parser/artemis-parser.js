@@ -7,9 +7,6 @@ export class Parser {
     this.settings = settings;
   }
 
-  get settings() { return this._settings; }
-  set settings(settings) { this._settings = settings; }
-
   parse(text) {
     let settings = this.settings;
     let helper = new Helper();
