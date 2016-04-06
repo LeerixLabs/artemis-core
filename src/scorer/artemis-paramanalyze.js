@@ -69,7 +69,6 @@ export class ParamAnalyze {
         if (!str) {
             return '';
         }
-        console.log(str);
         return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
             return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
         }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
