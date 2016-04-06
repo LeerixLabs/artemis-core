@@ -1,5 +1,5 @@
 import constants from './constants';
-import {Helper} from './helper';
+import {Helper} from './../common/common-helper';
 
 export class Parser {
 
