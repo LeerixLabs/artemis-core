@@ -1,5 +1,4 @@
 import {IGNORED_TAGS} from './common-constants';
-import {Element} from './element';
 
 export class HtmlDOM {
 
@@ -25,17 +24,15 @@ export class HtmlDOM {
     return this.body.getElementsByTagName('*');
   }
 
-  getRelevantElms() {
-    let relevantElms = [];
+  getRelevantDomElms() {
+    let relevantDomElms = [];
     let allDomElms = this.getAllDomElms();
     for (let i = 0; i < allDomElms.length; i++) {
       if (this.isRelevantElm(allDomElms[i])) {
-        let elm = new Element(i, allDomElms[i]);
-        elm.removeAttributeScore();
-        relevantElms.push(elm);
+        relevantDomElms.push(allDomElms[i]);
       }
     }
-    return relevantElms;
+    return relevantDomElms;
   }
 
   isRelevantElm(domElm){

@@ -9,21 +9,29 @@ export class Scorer{
 
   constructor(settings){
     this._settings = settings;
-    this._html = new HtmlDOM();
-    this._allElms = this._html.getRelevantElms();
   }
 
-  score(model){
+  score(scoringPlan){
     let scoringResult = {
       duration: 0,
       elements: []
     };
     let arrElms = [];
 
+    // Get relevant elements
+    this._html = new HtmlDOM();
+    let relevantDomElms = this._html.getRelevantDomElms();
+    this._allElms = [];
+    for (let i = 0; i < relevantDomElms.length; i++) {
+      let elm = new Element(i, allDomElms[i]);
+      elm.removeAttributeScore();
+      this._allElms.push(elm);
+    }
+
     //Weigh each element
     for (let elem of this._allElms){
       //Parse JSON plan and weigh element
-      elem.weight = this.recursiveScore( JSON.parse(model), elem);
+      elem.weight = this.recursiveScore( JSON.parse(scoringPlan), elem);
       arrElms.push(elem);
       i++;
     }
