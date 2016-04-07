@@ -76,7 +76,7 @@ export class Planner {
       }
     });
 
-    return JSON.stringify(plan, null, ' ');
+    return plan;
   }
 
   __model_node(json) {
