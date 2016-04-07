@@ -63,7 +63,7 @@ module.exports = function(config) {
       // i. e.
       noInfo: true
     },
-
+    singleRun: true,
 
     browsers:[/*'Chrome'*/ 'PhantomJS'],
 
