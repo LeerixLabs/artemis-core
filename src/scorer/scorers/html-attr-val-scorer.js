@@ -1,8 +1,8 @@
 import {ScorerHelper} from './../scorer-helper';
 
-export default class ElementAttributeValueScorer {
+export default class HtmlAttrValScorer {
 
-  static score(param, elm){
+  score(param, elm){
       let  attrs = [];
       for (var i = 0; i < elm.attrs.length; i++) {
           attrs.push(elm.attrs[i].value);

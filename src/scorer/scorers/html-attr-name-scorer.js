@@ -1,6 +1,6 @@
-export default class ElementAttributeKeyScorer {
+export default class HtmlAttrNameScorer {
 
-  static score(param, elm){
+  score(param, elm){
     for (let i=0; i<elm.attrs.length; i++) {
       if (elm.attrs[i]["name"] === param) {
         return 1;

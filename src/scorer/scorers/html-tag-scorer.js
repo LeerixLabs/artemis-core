@@ -1,10 +1,10 @@
-export default class ElementTagScorer {
+export default class HtmlTagScorer {
 
-  static score(param, elm){
+  score(param, elm){
     if (param === "element"){
         return 1;
     } else {
-        return param === elm.tagName ? 1: 0;
+        return param.toLowerCase() === elm.domElm.tagName.toLowerCase() ? 1 : 0;
     }
   }
 

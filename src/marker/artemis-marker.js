@@ -23,10 +23,10 @@ export class Marker {
       if (elm.colorClass === "" && elm.unique){
         elm.colorClass = 0;
       } else {
-        let arrColor = settings.colors["score-colors"];
+        let arrColor = this._settings.colors["score-colors"];
         // Comparison of score and the color
         arrColor.forEach((item,i) => {
-          if (elm.colorClass === "" && CssClassScorer.score >= item.value){
+          if (elm.colorClass === "" && elm.score >= item.value){
               elm.colorClass = i+1;
           }
         });

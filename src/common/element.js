@@ -12,7 +12,7 @@ export class Element {
     this.attrs = this.domElm.attributes;
     this._weight = 0;
     this._rect = this.getRect();
-    this.unicue = false;
+    this.unique = false;
   }
 
   //return position rectangle element; use: elem.rect

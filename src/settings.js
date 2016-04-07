@@ -120,7 +120,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "button"
@@ -138,7 +138,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "submit"
@@ -223,7 +223,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "text"
@@ -254,7 +254,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key",
+                "scorer": "html-attr-name",
                 "param": "href",
                 "weight": 1
               }
@@ -307,7 +307,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "checkbox"
@@ -333,7 +333,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "radio"

@@ -6,13 +6,13 @@ export class ScorerHelper {
     if (standard instanceof Array) {
       standard.forEach(param => {
         for (i = 0; i < datas.length; i++) {
-          score = Math.max(score, ParamAnalyzer.stringMatchScore(datas[i], param, allowPartialMatch));
+          score = Math.max(score, ScorerHelper.stringMatchScore(datas[i], param, allowPartialMatch));
         }
       });
       return score;
     }
     for (i = 0; i < datas.length; i++) {
-      score = Math.max(score, ParamAnalyzer.stringMatchScore(datas[i], standard, allowPartialMatch));
+      score = Math.max(score, ScorerHelper.stringMatchScore(datas[i], standard, allowPartialMatch));
     }
     return score;
   }
@@ -22,8 +22,8 @@ export class ScorerHelper {
     if (!data) {
       return 0;
     }
-    var dat = ParamAnalyzer.pascalCase(data).toLowerCase();
-    var str = ParamAnalyzer.pascalCase(standard).toLowerCase();
+    var dat = ScorerHelper.pascalCase(data).toLowerCase();
+    var str = ScorerHelper.pascalCase(standard).toLowerCase();
     if (dat.indexOf(str) === -1) {
       return 0;
     }
