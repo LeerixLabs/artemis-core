@@ -9,8 +9,7 @@ import HtmlAttrNameScorer from './scorers/html-attr-name-scorer.js';
 import HtmlAttrValScorer from './scorers/html-attr-val-scorer.js';
 import HtmlTagScorer from './scorers/html-tag-scorer.js';
 import RelPositionScorer from './scorers/rel-position-scorer.js';
-import TextScorer from './scorers/text-scorer.js';
-
+import FreeTextScorer from './scorers/free-text-scorer.js';
 
 export class Scorer{
 
@@ -21,13 +20,13 @@ export class Scorer{
   }
 
   _registerScorers() {
-    this._scorersMap.set("css-class", new CssClassScorer());
-    this._scorersMap.set("html-attr-name-and-val", new HtmlAttrNameAndValScorer());
-    this._scorersMap.set("html-attr-name", new HtmlAttrNameScorer());
-    this._scorersMap.set("html-attr-val", new HtmlAttrValScorer());
-    this._scorersMap.set("html-tag", new HtmlTagScorer());
-    this._scorersMap.set("rel-position", new RelPositionScorer());
-    this._scorersMap.set("text", new TextScorer());
+    this._scorersMap.set('css-class', new CssClassScorer());
+    this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer());
+    this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer());
+    this._scorersMap.set('html-attr-val', new HtmlAttrValScorer());
+    this._scorersMap.set('html-tag', new HtmlTagScorer());
+    this._scorersMap.set('rel-position', new RelPositionScorer());
+    this._scorersMap.set('free-text', new FreeTextScorer());
   }
 
   score(scoringPlan){
@@ -52,11 +51,12 @@ export class Scorer{
     // Score each element
     for (let elm of this._allElms){
       elm.score = this.recursiveScore(scoringPlan.target, elm);
+      console.log(elm.domElm.tagName + ':' + elm.score);
       scoringResult.elements.push(elm);
     }
 
     // Normalize scores
-    let arrScores = scoringResult.elements.map(elm => elm.weight);
+    let arrScores = scoringResult.elements.map(elm => elm.score);
     let maxScore = Math.max.apply( null, arrScores);
     for (let i = 0; i < scoringResult.elements.length; i++) {
       scoringResult.elements[i].score = maxScore ? ((scoringResult.elements[i].score / maxScore).toFixed(2)) : 0;
