@@ -7,10 +7,9 @@ import {Marker} from '../marker/artemis-marker';
 export class Manager {
 
   constructor() {
-    this._registerGlobalFunctions();
   }
 
-  _registerGlobalFunctions() {
+  registerGlobalFunctions() {
     document.artemisInit = this.init;
     document.artemisLocate = this.locate;
   }
@@ -31,14 +30,7 @@ export class Manager {
     this._marker.addColorClassesToHtmlDocHead();
 
     //TODO: core code should not be aware of its Chrome extension consumer
-    if (chrome && chrome.runtime && chrome.runtime.onMessage) {
-      chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
-        if (request.target) {
-          let query = request.target;
-          this.locate(query);
-        }
-      });
-    }
+
   }
 
   locate(query) {
@@ -57,5 +49,3 @@ export class Manager {
     return scoringResult;
   }
 }
-
-exports.artemis = new Manager();
