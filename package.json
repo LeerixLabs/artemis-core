@@ -1,6 +1,10 @@
 {
   "name": "artemis-core",
   "version": "1.0.0",
+  "engines": {
+    "node": "^4.4.2",
+    "npm": "^2.15.0"
+  },
   "description": "The Artemis core, contains the Parser, Planner, Socrer, and Parser.",
   "main": "index.js",
   "scripts": {
