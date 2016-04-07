@@ -12,11 +12,12 @@ export class Scorer{
   }
 
   score(scoringPlan){
+    let startTime = new Date();
+
     let scoringResult = {
       duration: 0,
       elements: []
     };
-    let arrElms = [];
 
     // Get relevant elements
     this._html = new HtmlDOM();
