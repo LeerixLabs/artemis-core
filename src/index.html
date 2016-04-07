@@ -19,7 +19,7 @@
     }
     </style>
 </head>
-<body>
+<body onload="initArtemis()">
  <h1 style="border: 1px solid red" class="gettext artemis-mark-green">Artemis Core</h1>
 
 <input type="text" id="myText" value="element left of 'Button 2'" placeholder="Set some text">
@@ -68,11 +68,17 @@
 // var inp  = document.getElementById("myText");
 // console.log(inp.getAttribute("type"));
 
-    // document.leerixFindElem("input");
+    // document.artemisFindElem("input");
+
+function initArtemis() {
+    document.artemisInit("");
+}
+
 function myFunction() {
     var inputValue = document.getElementById("myText").value;
-    document.leerixFindElem(inputValue);
+    document.artemisLocate(inputValue);
 }
+
 </script>
 </body>
 </html>

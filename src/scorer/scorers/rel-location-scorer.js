@@ -1,12 +1,13 @@
-import {REL_LOCATION_TYPE} from '../constants';
+import {REL_LOCATION_TYPE} from '../../common/common-constants';
+
 export default class RelPositionScorer {
 
     static get name() {
         return "target-relation";
     }
 
-    scorer(param,elem, comparingElement, bodyRect){
-        let elmRect1 = elem.rect;
+    score(param, elm, comparingElement, bodyRect){
+        let elmRect1 = elm.rect;
         let elmRect2 = comparingElement.rect;
         let score = 0;
 
@@ -14,26 +15,26 @@ export default class RelPositionScorer {
             if ((elmRect1.leftPage >= elmRect2.rightPage) &&
                 (elmRect1.topPage < elmRect2.bottomPage) &&
                 (elmRect1.bottomPage > elmRect2.topPage)) {
-                score = this.getPartialScore(elmRect1.leftPage - elmRect2.rightPage, bodyRect.rightPage, true);
+                score = RelPositionScorer.getPartialScore(elmRect1.leftPage - elmRect2.rightPage, bodyRect.rightPage, true);
             }
         } else
          if (param === REL_LOCATION_TYPE.LEFT_OF) {
             if ((elmRect2.leftPage >= elmRect1.rightPage) &&
                 (elmRect2.topPage < elmRect1.bottomPage) &&
                 (elmRect2.bottomPage > elmRect1.topPage)) {
-                score = this.getPartialScore(elmRect2.leftPage - elmRect1.rightPage, bodyRect.rightPage, true);
+                score = RelPositionScorer.getPartialScore(elmRect2.leftPage - elmRect1.rightPage, bodyRect.rightPage, true);
             }
         } else if (param === REL_LOCATION_TYPE.BELOW) {
             if ((elmRect1.topPage >= elmRect2.bottomPage) &&
                 (elmRect1.leftPage < elmRect2.rightPage) &&
                 (elmRect1.rightPage > elmRect2.leftPage)) {
-                score = this.getPartialScore(elmRect1.bottomPage - elmRect2.topPage, bodyRect.bottomPage, true);
+                score = RelPositionScorer.getPartialScore(elmRect1.bottomPage - elmRect2.topPage, bodyRect.bottomPage, true);
             }
         } else if (param === REL_LOCATION_TYPE.ABOVE) {
             if ((elmRect2.topPage >= elmRect1.bottomPage) &&
                 (elmRect2.leftPage < elmRect1.rightPage) &&
                 (elmRect2.rightPage > elmRect1.leftPage)) {
-                score = this.getPartialScore(elmRect2.bottomPage - elmRect1.topPage, bodyRect.bottomPage, true);
+                score = RelPositionScorer.getPartialScore(elmRect2.bottomPage - elmRect1.topPage, bodyRect.bottomPage, true);
             }
         } else if (param === REL_LOCATION_TYPE.NEAR) {
             var deltaX = Math.abs( (elmRect1.left + (elmRect1.right - elmRect1.left)/2) - (elmRect2.left + (elmRect2.right - elmRect2.left)/2) );
@@ -53,7 +54,7 @@ export default class RelPositionScorer {
         return score;
     }
 
-    getPartialScore(value, maxValue, reversed) {
+    static getPartialScore(value, maxValue, reversed) {
         var score = maxValue > 0 ? Math.min(Math.max(0, value / maxValue), 1.0) : 0;
         return reversed ? 1 - score : score;
     }

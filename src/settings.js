@@ -373,11 +373,13 @@ export let settings = {
       }
     }
   ],
-  "colors": [
-    {"1": "green"},
-    {"0.95-1": "lightgreen"},
-    {"0.85-0.95": "YellowGreen"},
-    {"0.7-0.85": "yellow"},
-    {"0.1-0.7": "LightGoldenRodYellow"}    
-  ]
+  "colors": {
+    "single-match-color": "#00FF00",
+    "score-colors": [
+      {"value": 1, "color": "#FF0000"},
+      {"value": 0.95, "color": "#FF3300"},
+      {"value": 0.9, "color": "#FF6600"},
+      {"value": 0.85, "color": "#FF9900"}
+    ]
+  }
 };

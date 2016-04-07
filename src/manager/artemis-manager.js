@@ -4,55 +4,58 @@ import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
 import {Marker} from '../marker/artemis-marker';
 
-/**
- * Execute artemis query returning a list of element with rank
- * @param query
- */
-class Manager {
-  constructor(){
-    document.leerixFindElem = this.main;
-    document.setttingsJSON =  settings;
-    //listening to chrome extention
+export class Manager {
+
+  constructor() {
+    this._registerGlobalFunctions();
+  }
+
+  _registerGlobalFunctions() {
+    document.artemisInit = this.init;
+    document.artemisLocate = this.locate;
+  }
+
+  init(config) {
+    if (!config) {
+      this._settings = settings;
+    } else if (typeof config == 'string' || config instanceof String) {
+      this._settings = JSON.parse(config);
+    } else {
+      this._settings = config;
+    }
+    this._parser = new Parser(this._settings);
+    this._planner = new Planner(this._settings);
+    this._scorer = new Scorer(this._settings);
+    this._marker = new Marker(this._settings);
+
+    this._marker.addColorClassesToHtmlDocHead();
+
+    //TODO: core code should not be aware of its Chrome extension consumer
     if (chrome && chrome.runtime && chrome.runtime.onMessage) {
       chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
-        if(request.target){
-        let query = request.target;
-        this.main(query);
-      }
-    });
+        if (request.target) {
+          let query = request.target;
+          this.locate(query);
+        }
+      });
     }
   }
 
-  main(query) {
-    // Parser str
-    let parser = new Parser();
-    let parserRes = parser.parse(query);
+  locate(query) {
+    // Parse the query sentence
+    let modeledQuery = this._parser.parse(query);
 
-    // Planner elems
-    let plannerJson = new Planner().model(JSON.stringify(parserRes, null, ' '));
-    // console.log("plannerJson", plannerJson);
+    // Prepare a plan for the scorer
+    let scoringPlan = this._planner.plan(modeledQuery);
 
-// let ee = {
-//   "target": {
-//     "and": [
-//       {
-//         "scorer": "html-attr-value",
-//         "param": "gettext",
-//         "weight": 1
-//       }
-//     ]
-//   }
-// };
-// 		plannerJson = JSON.stringify(ee);
-    // Scorer DOM elems
-    let scoreElems = new Scorer().score(plannerJson);
+    // Score the DOM elements
+    let scoringResult = this._scorer.score(scoringPlan);
 
-    // Marker DOM
-    new Marker(scoreElems);
+    // Color the DOM elements according to their score
+    this._marker.mark(scoringResult);
 
-    console.log('END ');
-
+    return scoringResult;
   }
 }
 
-exports.leerix = new Manager();
+exports.artemis = new Manager();
