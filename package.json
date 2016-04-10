@@ -1,6 +1,6 @@
 {
   "name": "artemis-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "node": "^4.4.2",
     "npm": "^2.15.0"
@@ -11,6 +11,7 @@
     "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "node_modules/karma/bin/karma start"
   },
+  "files":["dist/artemis.core.js","dist/artemis.core.js.map"],
   "keywords": [
     "Artemis"
   ],
