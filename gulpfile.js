@@ -10,10 +10,11 @@ gulp.task('webpack-dev-server', function (c) {
 
     myConfig.devtool = 'eval';
     myConfig.debug = true;
-
+    myConfig.output.path = __dirname +  '/';
     // Start a webpack-dev-server
     new WebpackDevServer(webpack(myConfig), {        
         contentBase: myConfig.devServer.contentBase,//__dirname +'/src',
+        
         stats: {
             colors: true
         }
