@@ -20,6 +20,8 @@
 
     gulp //runs webpack
 
-##
+### Publishing
+    for publishing to nm registry:
+    npm publish
 
 #
