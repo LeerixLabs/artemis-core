@@ -53,7 +53,7 @@ export class Element {
   }
 
   //use: elem.artemisClass
-  get colorClass() {
+  get colorClassIndex() {
     for(let classElem of this.classes){
       if(classElem.includes(ARTEMIS_CLASS)){
         return classElem;
@@ -63,11 +63,11 @@ export class Element {
   }
 
   //use: elem.artemisClass = "red";
-  set colorClass(colorClass) {
-    this.classes.add(`${ARTEMIS_CLASS}${colorClass}`);
+  set colorClassIndex(colorClassIndex) {
+    this.classes.add(`${ARTEMIS_CLASS}${colorClassIndex}`);
   }
 
-  removeColorClass(){
+  removeColorClassIndex(){
     for(let classElem of this.classes){
       if(classElem.includes(ARTEMIS_CLASS)){
         this.classes.remove(classElem);
@@ -77,6 +77,6 @@ export class Element {
 
   removeAttributeScore(){
     this.domElm.removeAttribute(ARTEMIS_SCORE_ATTR);
-    this.removeColorClass();
+    this.removeColorClassIndex();
   }
 }

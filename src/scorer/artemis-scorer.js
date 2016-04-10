@@ -51,7 +51,6 @@ export class Scorer{
     // Score each element
     for (let elm of this._allElms){
       elm.score = this.recursiveScore(scoringPlan.target, elm);
-      console.log(elm.domElm.tagName + ':' + elm.score);
       scoringResult.elements.push(elm);
     }
 
@@ -65,8 +64,9 @@ export class Scorer{
     // Look for a single match
     let perfectScore = 0;
     scoringResult.elements.forEach( (elm) => {
-      if (elm.score === 1) {
+      if (+elm.score === 1) {
         perfectScore++;
+        console.log(elm.tagName,elm.score );
       }
     });
     scoringResult.hasSingleMatch = perfectScore === 1;
