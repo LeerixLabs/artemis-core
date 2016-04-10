@@ -48,7 +48,7 @@ export let settings = {
 		{
 			"location": "post-target-type",
 			"phrase": "(at the top|at the bottom|on the left|on the right|at the middle)",
-			"type": "elm-position"
+			"type": "elm-location"
 		},
 		{
 			"location": "post-target-type",
@@ -68,17 +68,17 @@ export let settings = {
 		{
 			"location": "post-target-type",
 			"phrase": "with attribute (\\S*)",
-			"type": "html-attr-key"
+			"type": "html-attr-name"
 		},
 		{
 			"location": "post-target-type",
 			"phrase": "with attribute value (\\S*)",
-			"type": "html-attr-value"
+			"type": "html-attr-val"
 		},
 		{
 			"location": "post-target-type",
 			"phrase": "with attribute (\\S*)=(\\S*)",
-			"type": "html-attr-key-and-value"
+			"type": "html-attr-name-and-val"
 		},
 		{
 			"location": "post-target-type",
@@ -88,17 +88,17 @@ export let settings = {
 		{
 			"location": "post-target-type",
 			"phrase": "with style (\\S*)",
-			"type": "css-style-key"
+			"type": "css-style-name"
 		},
 		{
 			"location": "post-target-type",
 			"phrase": "with style (\\S*):(\\S*)",
-			"type": "css-style-key-and-value"
+			"type": "css-style-name-and-val"
 		},
 		{
 			"location": "post-target-type",
 			"phrase": "(above|below|left of|right of|inside)",
-			"type": "target-relation"
+			"type": "rel-position"
 		}
 	],
 	 "plans": [
@@ -120,7 +120,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "button"
@@ -138,7 +138,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "submit"
@@ -223,7 +223,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "text"
@@ -254,7 +254,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key",
+                "scorer": "html-attr-name",
                 "param": "href",
                 "weight": 1
               }
@@ -307,7 +307,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "checkbox"
@@ -333,7 +333,7 @@ export let settings = {
                 "weight": 1
               },
               {
-                "scorer": "html-attr-key-and-value",
+                "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
                   "radio"

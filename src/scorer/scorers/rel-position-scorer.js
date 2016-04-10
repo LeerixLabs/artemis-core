@@ -2,10 +2,6 @@ import {REL_LOCATION_TYPE} from '../../common/common-constants';
 
 export default class RelPositionScorer {
 
-    static get name() {
-        return "target-relation";
-    }
-
     score(param, elm, comparingElement, bodyRect){
         let elmRect1 = elm.rect;
         let elmRect2 = comparingElement.rect;

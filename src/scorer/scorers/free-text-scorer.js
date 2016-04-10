@@ -1,8 +1,8 @@
 import {ScorerHelper} from './../scorer-helper';
 
-export default class TextScorer {
+export default class FreeTextScorer {
 
-    static score(param, elm){
+    score(param, elm){
         return ScorerHelper.stringMatchScores([elm.domElm.text, elm.domElm.value, elm.domElm.innerText, elm.domElm.textContent], param, true);
     }
 }

@@ -30,7 +30,7 @@ export class Planner {
 
     let isInsideRelation = function() {
       let last = getLastInPlan();
-      return (last && last.scorer === 'target-relation');
+      return (last && last.scorer === 'rel-position');
     };
 
     let isRelation = function(word) {
@@ -42,7 +42,7 @@ export class Planner {
     //jsonIncoming => ['button', 'left of', 'button', 'right of', 'button' ]
     jsonIncoming.forEach((word) => {
       let relationPlan = {
-        "scorer": "target-relation",
+        "scorer": "rel-position",
         "param": word,
         "weight": 1,
         "target": null
@@ -76,7 +76,7 @@ export class Planner {
       }
     });
 
-    return JSON.stringify(plan, null, ' ');
+    return plan;
   }
 
   __model_node(json) {

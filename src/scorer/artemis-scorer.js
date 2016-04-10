@@ -3,12 +3,30 @@ import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
 import {ARTEMIS_CLASS} from '../common/common-constants';
 import {HtmlDOM} from './../common/html-dom';
 import {Element} from './../common/element';
-import {ParamAnalyzer} from './param-analyzer.js'
+import CssClassScorer from './scorers/css-class-scorer.js';
+import HtmlAttrNameAndValScorer from './scorers/html-attr-name-and-val-scorer.js';
+import HtmlAttrNameScorer from './scorers/html-attr-name-scorer.js';
+import HtmlAttrValScorer from './scorers/html-attr-val-scorer.js';
+import HtmlTagScorer from './scorers/html-tag-scorer.js';
+import RelPositionScorer from './scorers/rel-position-scorer.js';
+import FreeTextScorer from './scorers/free-text-scorer.js';
 
 export class Scorer{
 
   constructor(settings){
     this._settings = settings;
+    this._scorersMap = new Map();
+    this._registerScorers();
+  }
+
+  _registerScorers() {
+    this._scorersMap.set('css-class', new CssClassScorer());
+    this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer());
+    this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer());
+    this._scorersMap.set('html-attr-val', new HtmlAttrValScorer());
+    this._scorersMap.set('html-tag', new HtmlTagScorer());
+    this._scorersMap.set('rel-position', new RelPositionScorer());
+    this._scorersMap.set('free-text', new FreeTextScorer());
   }
 
   score(scoringPlan){
@@ -16,6 +34,7 @@ export class Scorer{
 
     let scoringResult = {
       duration: 0,
+      hasSingleMatch: false,
       elements: []
     };
 
@@ -29,25 +48,28 @@ export class Scorer{
       this._allElms.push(elm);
     }
 
-    //Weigh each element
-    for (let elem of this._allElms){
-      //Parse JSON plan and weigh element
-      elem.weight = this.recursiveScore( JSON.parse(scoringPlan), elem);
-      scoringResult.elements.push(elem);
-      i++;
+    // Score each element
+    for (let elm of this._allElms){
+      elm.score = this.recursiveScore(scoringPlan.target, elm);
+      console.log(elm.domElm.tagName + ':' + elm.score);
+      scoringResult.elements.push(elm);
     }
 
-    //Get maximum Score
-    let arrWeights = scoringResult.elements.map(elm => elm.weight);
-    let maxWeight = Math.max.apply( null, arrWeights );
-
-    //Set endScore to element
+    // Normalize scores
+    let arrScores = scoringResult.elements.map(elm => elm.score);
+    let maxScore = Math.max.apply( null, arrScores);
     for (let i = 0; i < scoringResult.elements.length; i++) {
-      let d =(scoringResult.elements[i].weight / maxWeight).toFixed(2);
-      scoringResult.elements[i].score = maxWeight ? ((scoringResult.elements[i].weight / maxWeight).toFixed(2)) : 0;
+      scoringResult.elements[i].score = maxScore ? ((scoringResult.elements[i].score / maxScore).toFixed(2)) : 0;
     }
-    //Set unique param to element
-    Scorer.isUniqueElement(scoringResult.elements);
+
+    // Look for a single match
+    let perfectScore = 0;
+    scoringResult.elements.forEach( (elm) => {
+      if (elm.score === 1) {
+        perfectScore++;
+      }
+    });
+    scoringResult.hasSingleMatch = perfectScore === 1;
 
     let endTime = new Date();
 
@@ -55,70 +77,53 @@ export class Scorer{
     return scoringResult;
   }
 
-  static isUniqueElement(arrElms){
-      let isUnique = arrElms.filter(elem => {
-          return +CssClassScorer.score === 1;
-      });
-      isUnique[0].unicue = isUnique.length===1;
-  }
+  recursiveScore(planNode, elm){
+    let score = null;
+    let weight = planNode.weight;
+    if (!weight && weight !== 0) {
+      weight = 1;
+    }
 
-  recursiveScore(planNode, elem){
-      let weight = planNode.weight;
-      let score = null;
-      let paramAnalyzer = new ParamAnalyzer();
-
-      //start node
-      if(planNode.target && !planNode.scorer){
-          score = (score !== null) ? score * this.recursiveScore(planNode.target, elem)
-              : this.recursiveScore(planNode.target, elem);
+    //leaf node
+    if (planNode.scorer && !planNode.target) {
+      let scorer = this._scorersMap.get(planNode.scorer);
+      score = weight * scorer.score(planNode.param, elm);
+    }
+    //node with 'and' items
+    else if (planNode.and){
+      for (let i = 0; i < planNode.and.length; i++) {
+        score = (score !== null) ? score * this.recursiveScore(planNode.and[i], elm)
+        : this.recursiveScore(planNode.and[i], elm);
       }
-      //end node
-      else if(planNode.scorer && !planNode.target) {
-          if(!weight && weight!==0){
-              throw new Error("Not found weight in Node Plans: "+ planNode);
-          }
-          let relationScore = paramAnalyzer.analyzeScorerParam(planNode.scorer, planNode.param, elem);
-          score = weight * relationScore;
+      if (weight > 0) {
+        score *= weight;
       }
-      //node with node.and
-      else if(planNode.and){
-          for (var i = 0; i < planNode.and.length; i++) {
-              score = (score !== null) ? score * this.recursiveScore(planNode.and[i], elem)
-              : this.recursiveScore(planNode.and[i], elem);
-          }
-          if(weight > 0){
-              score *= weight;
-          }
+    }
+    //node with 'or' items
+    else if (planNode.or) {
+      let partScore = [];
+      for (let i = 0; i < planNode.or.length; i++) {
+        let result = this.recursiveScore(planNode.or[i], elm);
+        partScore.push(result);
       }
-      //node with node.or
-      else if (planNode.or){
-          let partScore = [];
-          for (var i = 0; i < planNode.or.length; i++) {
-              let result = this.recursiveScore(planNode.or[i], elem);
-              partScore.push(result);
-          }
-          score = Math.max.apply(null, partScore);
+      score = Math.max.apply(null, partScore);
+    }
+    //next node with target
+    else if (planNode.scorer && planNode.target) {
+      let maxScore = 0;
+      for (let i=0; i<this._allElms.length; i++) {
+        let secondaryElm = this._allElms[i];
+        if (elm !== secondaryElm) {
+          let scorer = this._scorersMap.get(planNode.scorer);
+          let relationScore = scorer.score(planNode.param, elm, secondaryElm, this._html.bodyRect);
+          let planItemNode = planNode.target;
+          let secondaryScore = this.recursiveScore(planItemNode, secondaryElm);
+          maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
+        }
       }
-      //next node with target
-      else if(planNode.scorer && planNode.target){
-          if(!weight && weight!==0){
-              throw new Error("Not found weight in Node Plans: " + planNode);
-          }
-
-          let maxScore = 0;
-          for (i=0; i<this._allElms.length; i++) {
-              let secondaryElm = this._allElms[i];
-              if (elem !== secondaryElm) {
-                  planNode.targetElem = secondaryElm;
-                  let relationScore = paramAnalyzer.analyzeScorerParam(planNode.scorer, planNode.param, elem, secondaryElm, this._html.bodyRect);
-                  let planItemNode = planNode.target;
-                  let secondaryScore = this.recursiveScore(planItemNode, secondaryElm);
-                  maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
-              }
-          }
-          score = weight * maxScore;
-      }
-      return score;
+      score = weight * maxScore;
+    }
+    return score;
   }
 
 }
