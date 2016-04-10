@@ -12,12 +12,17 @@ export class Helper {
     this.___LOG('WRN ' + msg);
   }
 
+  static isString(str1, str2){
+      return typeof str1 == 'string' && typeof str2 == 'string' && str1.length &&  str2.length; 
+  }
+
+
   static startsWith(str1, str2) {
-    return _.isString(str1) && !_.isEmpty(str1) && _.isString(str2) && !_.isEmpty(str2) ? str1.indexOf(str2) === 0 : false;
+    return this.isString(str1, str2) ? str1.indexOf(str2) === 0 : false;
   }
 
   static endsWith(str1, str2) {
-    return _.isString(str1) && !_.isEmpty(str1) && _.isString(str2) && !_.isEmpty(str2) ? str1.indexOf(str2, str1.length - str2.length) !== -1 : false;
+    return this.isString(str1, str2) ? str1.indexOf(str2, str1.length - str2.length) !== -1 : false;
   }
 
   static quoteStart(str) {
