@@ -5,7 +5,7 @@ export class ChromeListener {
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.target) {
           let query = request.target;
-          manager.artemisLocate(query);
+          manager.locate(query);
         }
       });
     }
