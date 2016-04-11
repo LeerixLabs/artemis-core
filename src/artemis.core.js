@@ -5,6 +5,6 @@ let manager = new Manager(window, document);
 
 manager.registerGlobalFunctions();
 
-ChromeListener.registerChromeListener();
+ChromeListener.registerChromeListener(manager);
 
 exports.artemis = manager;
