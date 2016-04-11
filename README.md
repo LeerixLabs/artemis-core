@@ -26,5 +26,7 @@
 
 ### Publishing
     for publishing to nm registry:
+    
+    npm run build
     npm publish
 
