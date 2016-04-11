@@ -5,7 +5,7 @@ export class ChromeListener {
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.target) {
           let query = request.target;
-          manager.locate(query);
+          manager.locate.apply(manager,[query]);
         }
       });
     }
