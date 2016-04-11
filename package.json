@@ -9,9 +9,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "build": "webpack --config webpack-production.config.js --progress --profile --colors",
     "test": "node_modules/karma/bin/karma start"
   },
-  "files":["dist/artemis.core.js","dist/artemis.core.js.map"],
+  "files":["dist/artemis.core.js"],
   "keywords": [
     "Artemis"
   ],
