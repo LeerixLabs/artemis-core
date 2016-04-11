@@ -10,8 +10,8 @@ export class Planner {
      return plan ? plan.plan : null;
   }
 
-  static isOneOfElements(term){
-    return new RegExp("(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)").test(term);
+  static  isOneOfElements(term, _settings){
+    return new RegExp(_settings.phrases.find(p => p.location === "target-type").phrase).test(term);
   }
 
   plan(modeledQuery) {
@@ -33,8 +33,8 @@ export class Planner {
       return (last && last.scorer === 'rel-position');
     };
 
-    let isRelation = function(word) {
-      return new RegExp("(above|below|left of|right of|inside)").test(word.replace('-',' '));
+    let isRelation = function(word, settings) {        
+      return new RegExp(settings.phrases.find(p => p.type === "rel-position").phrase).test(word.replace('-',' '));
     };
 
     jsonIncoming = jsonIncoming.map(d=>d.replace(/^-/,''));
@@ -53,7 +53,7 @@ export class Planner {
         "weight": 1
       };
       let currPlan;
-      if (Planner.isOneOfElements(word)) {
+      if (Planner.isOneOfElements(word, this._settings)) {
         currPlan = this.findPlan(word);
         if (isInsideRelation()) {
           //relation type
@@ -61,7 +61,7 @@ export class Planner {
         } else {
            plan.target.and.push(currPlan);
         }
-      } else if (isRelation(word)) {
+      } else if (isRelation(word, this._settings)) {
         //new relation
         plan.target.and.push(relationPlan);
       } else {
