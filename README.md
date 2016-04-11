@@ -16,12 +16,15 @@
 
     npm start //starts the dev server on http://localhost:8080/webpack-dev-server/
 
-### Build
+### Build development
 
     gulp //runs webpack
+
+### Build
+
+    npm run build //runs webpack
 
 ### Publishing
     for publishing to nm registry:
     npm publish
 
-#
