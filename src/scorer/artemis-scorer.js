@@ -58,15 +58,14 @@ export class Scorer{
     let arrScores = scoringResult.elements.map(elm => elm.score);
     let maxScore = Math.max.apply( null, arrScores);
     for (let i = 0; i < scoringResult.elements.length; i++) {
-      scoringResult.elements[i].score = maxScore ? ((scoringResult.elements[i].score / maxScore).toFixed(2)) : 0;
+      scoringResult.elements[i].score = maxScore ? Math.round(scoringResult.elements[i].score / maxScore*100)/100 : 0;
     }
 
     // Look for a single match
     let perfectScore = 0;
     scoringResult.elements.forEach( (elm) => {
-      if (+elm.score === 1) {
+      if (elm.score === 1) {
         perfectScore++;
-        console.log(elm.tagName,elm.score );
       }
     });
     scoringResult.hasSingleMatch = perfectScore === 1;

@@ -13,6 +13,7 @@ export class Element {
     this._weight = 0;
     this._rect = this.getRect();
     this.unique = false;
+    this._score = 0;
   }
 
   //return position rectangle element; use: elem.rect
@@ -32,13 +33,14 @@ export class Element {
   //use: elem.score
   get score() {
     if(this.domElm.hasAttribute(ARTEMIS_SCORE_ATTR)){
-      return this.domElm.getAttribute(ARTEMIS_SCORE_ATTR);
+      return this._score;
     }
     return 0;
   }
 
   //use: elem.score = 0.2;
   set score(score) {
+    this._score = score;
     this.domElm.setAttribute(ARTEMIS_SCORE_ATTR, score);
   }
 
