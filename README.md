@@ -22,11 +22,11 @@
 
 ### Build
 
-    npm run build //runs webpack
+    npm run build # runs webpack
 
 ### Publishing
-    for publishing to nm registry:
-    
+    # for publishing to npm registry:
+
     npm run build
     npm publish
 
