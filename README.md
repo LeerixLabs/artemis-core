@@ -25,8 +25,8 @@
     npm run build # runs webpack
 
 ### Publishing
+    ```sh
     # for publishing to npm registry:
-
     npm run build
     npm publish
-
+ 	```
