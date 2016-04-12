@@ -4,12 +4,12 @@
 
 ### DEV Machine Prerequisites
 
-    Node.js - can be installed from https://nodejs.org
-    Gulp - can be installed by running npm i -g gulp
+    Node.js - can be installed from `https://nodejs.org`
+    Gulp - can be installed by running `npm i -g gulp`
     
 ### One time Installation
+Clone the GitHub repository to your local machine.
 
-    Clone the GitHub repository to your local machine.
     npm install
 
 ### On Work Start
