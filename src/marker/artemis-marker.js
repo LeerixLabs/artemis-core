@@ -21,11 +21,11 @@ export class Marker {
 	mark(scoringResult) {
     let arrColor = this._settings.colors["score-colors"];
     for (let elm of scoringResult.elements) {
-      if (scoringResult.hasSingleMatch && +elm.score === 1) {
+      if (scoringResult.hasSingleMatch && elm.score === 1) {
         elm.colorClassIndex = 0;
       } else {
         arrColor.forEach((item,i) => {
-          if (elm.colorClassIndex === "" && +elm.score >= item.value){
+          if (elm.colorClassIndex === "" && elm.score >= item.value){
               elm.colorClassIndex = i+1;
           }
         });

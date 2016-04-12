@@ -3,12 +3,17 @@
 ## For Developers
 
 ### DEV Machine Prerequisites
-Node.js - can be installed from `https://nodejs.org`
+Git - can be installed ([git site](https://git-scm.com/downloads)).
+
+Node.js - can be installed from [Nodejs.org](https://nodejs.org).
 
 Gulp - can be installed by running `npm i -g gulp`
     
 ### One time Installation
-Clone the GitHub repository to your local machine.
+```sh
+git clone https://github.com/LeerixLabs/artemis-core.git
+```
+Git clone. Clone the GitHub repository to your local machine.
 
     npm install
 
