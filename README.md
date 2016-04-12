@@ -13,15 +13,18 @@ Clone the GitHub repository to your local machine.
 
 ### On Work Start
 Starts the dev server on `http://localhost:8080/webpack-dev-server/`
+    
     npm start
 
 ### Build development
-
-    gulp //runs webpack
+Сompiles in directory `dist` the file `artemis.core.js` with sourse-map
+```sh
+gulp //runs webpack
+```
 
 ### Build
-
-    npm run build # runs webpack
+Сompiles in directory `dist` the minified file `artemis.core.js` without sourse-map
+    npm run build
 
 ### Publishing
 ```sh
