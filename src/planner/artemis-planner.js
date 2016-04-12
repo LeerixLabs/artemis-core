@@ -37,13 +37,13 @@ export class Planner {
       return new RegExp(settings.phrases.find(p => p.type === "rel-position").phrase).test(word.replace('-',' '));
     };
 
-    jsonIncoming = jsonIncoming.map(d=>d.replace(/^-/,''));
+    jsonIncoming = jsonIncoming.map(d=>{return {value:d.value.replace(/^-/,'')}});
 
-    //jsonIncoming => ['button', 'left of', 'button', 'right of', 'button' ]
+   // jsonIncoming =  [{value:"element"},{value:"left-of"},{value:"Button 2"}]
     jsonIncoming.forEach( word => {
       let relationPlan = {
         "scorer": "rel-position",
-        "param": word,
+        "param": word.value,
         "weight": 1,
         "target": null
       };
@@ -53,19 +53,19 @@ export class Planner {
         "weight": 1
       };
       let currPlan;
-      if (Planner.isOneOfElements(word, this._settings)) {
-        currPlan = this.findPlan(word);
+      if (Planner.isOneOfElements(word.value, this._settings)) {
+        currPlan = this.findPlan(word.value);
         if (isInsideRelation()) {
           //relation type
            getLastInPlan().target = currPlan;
         } else {
            plan.target.and.push(currPlan);
         }
-      } else if (isRelation(word, this._settings)) {
+      } else if (isRelation(word.value, this._settings)) {
         //new relation
         plan.target.and.push(relationPlan);
       } else {
-        freeTextPlan.param = word;
+        freeTextPlan.param = word.value;
         currPlan =  freeTextPlan;
         if (isInsideRelation()) {
           //relation type
@@ -75,6 +75,7 @@ export class Planner {
         }
       }
     });
+
 
     return plan;
   }

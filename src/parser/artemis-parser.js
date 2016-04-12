@@ -37,44 +37,45 @@ export class Parser {
             continue;
         }
         if (Helper.quoted(str)) {
-            words.push(str);
+            words.push({value:str});
         } else if (Helper.quoteStart(str) && !Helper.quoteEnd(str)) {
-            words.push(str);
+            words.push({value:str});
             insideQuotes = true;
         } else if (Helper.quoteEnd(str) && !Helper.quoteStart(str)) {
-            words[words.length - 1] += (' ' + str);
+            words[words.length - 1].value += (' ' + str);
             insideQuotes = false;
         } else if (insideQuotes) {
-            words[words.length - 1] += (' ' + str);
+            words[words.length - 1].value += (' ' + str);
         } else {
-            words.push(str);
+            words.push({value:str});
         }
     }
     for (i = 0; i < words.length; i++) {
-        if (Helper.quoted(words[i])) {
-            words[i] = Helper.unQuote(words[i]);
+        if (Helper.quoted(words[i].value)) {
+            words[i].value = Helper.unQuote(words[i].value);
             continue;
         }
-        wordLowerCase = words[i].toLowerCase();
-        if (wordLowerCase === 'small') { words[i] = constants.keyword.SMALL; }
-        if (wordLowerCase === 'medium') { words[i] = constants.keyword.MEDIUM; }
-        if (wordLowerCase === 'large') { words[i] = constants.keyword.LARGE; }
-        if (wordLowerCase === 'element' || wordLowerCase === 'elm') { words[i] = constants.keyword.ELEMENT; }
-        if (wordLowerCase === 'button' || wordLowerCase === 'btn') { words[i] = constants.keyword.BUTTON; }
-        if (wordLowerCase === 'link' || wordLowerCase === 'lnk' || wordLowerCase === 'dropdown' || wordLowerCase === 'item') { words[i] = constants.keyword.LINK; }
-        if (wordLowerCase === 'input' || wordLowerCase === 'inp') { words[i] = constants.keyword.INPUT; }
-        if (wordLowerCase === 'checkbox' || wordLowerCase === 'chk') { words[i] = constants.keyword.CHECKBOX; }
-        if (wordLowerCase === 'label' || wordLowerCase === 'lbl') { words[i] = constants.keyword.LABEL; }
-        if (wordLowerCase === 'image' || wordLowerCase === 'img') { words[i] = constants.keyword.IMAGE; }
-        if (wordLowerCase === 'panel' || wordLowerCase === 'pnl') { words[i] = constants.keyword.PANEL; }
+        wordLowerCase = words[i].value.toLowerCase();
+        if (wordLowerCase === 'small') { words[i].value = constants.keyword.SMALL; }
+        if (wordLowerCase === 'medium') { words[i].value = constants.keyword.MEDIUM; }
+        if (wordLowerCase === 'large') { words[i].value = constants.keyword.LARGE; }
+        if (wordLowerCase === 'element' || wordLowerCase === 'elm') { words[i].value = constants.keyword.ELEMENT; }
+        if (wordLowerCase === 'button' || wordLowerCase === 'btn') { words[i].value = constants.keyword.BUTTON; }
+        if (wordLowerCase === 'link' || wordLowerCase === 'lnk' || wordLowerCase === 'dropdown' || wordLowerCase === 'item') { words[i].value = constants.keyword.LINK; }
+        if (wordLowerCase === 'input' || wordLowerCase === 'inp') { words[i].value = constants.keyword.INPUT; }
+        if (wordLowerCase === 'checkbox' || wordLowerCase === 'chk') { words[i].value = constants.keyword.CHECKBOX; }
+        if (wordLowerCase === 'label' || wordLowerCase === 'lbl') { words[i].value = constants.keyword.LABEL; }
+        if (wordLowerCase === 'image' || wordLowerCase === 'img') { words[i].value = constants.keyword.IMAGE; }
+        if (wordLowerCase === 'panel' || wordLowerCase === 'pnl') { words[i].value = constants.keyword.PANEL; }
         //if (wordLowerCase === 'item') { words[i] = constants.keyword.ITEM; }
-        if (wordLowerCase === 'toolbar') { words[i] = constants.keyword.TOOLBAR; }
-        if (wordLowerCase === 'above') { words[i] = constants.keyword.ABOVE; }
-        if (wordLowerCase === 'below') { words[i] = constants.keyword.BELOW; }
-        if (wordLowerCase === 'near') { words[i] = constants.keyword.NEAR; }
-        if (wordLowerCase === 'inside') { words[i] = constants.keyword.INSIDE; }
-        if (wordLowerCase === 'equals') { words[i] = constants.keyword.ATTR_EQUALS; }
+        if (wordLowerCase === 'toolbar') { words[i].value = constants.keyword.TOOLBAR; }
+        if (wordLowerCase === 'above') { words[i].value = constants.keyword.ABOVE; }
+        if (wordLowerCase === 'below') { words[i].value = constants.keyword.BELOW; }
+        if (wordLowerCase === 'near') { words[i].value = constants.keyword.NEAR; }
+        if (wordLowerCase === 'inside') { words[i].value = constants.keyword.INSIDE; }
+        if (wordLowerCase === 'equals') { words[i].value = constants.keyword.ATTR_EQUALS; }
     }
+    //words = words.map((x)=>{return {value:x};});
     return words;
   }
 }
