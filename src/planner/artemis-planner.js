@@ -40,7 +40,7 @@ export class Planner {
     jsonIncoming = jsonIncoming.map(d=>d.replace(/^-/,''));
 
     //jsonIncoming => ['button', 'left of', 'button', 'right of', 'button' ]
-    jsonIncoming.forEach((word) => {
+    jsonIncoming.forEach( word => {
       let relationPlan = {
         "scorer": "rel-position",
         "param": word,
