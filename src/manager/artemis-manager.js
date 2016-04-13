@@ -39,7 +39,7 @@ export class Manager {
 
     // Prepare a plan for the scorer
     let scoringPlan = this._planner.plan(modeledQuery);
-
+    console.log('plan: ',scoringPlan)
     // Score the DOM elements
     let scoringResult = this._scorer.score(scoringPlan);
 
