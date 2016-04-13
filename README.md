@@ -12,10 +12,8 @@ Gulp - can be installed by running `npm i -g gulp`
 ### One time Installation
 ```sh
 git clone https://github.com/LeerixLabs/artemis-core.git
-```
-Git clone. Clone the GitHub repository to your local machine.
-
-    npm install
+npm install
+``` 
 
 ### On Work Start
 Starts the dev server on `http://localhost:8080/webpack-dev-server/`
