@@ -7,7 +7,7 @@ describe("Planner Test: ", function(){
      let planner = new Planner(settings);
 
     it("plan must have property 'target'", function(){
-         let parserOutput = [{value:"element"},{value:"left-of"},{value:"Button 2"}];
+         let parserOutput = [{value:"element", type:'elm-type'},{value:"left-of"},{value:"Button 2"}];
          let plan = planner.plan(parserOutput);
          expect(plan.target).toBeDefined();
     });
@@ -17,7 +17,7 @@ describe("Planner Test: output of 'button':::", function(){
     "use strict";
  
     let planner = new Planner(settings);
-    let parserOutput = [{value:"button"}];
+    let parserOutput = [{value:"button", type:'elm-type'}];
     let plan = planner.plan(parserOutput);
     let and = plan.target.and;
     let or = and[0].or;
