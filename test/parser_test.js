@@ -22,5 +22,5 @@ describe("Parse Test", () => {
     it("correct parsing of parenthesis", () => {
          let words = textParser.parse("\"save all\" button");
          expect(words).toEqual([ {value:'save all'} ,{value:'button', type:'elm-type'}]);
-    });             
+    });        
 });

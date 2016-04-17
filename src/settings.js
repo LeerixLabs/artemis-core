@@ -4,50 +4,50 @@ export let settings = {
 	"phrases": [
 		{
 			"location": "pre-target-type",
-			"phrase": "(1st|first)",
+			"phrase": "^(1st|first)",
 			"type": "elm-ordinal",
 			"value": 1
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": "(2nd|second)",
+			"phrase": "^(2nd|second)",
 			"type": "elm-ordinal",
 			"value": 2
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": "(3rd|third)",
+			"phrase": "^(3rd|third)",
 			"type": "elm-ordinal",
 			"value": 3
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": "([0-9]+)th",
+			"phrase": "^([0-9]+)th",
 			"type": "elm-ordinal"
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": "(small|medium|large)",
+			"phrase": "^(small|medium|large)",
 			"type": "elm-size"
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": "(red|orange|yellow|green|blue|purple|pink|brown|gray|black|white)",
+			"phrase": "^(red|orange|yellow|green|blue|purple|pink|brown|gray|black|white)",
 			"type": "elm-color"
 		},
 		{
 			"location": "target-type",
-			"phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
+			"phrase": "^(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
 			"type": "elm-type"
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": '".*?"',
+			"phrase": '^(".*?")',
 			"type": "free-text"
 		},
 		{
 			"location": "post-target-type",
-			"phrase": "(at the top|at the bottom|on the left|on the right|at the middle)",
+			"phrase": "^(at the top|at the bottom|on the left|on the right|at the middle)",
 			"type": "elm-location"
 		},
 		{
@@ -97,7 +97,7 @@ export let settings = {
 		},
 		{
 			"location": "post-target-type",
-			"phrase": "(above|below|left of|right of|inside)",
+			"phrase": "^(above|below|left of|right of|inside)",
 			"type": "rel-position"
 		}
 	],
