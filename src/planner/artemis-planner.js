@@ -10,8 +10,8 @@ export class Planner {
      return plan ? plan.plan : null;
   }
 
-  static  isOneOfElements(term, _settings){
-    return new RegExp(_settings.phrases.find(p => p.location === "target-type").phrase).test(term);
+  static  isOneOfElements(wrd){
+    return wrd.type === "elm-type";
   }
 
   plan(modeledQuery) {
@@ -36,8 +36,8 @@ export class Planner {
     let isRelation = function(word, settings) {        
       return new RegExp(settings.phrases.find(p => p.type === "rel-position").phrase).test(word.replace('-',' '));
     };
-
-    jsonIncoming = jsonIncoming.map(d=>{return {value:d.value.replace(/^-/,'')}});
+    //replace all the '-' in the beginning 
+    jsonIncoming.forEach(d=>{d.value = d.value.replace(/^-/,'')});
 
    // jsonIncoming =  [{value:"element"},{value:"left-of"},{value:"Button 2"}]
     jsonIncoming.forEach( word => {
@@ -53,7 +53,7 @@ export class Planner {
         "weight": 1
       };
       let currPlan;
-      if (Planner.isOneOfElements(word.value, this._settings)) {
+      if (Planner.isOneOfElements(word)) {
         currPlan = this.findPlan(word.value);
         if (isInsideRelation()) {
           //relation type

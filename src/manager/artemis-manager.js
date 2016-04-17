@@ -36,7 +36,7 @@ export class Manager {
   locate(query) {
     // Parse the query sentence
     let modeledQuery = this._parser.parse(query);
-
+console.log(' modeledQuery: ', modeledQuery)
     // Prepare a plan for the scorer
     let scoringPlan = this._planner.plan(modeledQuery);
     console.log('plan: ',scoringPlan)

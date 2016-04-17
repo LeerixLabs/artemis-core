@@ -6,7 +6,9 @@ export class Parser {
   constructor(settings) {
     this._settings = settings;
   }
-
+  isOneOfElements(term, _settings){
+    return new RegExp(this._settings.phrases.find(p => p.location === "target-type").phrase).test(term);
+  }
   parse(text) {
     let settings = this._settings;
     var words = [];
@@ -21,6 +23,7 @@ export class Parser {
     txt = txt.replace(/\b(with type|and type|or type)\b/gi, constants.keyword.WITH_TYPE);
     txt = txt.replace(/\b(with identity|and identity|or identity)\b/gi, constants.keyword.IDENTITY);
     txt = txt.replace(/\b(with text|and text|or text)\b/gi, constants.keyword.TEXT);
+    
     txt = txt.replace(/\b(at the top)\b/gi, constants.keyword.AT_THE_TOP);
     txt = txt.replace(/\b(at the bottom)\b/gi, constants.keyword.AT_THE_BOTTOM);
     txt = txt.replace(/\b(on the left)\b/gi, constants.keyword.ON_THE_LEFT);
@@ -28,6 +31,7 @@ export class Parser {
     txt = txt.replace(/\b(on the middle)\b/gi, constants.keyword.ON_THE_MIDDLE);
     txt = txt.replace(/\b(right of)\b/gi, constants.keyword.RIGHT_OF);
     txt = txt.replace(/\b(left of)\b/gi, constants.keyword.LEFT_OF);
+    
     txt = txt.replace(/\b(the toolbar)\b/gi, constants.keyword.TOOLBAR);
     strs = txt.split(' ');
     insideQuotes = false;
@@ -56,6 +60,11 @@ export class Parser {
             continue;
         }
         wordLowerCase = words[i].value.toLowerCase();
+        if(this.isOneOfElements(wordLowerCase)){
+            words[i].value = wordLowerCase;
+            words[i].type = "elm-type";
+        }
+        /*
         if (wordLowerCase === 'small') { words[i].value = constants.keyword.SMALL; }
         if (wordLowerCase === 'medium') { words[i].value = constants.keyword.MEDIUM; }
         if (wordLowerCase === 'large') { words[i].value = constants.keyword.LARGE; }
@@ -68,14 +77,17 @@ export class Parser {
         if (wordLowerCase === 'image' || wordLowerCase === 'img') { words[i].value = constants.keyword.IMAGE; }
         if (wordLowerCase === 'panel' || wordLowerCase === 'pnl') { words[i].value = constants.keyword.PANEL; }
         //if (wordLowerCase === 'item') { words[i] = constants.keyword.ITEM; }
+        */
         if (wordLowerCase === 'toolbar') { words[i].value = constants.keyword.TOOLBAR; }
         if (wordLowerCase === 'above') { words[i].value = constants.keyword.ABOVE; }
         if (wordLowerCase === 'below') { words[i].value = constants.keyword.BELOW; }
         if (wordLowerCase === 'near') { words[i].value = constants.keyword.NEAR; }
         if (wordLowerCase === 'inside') { words[i].value = constants.keyword.INSIDE; }
         if (wordLowerCase === 'equals') { words[i].value = constants.keyword.ATTR_EQUALS; }
+        
+        
     }
-    //words = words.map((x)=>{return {value:x};});
+
     return words;
   }
 }
