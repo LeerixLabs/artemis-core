@@ -35,3 +35,23 @@ describe("Planner Test: output of 'button':::", function(){
         expect(firstMemeber.param).toBe('button');        
     }); 
 });
+describe("Planner Test: output of 'button left of Button 2':::", function(){
+    "use strict";
+ 
+     let planner = new Planner(settings);
+     let parserOutput = [{value:"element", type:'elm-type'},{value:"left-of"},{value:"Button 2"}];
+     let plan = planner.plan(parserOutput);
+     let and = plan.target.and; 
+     let second = and[1];
+     
+    it("plan must have to members inside 'and'", function(){                 
+         expect(and.length).toBe(2);
+    });    
+    it("second memeber must have 'target' node", function(){               
+         expect(second.param).toBe('left-of');
+         expect(second.target).toBeDefined();
+    });
+    it("'target' must have 'free text' in scorer property", function(){                      
+         expect(second.target.scorer).toBeDefined('free text');
+    });  
+});
