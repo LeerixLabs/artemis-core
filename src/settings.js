@@ -42,7 +42,7 @@ export let settings = {
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": '^(".*?")',
+			"phrase": "^(?:['|\"])([\\w|\\s]+)(?:['|\"])|^([\w|-]+)",
 			"type": "free-text"
 		},
 		{
