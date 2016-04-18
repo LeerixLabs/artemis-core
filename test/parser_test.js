@@ -19,8 +19,16 @@ describe("Parse Test", () => {
          let words = textParser.parse("button left of button");
          expect(words).toEqual([ {value:'button', type:'elm-type'}, {value:'-left-of'}, {value:'button', type:'elm-type'} ]);
     });
-    it("correct parsing of parenthesis", () => {
+    it("correct parsing of double quotes", () => {
          let words = textParser.parse("\"save all\" button");
          expect(words).toEqual([ {value:'save all'} ,{value:'button', type:'elm-type'}]);
-    });        
+    });  
+    it("correct parsing of single quotes", () => {
+         let words = textParser.parse("'save all' button");
+         expect(words).toEqual([ {value:'save all'} ,{value:'button', type:'elm-type'}]);
+    });
+    it("correct parsing of hyphen delimited text", () => {
+         let words = textParser.parse("save-all button");
+         expect(words).toEqual([ {value:'save-all'} ,{value:'button', type:'elm-type'}]);
+    });              
 });

@@ -5,7 +5,7 @@ export class Parser {
 
   constructor(settings) {
     this._settings = settings;
-    this.phrases = this._settings.phrases;
+    this.phrases = this._settings.phrases.map(p=>{ p.phrase   = '^'+p.phrase; return p;  });
     this.output = [];
   }
   isOneOfElements(term){
