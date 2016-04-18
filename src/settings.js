@@ -42,9 +42,14 @@ export let settings = {
 		},
 		{
 			"location": "pre-target-type",
-			"phrase": "^(?:['|\"])([\\w|\\s]+)(?:['|\"])|^([\w|-]+)",
+			"phrase": "^(?:['|\"])([\\w|\\s]+)(?:['|\"])",
 			"type": "free-text"
 		},
+		{
+			"location": "pre-target-type",
+			"phrase": "^[A-Za-z0-9]+([-]{1}[A-Za-z0-9]+)+",
+			"type": "free-text"
+		},        
 		{
 			"location": "post-target-type",
 			"phrase": "^(at the top|at the bottom|on the left|on the right|at the middle)",
