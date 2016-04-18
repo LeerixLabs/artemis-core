@@ -5,6 +5,7 @@ export class Parser {
 
   constructor(settings) {
     this._settings = settings;
+    //placing '^' at  the begining of eachn regex
     this.phrases = this._settings.phrases.map(p=>{ p.phrase   = '^'+p.phrase; return p;  });
     this.output = [];
   }
