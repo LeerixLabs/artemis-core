@@ -17,7 +17,7 @@ describe("Parse Test", () => {
     });
     it("'button left of button' should be converted to [ '-button', '-left-of', '-button' ]", () => {
          let words = textParser.parse("button left of button");
-         expect(words).toEqual([ {value:'button', type:'elm-type'}, {value:'-left-of'}, {value:'button', type:'elm-type'} ]);
+         expect(words).toEqual([ {value:'button', type:'elm-type'}, {value:'-left-of', type:'rel-position'}, {value:'button', type:'elm-type'} ]);
     });
     it("correct parsing of double quotes", () => {
          let words = textParser.parse("\"save all\" button");

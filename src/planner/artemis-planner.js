@@ -33,8 +33,8 @@ export class Planner {
       return (last && last.scorer === 'rel-position');
     };
 
-    let isRelation = function(word, settings) {        
-      return new RegExp(settings.phrases.find(p => p.type === "rel-position").phrase).test(word.replace('-',' '));
+    let isRelation = function(word) {        
+      return word.type === 'rel-position';
     };
     //replace all the '-' in the beginning 
     jsonIncoming.forEach(d=>{d.value = d.value.replace(/^-/,'')});
@@ -61,7 +61,7 @@ export class Planner {
         } else {
            plan.target.and.push(currPlan);
         }
-      } else if (isRelation(word.value, this._settings)) {
+      } else if (isRelation(word)) {
         //new relation
         plan.target.and.push(relationPlan);
       } else {
