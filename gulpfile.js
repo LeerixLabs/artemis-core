@@ -42,5 +42,13 @@ gulp.task("webpack", function(callback) {
         callback();
     });
 });
-gulp.task("default", ['webpack'], function() {
+gulp.task("production", function(callback) {
+    // run webpack
+    webpack(
+       require('./webpack-production.config.js') 
+    , function(err, stats) {
+        callback();
+    });
+});
+gulp.task("default", ['webpack','production'], function() {
 });

@@ -1,7 +1,7 @@
-
-
 var webpack = require('webpack');
 var path = require('path');
+var PACKAGE = require('./package.json');
+var banner = `/**\n* LeerixLabs, ${PACKAGE.name} v${PACKAGE.version}\n* ${PACKAGE.description}\n* Date: ${new Date()}\n**/`;
 
 module.exports = {
     entry: { 
@@ -10,7 +10,7 @@ module.exports = {
     output:{
     
         publicPath: '/',
-        filename: 'dist/[name].js',
+        filename: 'dist/[name].min.js',
         library: "core"
     },
     debug:'true',
@@ -32,6 +32,7 @@ module.exports = {
     plugins:[
         new webpack.optimize.UglifyJsPlugin({
           compress: { warnings: false, drop_console: true }
-        })
+        }),
+        new webpack.BannerPlugin(banner, { raw: true, entryOnly: true })
     ]
 }

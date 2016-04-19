@@ -1,12 +1,7 @@
-
 var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    // entry:[
-    //     'babel-polyfill',
-    //     './src/artemis'
-    // ],
     entry: { 
         "artemis.core": './src/artemis.core.js'
     },
