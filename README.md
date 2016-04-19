@@ -15,7 +15,7 @@ git clone https://github.com/LeerixLabs/artemis-core.git
 npm install
 ``` 
 
-### On Work Start
+### Starts the dev server
 Starts the dev server on `http://localhost:8080/webpack-dev-server/`
     
     npm start
@@ -26,9 +26,9 @@ Starts the dev server on `http://localhost:8080/webpack-dev-server/`
 gulp  # runs webpack
 ```
 
-### Publishing `artemis.core.min.js`
+### Publishing
 ```sh
-# for publishing to npm registry:
+# for publishing `artemis.core.min.js` to npm registry:
 gulp
 npm publish
 ```
