@@ -39,7 +39,7 @@ describe("Planner Test: output of 'button left of Button 2':::", function(){
     "use strict";
  
      let planner = new Planner(settings);
-     let parserOutput = [{value:"element", type:'elm-type'},{value:"left-of"},{value:"Button 2"}];
+     let parserOutput = [{value:"element", type:'elm-type'},{value:"left-of", type:'rel-position'},{value:"Button 2"}];
      let plan = planner.plan(parserOutput);
      let and = plan.target.and; 
      let second = and[1];

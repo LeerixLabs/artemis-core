@@ -27,7 +27,9 @@ export class Parser {
         obj.type= 'elm-type';
     }
     if(this.isRelation(found)){
-        obj.value = '-'+obj.value.replace(/\s/g,'-')
+        obj.value = '-'+obj.value.replace(/\s/g,'-');
+        obj.type= 'rel-position';
+        
     }
     
     if(phrase.type==='free-text'){//replace quotes
