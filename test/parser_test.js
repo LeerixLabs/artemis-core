@@ -30,5 +30,16 @@ describe("Parse Test", () => {
     it("correct parsing of hyphen delimited text", () => {
          let words = textParser.parse("save-all button");
          expect(words).toEqual([ {value:'save-all'} ,{value:'button', type:'elm-type'}]);
-    });              
+    }); 
+    
+    
+    it('test all posssible elems - should appear in "value"', () => {
+        let allposssible = settings.phrases.find(p => p.location === "target-type").phrase.replace(/\(|\)|\^/g,'').split('|');
+        allposssible.forEach(p=>{
+            expect(textParser.parse(p)[0].value).toEqual(p);
+            
+        });
+    })
+    
+                 
 });
