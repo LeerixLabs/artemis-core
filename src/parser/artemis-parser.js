@@ -21,19 +21,21 @@ export class Parser {
     this.words = this.words.replace(found, '');
     this.words = this.words.replace(/^\s+/,'');
     
-    let obj = {value:found};
-    if(this.isOneOfElements(phrase)){
-        obj.type= 'elm-type';
-    }
+    let obj = {value: found, type: phrase.type};
+   
+
     if(this.isRelation(phrase)){
         obj.value = '-'+obj.value.replace(/\s/g,'-');
-        obj.type= 'rel-position';
-        
     }
     
     if(phrase.type==='free-text'){//replace quotes
        obj.value = obj.value.replace(/'|"/g,'');
     }
+    
+    if(phrase.type==='html-tag'){//replace quotes
+       obj.value = obj.value.replace(/with tag\s+/g,'');
+    }    
+    
     
     this.output.push(obj);
     return true;
