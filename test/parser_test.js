@@ -13,7 +13,7 @@ describe("Parse Test", () => {
     }); 
     it("'small button' should be converted to [{value:'small'},{value:'button', type:'elm-type'}]", () => {
          let words = textParser.parse("small button");
-         expect(words).toEqual([{value:'small'},{value:'button', type:'elm-type'}]);
+         expect(words).toEqual([{value:'small', type:'elm-size'},{value:'button', type:'elm-type'}]);
     });
     it("'button left of button' should be converted to [ {value:'button', type:'elm-type'}, {value:'-left-of', type:'rel-position'}, {value:'button', type:'elm-type'}]", () => {
          let words = textParser.parse("button left of button");
@@ -21,15 +21,16 @@ describe("Parse Test", () => {
     });
     it("correct parsing of double quotes", () => {
          let words = textParser.parse("\"save all\" button");
-         expect(words).toEqual([ {value:'save all'} ,{value:'button', type:'elm-type'}]);
+         expect(words).toEqual([ {value:'save all', type:'free-text'} ,{value:'button', type:'elm-type'}]);
     });  
     it("correct parsing of single quotes", () => {
          let words = textParser.parse("'save all' button");
-         expect(words).toEqual([{value:'save all'} ,{value:'button', type:'elm-type'}]);
+         expect(words).toEqual([{value:'save all', type:'free-text'} ,{value:'button', type:'elm-type'}]);
     });
+    
     it("correct parsing of hyphen delimited text", () => {
          let words = textParser.parse("save-all button");
-         expect(words).toEqual([{value:'save-all'} ,{value:'button', type:'elm-type'}]);
+         expect(words).toEqual([{value:'save-all', type:'free-text'} ,{value:'button', type:'elm-type'}]);
     }); 
     
     
@@ -43,7 +44,7 @@ describe("Parse Test", () => {
     
     it("correct parsing of 'at the bottom'", () => {
          let words = textParser.parse("button at the bottom");
-         expect(words).toEqual([{value:'button', type:'elm-type'},{value:'at the bottom'} ,]);
+         expect(words).toEqual([{value:'button', type:'elm-type'},{value:'at the bottom', type:'elm-location'} ,]);
     });  
     
     it("correct parsing of ordinal the phrases", () => { 
@@ -54,16 +55,18 @@ describe("Parse Test", () => {
          'small',
          'red',
          'with text hhh',
-         'with identity hhh',
-         'with tag hhh',
+         'with identity hhh',      
          'with attribute hhh',
          'with attribute hhh=kkk',
          'with class hhh',
          'with style kkk',
          'with style hhh=kkk'];
-         phrases.forEach(p=>{
-             console.log(textParser.parse(p + ' button'))
+         phrases.forEach(p=>{             
              expect(textParser.parse(p)[0].value).toEqual(p);
          });
-    });               
+    }); 
+    
+    it("in case of 'with tag' phrase - should return only tag name", () => { 
+        expect(textParser.parse('with tag h1')[0].value).toEqual('h1');
+    });                
 });
