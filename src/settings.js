@@ -376,7 +376,44 @@ export let settings = {
           }
         ]
       }
+    },
+    {
+      "type": "html-tag",
+      "plan": {
+        "scorer": "html-tag",
+        "param":"<value>",
+        "weight": 1
+        }
+      }
+    },
+    {
+      "type": "html-attr-name-and-val",
+      "plan": {
+        "scorer": "html-attr-name-and-val",
+        "param":"<value>",
+        "weight": 1
+        }
+      }
+    },
+    {
+      "type": "free-text",
+      "plan": {
+        "scorer": "free-text",
+        "param":"<value>",
+        "weight": 1
+        }
+      }
+    },
+    {
+      "type": "css-class",
+      "plan": {
+        "scorer": "css-class",
+        "param":"<value>",
+        "weight": 1
+        }
+      }
     }
+
   ],
   "colors": {
     "single-match-color": "#00FF00",

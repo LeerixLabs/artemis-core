@@ -13,10 +13,10 @@ export class HtmlDOM {
 
   getRect() {
     let rectElm = this.body.getBoundingClientRect();
-    rectElm.topPage = rectElm.top + window.scrollY;
-    rectElm.bottomPage = rectElm.bottom + window.scrollY;
-    rectElm.leftPage = rectElm.left + window.scrollX;
-    rectElm.rightPage = rectElm.right + window.scrollX;
+    rectElm.topPage = rectElm.top + this.window.scrollY;
+    rectElm.bottomPage = rectElm.bottom + this.window.scrollY;
+    rectElm.leftPage = rectElm.left + this.window.scrollX;
+    rectElm.rightPage = rectElm.right + this.window.scrollX;
     return rectElm;
   }
 
