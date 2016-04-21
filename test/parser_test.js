@@ -41,5 +41,8 @@ describe("Parse Test", () => {
         });
     })
     
-                 
+    it("correct parsing of 'at the bottom'", () => {
+         let words = textParser.parse("button at the bottom");
+         expect(words).toEqual([ {value:'button', type:'elm-type'},{value:'at the bottom'} ,]);
+    });                  
 });
