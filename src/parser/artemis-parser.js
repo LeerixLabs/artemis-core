@@ -1,5 +1,4 @@
-import constants from './parser-constants';
-import {Helper} from './../common/common-helper';
+
 
 export class Parser {
 
@@ -9,11 +8,11 @@ export class Parser {
     this.phrases = this._settings.phrases.map(p=>{ p.phrase   = '^'+p.phrase; return p;  });
     this.output = [];
   }
-  isOneOfElements(term){
-    return new RegExp(this._settings.phrases.find(p => p.location === "target-type").phrase).test(term);
+  isOneOfElements(phrase){
+    return phrase.location === "target-type";
   }
-  isRelation(word){
-      return new RegExp(this._settings.phrases.find(p => p.type === "rel-position").phrase).test(word.replace('-',' '));
+  isRelation(phrase){
+      return phrase.type === "rel-position";
   }
   processPhrase(phrase){
  
@@ -23,10 +22,10 @@ export class Parser {
     this.words = this.words.replace(/^\s+/,'');
     
     let obj = {value:found};
-    if(this.isOneOfElements(found)){
+    if(this.isOneOfElements(phrase)){
         obj.type= 'elm-type';
     }
-    if(this.isRelation(found)){
+    if(this.isRelation(phrase)){
         obj.value = '-'+obj.value.replace(/\s/g,'-');
         obj.type= 'rel-position';
         
