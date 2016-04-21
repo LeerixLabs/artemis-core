@@ -7,15 +7,15 @@ describe("Parse Test", () => {
     let textParser = new Parser(settings);
      
     "use strict";
-    it("'button' should be converted to [-button]", () => {
+    it("'button' should be converted to [{value:'button', type:'elm-type'}]", () => {
          let words = textParser.parse("button");
          expect(words).toEqual([{value:'button', type:'elm-type'}]);
     }); 
-    it("'small button' should be converted to ['-small','-button']", () => {
+    it("'small button' should be converted to [{value:'small'},{value:'button', type:'elm-type'}]", () => {
          let words = textParser.parse("small button");
          expect(words).toEqual([{value:'small'},{value:'button', type:'elm-type'}]);
     });
-    it("'button left of button' should be converted to [ '-button', '-left-of', '-button' ]", () => {
+    it("'button left of button' should be converted to [ {value:'button', type:'elm-type'}, {value:'-left-of', type:'rel-position'}, {value:'button', type:'elm-type'}]", () => {
          let words = textParser.parse("button left of button");
          expect(words).toEqual([ {value:'button', type:'elm-type'}, {value:'-left-of', type:'rel-position'}, {value:'button', type:'elm-type'} ]);
     });
