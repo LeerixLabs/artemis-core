@@ -14,6 +14,10 @@ export class Planner {
     return wrd.type === "elm-type";
   }
 
+  isItemPlans(json){
+      return this.plans.find(x => x.type === json.type);
+  }
+
   plan(modeledQuery) {
     let jsonIncoming = modeledQuery;
     let plan = {
@@ -47,32 +51,26 @@ export class Planner {
         "weight": 1,
         "target": null
       };
-      let freeTextPlan =  {
-        "scorer": "free-text",
-        "param": "",
-        "weight": 1
-      };
-      let currPlan;
-      if (Planner.isOneOfElements(word)) {
-        currPlan = this.findPlan(word.value);
+      let node = this.__model_node(word); 
+      // console.log("word",word);
+      if(node){
         if (isInsideRelation()) {
-          //relation type
-           getLastInPlan().target = currPlan;
+           getLastInPlan().target = node.plan;
         } else {
-           plan.target.and.push(currPlan);
+           plan.target.and.push(node.plan);
         }
       } else if (isRelation(word)) {
         //new relation
         plan.target.and.push(relationPlan);
       } else {
-        freeTextPlan.param = word.value;
-        currPlan =  freeTextPlan;
+        node = this.isItemPlans(word);
+        node.plan.param = word.value;
         if (isInsideRelation()) {
-          //relation type
-          getLastInPlan().target = currPlan;
+           getLastInPlan().target = node.plan;
         } else {
-           plan.target.and.push(currPlan);
+           plan.target.and.push(node.plan);
         }
+
       }
     });
 
