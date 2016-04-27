@@ -383,7 +383,6 @@ export let settings = {
         "scorer": "html-tag",
         "param":"<value>",
         "weight": 1
-        }
       }
     },
     {
@@ -392,7 +391,6 @@ export let settings = {
         "scorer": "html-attr-name-and-val",
         "param":"<value>",
         "weight": 1
-        }
       }
     },
     {
@@ -401,7 +399,6 @@ export let settings = {
         "scorer": "free-text",
         "param":"<value>",
         "weight": 1
-        }
       }
     },
     {
@@ -410,7 +407,6 @@ export let settings = {
         "scorer": "css-class",
         "param":"<value>",
         "weight": 1
-        }
       }
     }
 
