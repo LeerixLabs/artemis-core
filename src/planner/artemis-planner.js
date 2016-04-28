@@ -64,6 +64,11 @@ export class Planner {
             node = JSON.parse(JSON.stringify(mynode)); // it must!!! - clone node
             node.plan.param = word.value;
             if (isInsideRelation()) {
+                if(!getLastInPlan().target){
+                    getLastInPlan().target = {
+                        "and": []
+                      };
+                }
                 getLastInPlan().target.and.push(node.plan);
             } else {
                 currentplan.target.and.push(node.plan);
