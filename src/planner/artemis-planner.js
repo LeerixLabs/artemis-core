@@ -14,25 +14,25 @@ export class Planner {
     return wrd.type === "elm-type";
   }
 
-  isItemPlans(json){
-      return this.plans.find(x => x.type === json.type);
+  itemPlans(json){
+      return this.plans.find(x => x.type === json.type); 
   }
 
   plan(modeledQuery) {
     let jsonIncoming = modeledQuery;
-    let plan = {
+    let currentplan = {
        "target": {
         "and": []
       }
     };
 
-    let getLastInPlan = function() {
-      return plan.target.and.length ?
-        plan.target.and[plan.target.and.length-1] :
+    function getLastInPlan() {
+      return currentplan.target.and.length ?
+        currentplan.target.and[currentplan.target.and.length-1] :
         null;
     };
 
-    let isInsideRelation = function() {
+    function isInsideRelation() {
       let last = getLastInPlan();
       return (last && last.scorer === 'rel-position');
     };
@@ -43,39 +43,35 @@ export class Planner {
     //replace all the '-' in the beginning 
     jsonIncoming.forEach(d=>{d.value = d.value.replace(/^-/,'')});
 
-   // jsonIncoming =  [{value:"element"},{value:"left-of"},{value:"Button 2"}]
-    jsonIncoming.forEach( word => {
-      let relationPlan = {
-        "scorer": "rel-position",
-        "param": word.value,
-        "weight": 1,
-        "target": null
-      };
-      let node = this.__model_node(word); 
-      // console.log("word",word);
-      if(node){
-        if (isInsideRelation()) {
-           getLastInPlan().target = node.plan;
+    jsonIncoming.forEach( (word,i) => {
+        let node = this.__model_node(word); 
+        if(node){
+            if (isInsideRelation()) {
+                getLastInPlan().target.and.push(node.plan);
+            } else {
+                currentplan.target.and.push(node.plan);
+            }
+        } else if (isRelation(word)) {
+            let relationPlan = {
+                "scorer": "rel-position",
+                "param": word.value,
+                "weight": 1,
+                "target": null
+            };
+            currentplan.target.and.push(relationPlan);
         } else {
-           plan.target.and.push(node.plan);
+            let mynode = this.itemPlans(word) ;
+            node = JSON.parse(JSON.stringify(mynode)); // it must!!! - clone node
+            node.plan.param = word.value;
+            if (isInsideRelation()) {
+                getLastInPlan().target.and.push(node.plan);
+            } else {
+                currentplan.target.and.push(node.plan);
+            }
         }
-      } else if (isRelation(word)) {
-        //new relation
-        plan.target.and.push(relationPlan);
-      } else {
-        node = this.isItemPlans(word);
-        node.plan.param = word.value;
-        if (isInsideRelation()) {
-           getLastInPlan().target = node.plan;
-        } else {
-           plan.target.and.push(node.plan);
-        }
-
-      }
     });
-
-
-    return plan;
+    console.log(JSON.stringify(currentplan,0,5));
+    return currentplan;
   }
 
   __model_node(json) {
