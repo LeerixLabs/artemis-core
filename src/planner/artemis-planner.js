@@ -43,7 +43,7 @@ export class Planner {
     //replace all the '-' in the beginning 
     jsonIncoming.forEach(d=>{d.value = d.value.replace(/^-/,'')});
 
-    jsonIncoming.forEach( (word,i) => {
+    jsonIncoming.forEach( word => {
         let node = this.__model_node(word); 
         if(node){
             if (isInsideRelation()) {
@@ -60,7 +60,9 @@ export class Planner {
             };
             currentplan.target.and.push(relationPlan);
         } else {
-            let mynode = this.itemPlans(word) ;
+            let mynode = this.itemPlans(word);
+            if(!mynode) throw new Error(`There is no such node: ${JSON.stringify(word,0,5)}`);
+            
             node = JSON.parse(JSON.stringify(mynode)); // it must!!! - clone node
             node.plan.param = word.value;
             if (isInsideRelation()) {
@@ -75,7 +77,8 @@ export class Planner {
             }
         }
     });
-    console.log(JSON.stringify(currentplan,0,5));
+    // console.log(JSON.stringify(currentplan.target.and[1]));
+    // console.log(JSON.stringify(currentplan,0,5));
     return currentplan;
   }
 

@@ -7,7 +7,7 @@ describe("Planner Test: ", function(){
      let planner = new Planner(settings);
 
     it("plan must have property 'target'", function(){
-         let parserOutput = [{value:"element", type:'elm-type'},{value:"left-of"},{value:"Button 2"}];
+         let parserOutput = [{"value":"element","type":"elm-type"},{"value":"-left-of","type":"rel-position"},{"value":"Button 2","type":"free-text"},{"value":"-right-of","type":"rel-position"},{"value":"Button 1","type":"free-text"},{"value":"link","type":"elm-type"}];
          let plan = planner.plan(parserOutput);
          expect(plan.target).toBeDefined();
     });
@@ -39,7 +39,7 @@ describe("Planner Test: output of 'button left of Button 2':::", function(){
     "use strict";
  
      let planner = new Planner(settings);
-     let parserOutput = [{value:"element", type:'elm-type'},{value:"left-of", type:'rel-position'},{value:"Button 2"}];
+     let parserOutput = [{value:"element", type:'elm-type'},{value:"left-of", type:'rel-position'},{value:"Button 2", type:"free-text"}];
      let plan = planner.plan(parserOutput);
      let and = plan.target.and; 
      let second = and[1];
@@ -52,6 +52,6 @@ describe("Planner Test: output of 'button left of Button 2':::", function(){
          expect(second.target).toBeDefined();
     });
     it("'target' must have 'free text' in scorer property", function(){                      
-         expect(second.target.scorer).toBeDefined('free text');
+         expect(second.target.and[0].scorer).toBeDefined('free-text');
     });  
 });
