@@ -15,36 +15,66 @@ export class Parser {
       return phrase.type === "rel-position";
   }
   processPhrase(phrase){
- 
-    let found = new RegExp(phrase.phrase).exec(this.words)[0];
-    
-    this.words = this.words.replace(found, '');
-    this.words = this.words.replace(/^\s+/,'');
-    
-    let obj = {value: found, type: phrase.type};
-   
+    let result =true;
+    let obj = {value: new RegExp(phrase.phrase).exec(this.words)[0], type: phrase.type};
 
     if(this.isRelation(phrase)){
         obj.value = '-'+obj.value.replace(/\s/g,'-');
     }
     
     if(phrase.type==='free-text'){//replace quotes
-       obj.value = obj.value.replace(/'|"/g,'');
+        obj.value = obj.value.replace(/'|"/g,'');
     }
     
     if(phrase.type==='html-tag'){//replace quotes
-       obj.value = obj.value.replace(/with tag\s+/g,'');
+        obj.value = obj.value.replace(/with tag\s+/g,'');
     }    
     
+    if(phrase.type==='html-attr-name'){
+      let found = this.words;
+      let strAttr = found.match(/(?:with attribute\s+)([^']*)/i);
+      let attrVal = strAttr[1].indexOf("=");
+      let firestParam = strAttr[1].split(" ")[0];
+
+       if(firestParam!=="value" && attrVal==-1){
+          let attr = found.replace(/with attribute\s+/g,'');
+          obj.value = attr.split(" ")[0];
+       }else{
+          result = false;
+       }
+    } 
+    if(phrase.type==='html-attr-val'){
+        obj.value = obj.value.replace(/with attribute value\s+/g,'');
+    } 
     
-    this.output.push(obj);
-    return true;
+    if(phrase.type==='html-attr-name-and-val'){
+      let found = this.words;
+      let strAttr = found.match(/(?:with attribute\s+)([^']*)/i); 
+      let attrVal = strAttr[1].indexOf("=");
+
+      if(attrVal>-1){
+          let val=strAttr[1].split("=");
+          obj.value = [];
+          obj.value.push(val[0]);
+          obj.value.push(val[1].split(" ")[0]);
+       }else{
+          result = false;
+       }
+    }
+
+    if(result){
+      let found = new RegExp(phrase.phrase).exec(this.words)[0];
+      this.words = this.words.replace(found, '');
+      this.words = this.words.replace(/^\s+/,'');
+      this.output.push(obj);
+    }
+    return result;
   }
+
   searchForPhrases(){
     let found = false;
     this.phrases.forEach(phrase => {
-      
-        if( new RegExp(phrase.phrase).test(this.words) && !found){          
+        if( new RegExp(phrase.phrase).test(this.words) && !found){ 
             found = this.processPhrase(phrase);
         }
     });
@@ -58,9 +88,8 @@ export class Parser {
     this.words = text;
     this.output = [];
     
-    while(this.words.length && this.searchForPhrases()){}   
-    
-
+    while(this.words.length && this.searchForPhrases()){} 
+      
     return this.output;
   }
 }

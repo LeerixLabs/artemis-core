@@ -47,6 +47,20 @@ describe("Parse Test", () => {
          expect(words).toEqual([{value:'button', type:'elm-type'},{value:'at the bottom', type:'elm-location'} ,]);
     });  
     
+    it("correct parsing of 'with smth hhh=kkk' the phrases", () => { 
+         let phrases = [
+         'with attribute hhh=kkk'];
+         phrases.forEach(p=>{             
+             expect(textParser.parse(p)[0].value).toEqual(['hhh','kkk']);
+         });
+    });
+    it("correct parsing of 'with smth hhh' the phrases", () => { 
+         let phrases = [     
+         'with attribute hhh'];
+         phrases.forEach(p=>{             
+             expect(textParser.parse(p)[0].value).toEqual('hhh');
+         });
+    });
     it("correct parsing of ordinal the phrases", () => { 
          let phrases = ['first',
          'second',
@@ -55,9 +69,7 @@ describe("Parse Test", () => {
          'small',
          'red',
          'with text hhh',
-         'with identity hhh',      
-         'with attribute hhh',
-         'with attribute hhh=kkk',
+         'with identity hhh', 
          'with class hhh',
          'with style kkk',
          'with style hhh=kkk'];

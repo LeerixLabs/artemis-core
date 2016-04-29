@@ -386,6 +386,22 @@ export let settings = {
       }
     },
     {
+      "type": "html-attr-name",
+      "plan": {
+        "scorer": "html-attr-name",
+        "param":"<value>",
+        "weight": 1
+      }
+    },
+    {
+      "type": "html-attr-val",
+      "plan": {
+        "scorer": "html-attr-val",
+        "param":"<value>",
+        "weight": 1
+      }
+    },
+    {
       "type": "html-attr-name-and-val",
       "plan": {
         "scorer": "html-attr-name-and-val",

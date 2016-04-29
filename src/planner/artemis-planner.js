@@ -41,12 +41,17 @@ export class Planner {
       return word.type === 'rel-position';
     };
     //replace all the '-' in the beginning 
-    jsonIncoming.forEach(d=>{d.value = d.value.replace(/^-/,'')});
+    jsonIncoming.forEach(d=>{d.value = Array.isArray(d.value) ? d.value : d.value.replace(/^-/,'');});
 
     jsonIncoming.forEach( word => {
         let node = this.__model_node(word); 
         if(node){
             if (isInsideRelation()) {
+                if(!getLastInPlan().target){
+                    getLastInPlan().target = {
+                        "and": []
+                      };
+                }
                 getLastInPlan().target.and.push(node.plan);
             } else {
                 currentplan.target.and.push(node.plan);
