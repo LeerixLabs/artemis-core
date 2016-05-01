@@ -30,5 +30,6 @@ gulp  # runs webpack
 ```sh
 # for publishing `artemis.core.min.js` to npm registry:
 gulp
+npm login
 npm publish
 ```
