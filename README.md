@@ -29,6 +29,7 @@ gulp  # runs webpack
 ### Publishing
 ```sh
 # for publishing `artemis.core.min.js` to npm registry:
+update version on package.json
 gulp
 npm login
 npm publish
