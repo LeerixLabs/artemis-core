@@ -18,6 +18,7 @@ npm install
 
 ### Launching the Dev Server
 This will launch the dev server with a dummy site on http://localhost:8080/
+
 You can change the default port on \node_modules\webpack-dev-server\bin\webpack-dev-server.js
 ```sh
 npm start
@@ -31,6 +32,7 @@ gulp
 
 ### Publishing to npm
 This will publish `artemis.core.min.js` to the npm registry
+
 First, update the new version number on package.json
 ```sh
 gulp
