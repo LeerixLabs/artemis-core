@@ -1,6 +1,6 @@
 {
   "name": "artemis-core",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "engines": {
     "node": "^4.4.2",
     "npm": "^2.15.0"
