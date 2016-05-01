@@ -21,7 +21,7 @@ Starts the dev server on `http://localhost:8080/webpack-dev-server/`
     npm start
 
 ### Build development
-Сompiles in directory `dist` the file `artemis.core.js` with sourse-map and `artemis.core.min.js`
+Сompiles in directory `dist` the file `artemis.core.js` with source-map and `artemis.core.min.js`
 ```sh
 gulp  # runs webpack
 ```
@@ -29,7 +29,7 @@ gulp  # runs webpack
 ### Publishing
 ```sh
 # for publishing `artemis.core.min.js` to npm registry:
-update version on package.json
+# first, update version on package.json
 gulp
 npm login
 npm publish
