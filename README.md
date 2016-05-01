@@ -23,7 +23,7 @@ Starts the dev server on `http://localhost:8080/webpack-dev-server/`
 ### Build development
 Сompiles in directory `dist` the file `artemis.core.js` with source-map and `artemis.core.min.js`
 ```sh
-gulp  # runs webpack
+gulp  # runs webpack and webpack-production
 ```
 
 ### Publishing
