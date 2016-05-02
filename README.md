@@ -3,32 +3,39 @@
 ## For Developers
 
 ### DEV Machine Prerequisites
-Git - can be installed ([git site](https://git-scm.com/downloads)).
+Git - can be installed from [git site](https://git-scm.com/downloads).
 
 Node.js - can be installed from [Nodejs.org](https://nodejs.org).
 
 Gulp - can be installed by running `npm i -g gulp`
     
-### One time Installation
+### Cloning the Repository
+This will clone the repository to your local machine
 ```sh
 git clone https://github.com/LeerixLabs/artemis-core.git
 npm install
 ``` 
 
-### Starts the dev server
-Starts the dev server on `http://localhost:8080/webpack-dev-server/`
-    
-    npm start
+### Launching the Dev Server
+This will launch the dev server with a dummy site on http://localhost:8080/
 
-### Build development
-Сompiles in directory `dist` the file `artemis.core.js` with sourse-map and `artemis.core.min.js`
+You can change the default port on \node_modules\webpack-dev-server\bin\webpack-dev-server.js
 ```sh
-gulp  # runs webpack
+npm start
 ```
 
-### Publishing
+### Building the Library Files
+This will build `artemis.core.js`, `artemis.core.js.map`, and `artemis.core.min.js` into the local `dist` directory
 ```sh
-# for publishing `artemis.core.min.js` to npm registry:
 gulp
+```
+
+### Publishing to npm
+This will publish `artemis.core.min.js` to the npm registry
+
+First, update the new version number on package.json
+```sh
+gulp
+npm login
 npm publish
 ```
