@@ -9,7 +9,7 @@ module.exports = {
     
         publicPath: '/',
         filename: 'dist/[name].js',
-        library: "core"
+        library: "artemisCore"
         // filename: 'dist/artemis.js'
     },
     debug:'true',

@@ -11,7 +11,7 @@ module.exports = {
     
         publicPath: '/',
         filename: 'dist/[name].min.js',
-        library: "core"
+        library: "artemisCore"
     },
     debug:'true',
     module: {

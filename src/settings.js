@@ -221,6 +221,11 @@ export let settings = {
             "weight": 0.7
           },
           {
+            "scorer": "html-tag",
+            "param": "input",
+            "weight": 1
+          },
+          {
             "and": [
               {
                 "scorer": "html-tag",
@@ -231,9 +236,9 @@ export let settings = {
                 "scorer": "html-attr-name-and-val",
                 "param": [
                   "type",
-                  "text"
+                  "checkbox"
                 ],
-                "weight": 1
+                "weight": 0.01
               }
             ],
             "weight": 1
