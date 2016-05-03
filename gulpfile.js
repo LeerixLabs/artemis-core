@@ -26,6 +26,9 @@ gulp.task('serve', function() {
 gulp.task('webpack', function(callback) {
   webpack(webpackConfig
     , function(err, stats) {
+      if (err) {
+        console.log('ERROR - ',err);
+      }
       callback();
     });
 });
@@ -34,6 +37,9 @@ gulp.task('webpack-min', function(callback) {
   webpack(
     webpackMinConfig
     , function(err, stats) {
+      if (err) {
+        console.log('ERROR - ',err);
+      }
       callback();
     });
 });
