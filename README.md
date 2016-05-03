@@ -27,7 +27,7 @@ gulp serve
 ### Building the Library Files
 This will build `artemis.core.js`, `artemis.core.js.map`, and `artemis.core.min.js` into the local `dist` directory
 ```sh
-gulp
+gulp pack
 ```
 
 ### Running Tests
