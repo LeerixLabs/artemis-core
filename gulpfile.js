@@ -1,8 +1,9 @@
 var gulp = require('gulp');
-var webpackDevServer = require('webpack-dev-server');
+var WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./webpack.config.js');
+var webpackMinConfig = require('./webpack-min.config.js');
 var karmaServer = require('karma').Server;
-var webpack = require("webpack");
+var webpack = require('webpack');
 
 gulp.task('serve', function() {
   var portNumber = 8082;
@@ -10,7 +11,7 @@ gulp.task('serve', function() {
   myConfig.devtool = 'eval';
   myConfig.debug = true;
   myConfig.output.path = __dirname +  '/';
-  new webpackDevServer(webpack(myConfig), {
+  new WebpackDevServer(webpack(myConfig), {
     contentBase: myConfig.devServer.contentBase,
     stats: {
       colors: true
@@ -23,8 +24,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('webpack', function(callback) {
-  webpack(
-    require('./webpack.config.js')
+  webpack(webpackConfig
     , function(err, stats) {
       callback();
     });
@@ -32,7 +32,7 @@ gulp.task('webpack', function(callback) {
 
 gulp.task('webpack-min', function(callback) {
   webpack(
-    require('./webpack-min.config.js')
+    webpackMinConfig
     , function(err, stats) {
       callback();
     });
