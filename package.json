@@ -1,11 +1,11 @@
 {
   "name": "artemis-core",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "engines": {
     "node": "^4.4.2",
     "npm": "^2.15.0"
   },
-  "description": "The Artemis core, contains the Parser, Planner, Socrer, and Parser.",
+  "description": "Artemis Core",
   "main": "index.js",
   "scripts": {
     "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js",
@@ -22,7 +22,7 @@
     "type": "git",
     "url": "https://github.com/LeerixLabs/artemis-core"
   },
-  "author": "",
+  "author": "Uri Kalish",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.4.0",
