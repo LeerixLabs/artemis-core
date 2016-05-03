@@ -8,7 +8,6 @@ module.exports = {
         "artemis.core": './src/artemis.core.js'
     },
     output:{
-    
         publicPath: '/',
         filename: 'dist/[name].min.js',
         library: "artemisCore"
@@ -35,4 +34,4 @@ module.exports = {
         }),
         new webpack.BannerPlugin(banner, { raw: true, entryOnly: true })
     ]
-}
+};

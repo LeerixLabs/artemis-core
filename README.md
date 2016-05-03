@@ -19,15 +19,21 @@ npm install
 ### Launching the Dev Server
 This will launch the dev server with a dummy site on http://localhost:8080/
 
-You can change the default port on \node_modules\webpack-dev-server\bin\webpack-dev-server.js
+You can change the default port on the gulpfile.js
 ```sh
-npm start
+gulp serve
 ```
 
 ### Building the Library Files
 This will build `artemis.core.js`, `artemis.core.js.map`, and `artemis.core.min.js` into the local `dist` directory
 ```sh
 gulp
+```
+
+### Running Tests
+This will run the Jasmin tests via Karma
+```sh
+gulp test
 ```
 
 ### Publishing to npm

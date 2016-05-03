@@ -6,17 +6,13 @@ module.exports = {
         "artemis.core": './src/artemis.core.js'
     },
     output:{
-    
         publicPath: '/',
         filename: 'dist/[name].js',
         library: "artemisCore"
-        // filename: 'dist/artemis.js'
     },
     debug:'true',
     devtool: 'source-map',
     module: {
-        //TODO: we should import the settings from webpack.cong using require,
-        //however, the include path are different (we don't need test in webpack)
         loaders: [
             {
                 test: /\.js$/,
@@ -31,4 +27,4 @@ module.exports = {
     devServer: {
         contentBase: "./src"
     }
-}
+};

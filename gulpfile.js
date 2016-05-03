@@ -18,7 +18,7 @@ gulp.task('webpack-dev-server', function (c) {
         stats: {
             colors: true
         }
-    }).listen(8080, 'localhost', function (err) {
+    }).listen(8085, 'localhost', function (err) {
         if (err) {
             console.log('ERROR - ',err);
         }
