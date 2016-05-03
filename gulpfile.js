@@ -28,6 +28,8 @@ gulp.task('webpack', function(callback) {
     , function(err, stats) {
       if (err) {
         console.log('ERROR - ',err);
+      } else {
+        console.log('Stats - ',stats);
       }
       callback();
     });
@@ -39,6 +41,8 @@ gulp.task('webpack-min', function(callback) {
     , function(err, stats) {
       if (err) {
         console.log('ERROR - ',err);
+      } else {
+        console.log('Stats - ',stats);
       }
       callback();
     });
