@@ -1,24 +1,15 @@
-// Karma configuration
-// Generated on Thu Jan 14 2016 09:30:16 GMT+0200 (Jerusalem Standard Time)
-
 module.exports = function(config) {
   config.set({
 
-
-
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
-
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
-
     // list of files / patterns to load in the browser
     files: [
-        //'babel-polyfill',
-        //'./src/artemis.js',
       './node_modules/babel-polyfill/dist/polyfill.js',
         './test/jasmine/*.js'
     ],
@@ -33,7 +24,6 @@ module.exports = function(config) {
     // list of files to exclude
     exclude: [
     ],
-
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -59,8 +49,6 @@ module.exports = function(config) {
     },
 
     webpackMiddleware: {
-      // webpack-dev-middleware configuration
-      // i. e.
       noInfo: true
     },
     singleRun: true,//run only once
