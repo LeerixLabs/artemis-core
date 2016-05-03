@@ -20,7 +20,7 @@ module.exports = function(config) {
         //'babel-polyfill',
         //'./src/artemis.js',
       './node_modules/babel-polyfill/dist/polyfill.js',
-        './test/**/*.js'
+        './test/jasmine/*.js'
     ],
 
     plugins: [

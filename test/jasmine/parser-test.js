@@ -1,5 +1,5 @@
-import {settings} from '../src/settings';
-import {Parser} from '../src/parser/artemis-parser.js'
+import {settings} from '../../src/settings';
+import {Parser} from '../../src/parser/artemis-parser.js'
 
 
 
