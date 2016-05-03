@@ -33,7 +33,7 @@ describe("Planner Test: output of 'button':::", function(){
     it("first member of 'or' shuold be html-element", function(){        
         expect(firstMemeber.scorer).toBe('html-tag');
         expect(firstMemeber.param).toBe('button');        
-    }); 
+    });
 });
 describe("Planner Test: output of 'button left of Button 2':::", function(){
     "use strict";
