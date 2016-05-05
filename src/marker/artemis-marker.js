@@ -1,4 +1,5 @@
 import {ARTEMIS_CLASS} from '../common/common-constants';
+import {log} from '../common/logger';
 
 export class Marker {
 

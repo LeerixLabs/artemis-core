@@ -1,4 +1,5 @@
 import {settings} from '../settings';
+import {log} from '../common/logger';
 import {Parser} from '../parser/artemis-parser';
 import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
@@ -21,6 +22,9 @@ export class Manager {
       this._settings = JSON.parse(config);
     } else {
       this._settings = config;
+    }
+    if (this._settings && this._settings['log-level']) {
+      log.setLogLevel(this._settings['log-level']);
     }
     this._parser = new Parser(this._settings);
     this._planner = new Planner(this._settings);

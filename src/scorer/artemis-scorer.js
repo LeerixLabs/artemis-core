@@ -1,6 +1,7 @@
 import {IGNORED_TAGS} from '../common/common-constants';
 import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
 import {ARTEMIS_CLASS} from '../common/common-constants';
+import {log} from '../common/logger';
 import {HtmlDOM} from './../common/html-dom';
 import {Element} from './../common/element';
 import CssClassScorer from './scorers/css-class-scorer.js';

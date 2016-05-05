@@ -1,11 +1,8 @@
-export default class Logger {
+class Logger {
 
-  constructor(settings) {
+  constructor() {
     this._logLevelNames = ['ALL', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF'];
     this.setLogLevel('WARN');
-    if (settings && settings['log-level']) {
-      this.setLogLevel(settings['log-level']);
-    }
   }
 
   setLogLevel(levelName) {
@@ -45,3 +42,5 @@ export default class Logger {
   };
 
 }
+
+module.exports.log = new Logger();

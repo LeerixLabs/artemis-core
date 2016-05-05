@@ -1,3 +1,5 @@
+import {log} from '../common/logger';
+
 export class Planner {
 
   constructor(settings) {
