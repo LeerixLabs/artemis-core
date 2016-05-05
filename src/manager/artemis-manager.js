@@ -32,18 +32,17 @@ export class Manager {
     this._marker = new Marker(this._settings);
 
     this._marker.addColorClassesToHtmlDocHead();
-
-    //TODO: core code should not be aware of its Chrome extension consumer
-
   }
 
   locate(query) {
+    log.debug(`query: ${query}`);
+
     // Parse the query sentence
     let modeledQuery = this._parser.parse(query);
-    console.log(' modeledQuery: ', JSON.stringify(modeledQuery));
+
     // Prepare a plan for the scorer
     let scoringPlan = this._planner.plan(modeledQuery);
-    console.log('plan: ',JSON.stringify(scoringPlan));
+
     // Score the DOM elements
     let scoringResult = this._scorer.score(scoringPlan);
 

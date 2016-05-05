@@ -74,6 +74,8 @@ export class Scorer{
     let endTime = new Date();
 
     scoringResult.duration = endTime.getTime() - startTime.getTime();
+
+    log.debug('scoringResult: ' + JSON.stringify(scoringResult, null, 4));
     return scoringResult;
   }
 

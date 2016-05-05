@@ -13,7 +13,7 @@ class Logger {
 
   _log(msg, levelName) {
     if (this._logLevel <= this._logLevelNames.indexOf(levelName)) {
-      console.log('ARTEMIS[' + levelName + '] ' + msg);
+      console.log('Artemis[' + levelName + '] ' + msg);
     }
   }
 

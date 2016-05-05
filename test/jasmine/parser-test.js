@@ -1,35 +1,33 @@
 import {settings} from '../../src/settings';
 import {Parser} from '../../src/parser/artemis-parser.js'
 
-
-
-describe("Parse Test", () => {
-    let textParser = new Parser(settings);
+describe("Parser Test", () => {
+    let parser = new Parser(settings);
      
-    "use strict";
     it("'button' should be converted to [{value:'button', type:'elm-type'}]", () => {
-         let words = textParser.parse("button");
-         expect(words).toEqual([{value:'button', type:'elm-type'}]);
-    }); 
+         let words = parser.parse("button");
+         expect(words).toEqual([{type:'elm-type', value:'button'}]);
+    });
+
     it("'small button' should be converted to [{value:'small'},{value:'button', type:'elm-type'}]", () => {
-         let words = textParser.parse("small button");
+         let words = parser.parse("small button");
          expect(words).toEqual([{value:'small', type:'elm-size'},{value:'button', type:'elm-type'}]);
     });
     it("'button left of button' should be converted to [ {value:'button', type:'elm-type'}, {value:'-left-of', type:'rel-position'}, {value:'button', type:'elm-type'}]", () => {
-         let words = textParser.parse("button left of button");
+         let words = parser.parse("button left of button");
          expect(words).toEqual([{value:'button', type:'elm-type'}, {value:'-left-of', type:'rel-position'}, {value:'button', type:'elm-type'} ]);
     });
     it("correct parsing of double quotes", () => {
-         let words = textParser.parse("\"save all\" button");
+         let words = parser.parse("\"save all\" button");
          expect(words).toEqual([ {value:'save all', type:'free-text'} ,{value:'button', type:'elm-type'}]);
     });  
     it("correct parsing of single quotes", () => {
-         let words = textParser.parse("'save all' button");
+         let words = parser.parse("'save all' button");
          expect(words).toEqual([{value:'save all', type:'free-text'} ,{value:'button', type:'elm-type'}]);
     });
     
     it("correct parsing of hyphen delimited text", () => {
-         let words = textParser.parse("save-all button");
+         let words = parser.parse("save-all button");
          expect(words).toEqual([{value:'save-all', type:'free-text'} ,{value:'button', type:'elm-type'}]);
     }); 
     
@@ -37,13 +35,13 @@ describe("Parse Test", () => {
     it('test all posssible elems - should appear in "value"', () => {
         let allposssible = settings.phrases.find(p => p.location === "target-type").phrase.replace(/\(|\)|\^/g,'').split('|');
         allposssible.forEach(p=>{
-            expect(textParser.parse(p)[0].value).toEqual(p);
+            expect(parser.parse(p)[0].value).toEqual(p);
             
         });
     })
     
     it("correct parsing of 'at the bottom'", () => {
-         let words = textParser.parse("button at the bottom");
+         let words = parser.parse("button at the bottom");
          expect(words).toEqual([{value:'button', type:'elm-type'},{value:'at the bottom', type:'elm-location'} ,]);
     });  
     
@@ -51,34 +49,38 @@ describe("Parse Test", () => {
          let phrases = [
          'with attribute hhh=kkk'];
          phrases.forEach(p=>{             
-             expect(textParser.parse(p)[0].value).toEqual(['hhh','kkk']);
+             expect(parser.parse(p)[0].value).toEqual(['hhh','kkk']);
          });
     });
     it("correct parsing of 'with smth hhh' the phrases", () => { 
          let phrases = [     
          'with attribute hhh'];
          phrases.forEach(p=>{             
-             expect(textParser.parse(p)[0].value).toEqual('hhh');
+             expect(parser.parse(p)[0].value).toEqual('hhh');
          });
     });
     it("correct parsing of ordinal the phrases", () => { 
-         let phrases = ['first',
-         'second',
-         'third',
-         '2th',
-         'small',
-         'red',
-         'with text hhh',
-         'with identity hhh', 
-         'with class hhh',
-         'with style kkk',
-         'with style hhh=kkk'];
+      let phrases = [
+        '1st',
+        'first',
+        '2nd',
+        'second',
+        '3rd',
+        'third',
+        '4th',
+        'small',
+        'medium',
+        'large',
+        'red',
+        'green',
+        'blue'
+      ];
          phrases.forEach(p=>{             
-             expect(textParser.parse(p)[0].value).toEqual(p);
+           expect(parser.parse(p)[0].value).toEqual(p);
          });
     }); 
     
     it("in case of 'with tag' phrase - should return only tag name", () => { 
-        expect(textParser.parse('with tag h1')[0].value).toEqual('h1');
+        expect(parser.parse('with tag h1')[0].value).toEqual('h1');
     });                
 });

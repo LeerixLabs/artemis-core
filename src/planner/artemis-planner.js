@@ -32,12 +32,12 @@ export class Planner {
       return currentplan.target.and.length ?
         currentplan.target.and[currentplan.target.and.length-1] :
         null;
-    };
+    }
 
     function isInsideRelation() {
       let last = getLastInPlan();
       return (last && last.scorer === 'rel-position');
-    };
+    }
 
     let isRelation = function(word) {        
       return word.type === 'rel-position';
@@ -84,9 +84,10 @@ export class Planner {
             }
         }
     });
-    // console.log(JSON.stringify(currentplan.target.and[1]));
-    // console.log(JSON.stringify(currentplan,0,5));
-    return currentplan;
+
+    let scoringPlan = currentplan;
+    log.debug('scoringPlan: ' + JSON.stringify(scoringPlan, null, 4));
+    return scoringPlan;
   }
 
   __model_node(json) {
