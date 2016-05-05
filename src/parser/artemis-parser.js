@@ -1,9 +1,11 @@
-
+import Logger from '../common/logger';
 
 export class Parser {
 
   constructor(settings) {
     this._settings = settings;
+    //this._logger = new Logger(this._settings);
+    //this._logger.trace('Parser');
     //placing '^' at  the begining of eachn regex
     this.phrases = this._settings.phrases.map(p=>{ p.phrase   = '^'+p.phrase; return p;  });
     this.output = [];

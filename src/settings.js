@@ -1,5 +1,6 @@
 export let settings = {
 	"version":	1,
+  "log-level": "DEBUG",
 	"language": "en",
 	"phrases": [
 		{
