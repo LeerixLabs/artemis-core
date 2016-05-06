@@ -20,8 +20,9 @@ export class Planner {
       return this.plans.find(x => x.type === json.type); 
   }
 
-  plan(modeledQuery) {
-    let jsonIncoming = modeledQuery;
+  plan(modeledElmDesc) {
+    log.debug('Planner.plan() - start');
+    let jsonIncoming = modeledElmDesc;
     let currentplan = {
        "target": {
         "and": []
@@ -83,15 +84,16 @@ export class Planner {
                 currentplan.target.and.push(node.plan);
             }
         }
+
     });
 
     let scoringPlan = currentplan;
-    log.debug('scoringPlan: ' + JSON.stringify(scoringPlan, null, 4));
+    log.debug(`scoringPlan: ${JSON.stringify(scoringPlan, null, 4)}`);
+    log.debug('Planner.plan() - end');
     return scoringPlan;
   }
 
   __model_node(json) {
       return this.plans.find(x => x.type === json.type && x.value === json.value);
-      console.error("settings doesn't contain plan for this string:",json);
   }
 }

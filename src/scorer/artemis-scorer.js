@@ -31,6 +31,7 @@ export class Scorer{
   }
 
   score(scoringPlan){
+    log.debug('Scorer.score() - start');
     let startTime = new Date();
 
     let scoringResult = {
@@ -75,7 +76,8 @@ export class Scorer{
 
     scoringResult.duration = endTime.getTime() - startTime.getTime();
 
-    log.debug('scoringResult: ' + JSON.stringify(scoringResult, null, 4));
+    log.debug(`scoringResult: ${JSON.stringify(scoringResult, null, 4)}`);
+    log.debug('Scorer.score() - end');
     return scoringResult;
   }
 

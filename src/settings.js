@@ -4,97 +4,133 @@ export let settings = {
   "language": "en",
   "phrases": [
     {
-      "location": "pre-target-type",
+      "location": "object-type",
+      "phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
+      "type": "elm-type",
+      "is-object-type": true
+    },
+    {
+      "location": "pre-object-type",
       "phrase": "(1st|first)",
       "type": "elm-ordinal",
       "value": 1
     },
     {
-      "location": "pre-target-type",
+      "location": "pre-object-type",
       "phrase": "(2nd|second)",
       "type": "elm-ordinal",
       "value": 2
     },
     {
-      "location": "pre-target-type",
+      "location": "pre-object-type",
       "phrase": "(3rd|third)",
       "type": "elm-ordinal",
       "value": 3
     },
     {
-      "location": "pre-target-type",
+      "location": "pre-object-type",
       "phrase": "([0-9]+)th",
       "type": "elm-ordinal"
     },
     {
-      "location": "pre-target-type",
+      "location": "pre-object-type",
       "phrase": "(small|medium|large)",
       "type": "elm-size"
     },
     {
-      "location": "pre-target-type",
+      "location": "pre-object-type",
       "phrase": "(red|orange|yellow|green|blue|purple|pink|brown|gray|black|white)",
       "type": "elm-color"
     },
     {
-      "location": "target-type",
-      "phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
-      "type": "elm-type"
-    },
-    {
-      "location": "pre-target-type",
-      "phrase": "(?:['|\"])([\\w|\\s]+)(?:['|\"])",
+      "location": "pre-object-type",
+      "phrase": "(?:['|\"])([\\w\\s-]+)(?:['|\"])",
       "type": "free-text"
     },
     {
-      "location": "pre-target-type",
-      "phrase": "[A-Za-z0-9]+([-]{1}[A-Za-z0-9]+)+",
+      "location": "pre-object-type",
+      "phrase": "([\\w-]+)",
       "type": "free-text"
     },
     {
-      "location": "post-target-type",
-      "phrase": "(at the top|at the bottom|on the left|on the right|at the middle)",
-      "type": "elm-location"
+      "location": "post-object-type",
+      "phrase": "at the top",
+      "type": "elm-location",
+      "value": "top"
     },
     {
-      "location": "post-target-type",
-      "phrase": "with text (\\S*)",
-      "type": "elm-text"
+      "location": "post-object-type",
+      "phrase": "at the bottom",
+      "type": "elm-location",
+      "value": "bottom"
     },
     {
-      "location": "post-target-type",
-      "phrase": "with tag (\\S*)",
+      "location": "post-object-type",
+      "phrase": "on the left",
+      "type": "elm-location",
+      "value": "left"
+    },
+    {
+      "location": "post-object-type",
+      "phrase": "on the right",
+      "type": "elm-location",
+      "value": "right"
+    },
+    {
+      "location": "post-object-type",
+      "phrase": "at the middle",
+      "type": "elm-location",
+      "value": "middle"
+    },
+    {
+      "location": "post-object-type",
+      "phrase": "(?:with|and) tag ([\\w-]+)",
       "type": "html-tag"
     },
     {
-      "location": "post-target-type",
-      "phrase": "with attribute (\\S*)",
-      "type": "html-attr-name"
-    },
-    {
-      "location": "post-target-type",
-      "phrase": "with attribute value (\\S*)",
+      "location": "post-object-type",
+      "phrase": "(?:with|and) attribute value ([\\w-]+)",
       "type": "html-attr-val"
     },
     {
-      "location": "post-target-type",
-      "phrase": "with attribute (\\S*)=(\\S*)",
+      "location": "post-object-type",
+      "phrase": "(?:with|and) attribute ([\\w-]+)=([\\w-]+)",
       "type": "html-attr-name-and-val"
     },
     {
-      "location": "post-target-type",
-      "phrase": "with class (\\S*)",
+      "location": "post-object-type",
+      "phrase": "(?:with|and) attribute ([\\w-]+)",
+      "type": "html-attr-name"
+    },
+    {
+      "location": "post-object-type",
+      "phrase": "(?:with|and) class ([\\w-]+)",
       "type": "css-class"
     },
     {
-      "location": "post-target-type",
-      "phrase": "with style (\\S*):(\\S*)",
+      "location": "post-object-type",
+      "phrase": "(?:with|and) style ([\\w-]+):([\\w-]+)",
       "type": "css-style-name-and-val"
     },
     {
-      "location": "post-target-type",
-      "phrase": "(above|below|left of|right of|inside)",
-      "type": "rel-position"
+      "location": "post-object-type",
+      "phrase": "left of",
+      "type": "rel-position",
+      "value": "left-of",
+      "is-object-relation": true
+    },
+    {
+      "location": "post-object-type",
+      "phrase": "right of",
+      "type": "rel-position",
+      "value": "right-of",
+      "is-object-relation": true
+    },
+    {
+      "location": "post-object-type",
+      "phrase": "(above|below|inside)",
+      "type": "rel-position",
+      "is-object-relation": true
     }
   ],
   "plans": [

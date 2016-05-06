@@ -34,14 +34,14 @@ export class Manager {
     this._marker.addColorClassesToHtmlDocHead();
   }
 
-  locate(query) {
-    log.debug(`query: ${query}`);
+  locate(elmDescStr) {
+    log.debug('Manager.locate() - start');
 
-    // Parse the query sentence
-    let modeledQuery = this._parser.parse(query);
+    // Parse the element description sentence
+    let modeledElmDesc = this._parser.parse(elmDescStr);
 
     // Prepare a plan for the scorer
-    let scoringPlan = this._planner.plan(modeledQuery);
+    let scoringPlan = this._planner.plan(modeledElmDesc);
 
     // Score the DOM elements
     let scoringResult = this._scorer.score(scoringPlan);
@@ -49,6 +49,7 @@ export class Manager {
     // Color the DOM elements according to their score
     this._marker.mark(scoringResult);
 
+    log.debug('Manager.locate() - end');
     return scoringResult;
   }
 }

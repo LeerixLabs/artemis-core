@@ -20,6 +20,7 @@ export class Marker {
   }
 
 	mark(scoringResult) {
+    log.debug('Marker.mark() - start');
     let arrColor = this._settings.colors["score-colors"];
     for (let elm of scoringResult.elements) {
       if (scoringResult.hasSingleMatch && elm.score === 1) {
@@ -32,6 +33,7 @@ export class Marker {
         });
       }
     }
+    log.debug('Marker.mark() - end');
 	}
 
 }
