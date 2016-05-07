@@ -136,64 +136,58 @@ export let settings = {
   "plans": [
     {
       "type": "elm-type",
+      "value": "element",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "value": "*"
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
       "value": "button",
       "plan": {
         "or": [
           {
             "scorer": "html-tag",
-            "param": "button",
-            "weight": 1
+            "value": "button"
           },
           {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "input",
-                "weight": 1
+                "value": "input"
               },
               {
                 "scorer": "html-attr-name-and-val",
-                "param": [
-                  "type",
-                  "button"
-                ],
-                "weight": 1
+                "value": ["type", "button"]
               }
-            ],
-            "weight": 1
+            ]
           },
           {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "input",
-                "weight": 1
+                "value": "input"
               },
               {
                 "scorer": "html-attr-name-and-val",
-                "param": [
-                  "type",
-                  "submit"
-                ],
-                "weight": 1
+                "value": ["type", "submit"]
               }
-            ],
-            "weight": 1
+            ]
           },
           {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "a",
-                "weight": 1
+                "value": "a"
               },
               {
                 "scorer": "css-class",
-                "param": [
-                  "button",
-                  "btn"
-                ],
-                "weight": 1
+                "value": ["button", "btn"]
               }
             ],
             "weight": 0.8
@@ -202,16 +196,11 @@ export let settings = {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "img",
-                "weight": 1
+                "value": "img"
               },
               {
                 "scorer": "css-class",
-                "param": [
-                  "button",
-                  "btn"
-                ],
-                "weight": 1
+                "value": ["button", "btn"]
               }
             ],
             "weight": 0.6
@@ -220,55 +209,14 @@ export let settings = {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "div",
-                "weight": 1
+                "value": "div"
               },
               {
                 "scorer": "css-class",
-                "param": [
-                  "button",
-                  "btn"
-                ],
-                "weight": 1
+                "value": ["button", "btn"]
               }
             ],
             "weight": 0.4
-          }
-        ]
-      }
-    },
-    {
-      "type": "elm-type",
-      "value": "input",
-      "plan": {
-        "or": [
-          {
-            "scorer": "html-tag",
-            "param": "textarea",
-            "weight": 0.7
-          },
-          {
-            "scorer": "html-tag",
-            "param": "input",
-            "weight": 1
-          },
-          {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "param": "input",
-                "weight": 1
-              },
-              {
-                "scorer": "html-attr-name-and-val",
-                "param": [
-                  "type",
-                  "checkbox"
-                ],
-                "weight": 0.01
-              }
-            ],
-            "weight": 1
           }
         ]
       }
@@ -279,54 +227,16 @@ export let settings = {
       "plan": {
         "or": [
           {
-            "scorer": "html-tag",
-            "param": "a",
-            "weight": 0.7
-          },
-          {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "a",
-                "weight": 1
+                "value": "a"
               },
               {
                 "scorer": "html-attr-name",
-                "param": "href",
-                "weight": 1
+                "value": "href"
               }
-            ],
-            "weight": 1
-          },
-          {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "param": "button",
-                "weight": 1
-              },
-              {
-                "scorer": "css-class",
-                "param": "btn-link",
-                "weight": 1
-              }
-            ],
-            "weight": 1
-          },
-          {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "param": "div",
-                "weight": 0.9
-              },
-              {
-                "scorer": "css-class",
-                "param": "btn-link",
-                "weight": 1
-              }
-            ],
-            "weight": 1
+            ]
           }
         ]
       }
@@ -340,19 +250,13 @@ export let settings = {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "input",
-                "weight": 1
+                "value": "input"
               },
               {
                 "scorer": "html-attr-name-and-val",
-                "param": [
-                  "type",
-                  "checkbox"
-                ],
-                "weight": 1
+                "value": ["type", "checkbox"]
               }
-            ],
-            "weight": 1
+            ]
           }
         ]
       }
@@ -366,19 +270,13 @@ export let settings = {
             "and": [
               {
                 "scorer": "html-tag",
-                "param": "input",
-                "weight": 1
+                "value": "input"
               },
               {
                 "scorer": "html-attr-name-and-val",
-                "param": [
-                  "type",
-                  "radio"
-                ],
-                "weight": 1
+                "value": ["type", "radio"]
               }
-            ],
-            "weight": 1
+            ]
           }
         ]
       }
@@ -390,81 +288,231 @@ export let settings = {
         "or": [
           {
             "scorer": "html-tag",
-            "param": "label",
-            "weight": 1
+            "value": "label"
           }
         ]
       }
     },
     {
       "type": "elm-type",
-      "value": "element",
+      "value": "input",
       "plan": {
         "or": [
           {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "value": "input"
+              },
+              {
+                "scorer": "html-attr-name-and-val",
+                "value": ["type", "text"]
+              }
+            ]
+          },
+          {
             "scorer": "html-tag",
-            "param": "element",
-            "weight": 1
+            "value": "textarea",
+            "weight": 0.7
           }
         ]
       }
     },
     {
-      "type": "html-tag",
+      "type": "elm-type",
+      "value": "image",
       "plan": {
-        "scorer": "html-tag",
-        "param":"<value>",
-        "weight": 1
+        "or": [
+          {
+            "scorer": "html-tag",
+            "value": "img"
+          }
+        ]
       }
     },
     {
-      "type": "html-attr-name",
+      "type": "elm-type",
+      "value": "panel",
       "plan": {
-        "scorer": "html-attr-name",
-        "param":"<value>",
-        "weight": 1
+        "or": [
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "value": "div"
+              },
+              {
+                "scorer": "elm-size",
+                "value": "large"
+              }
+            ]
+          }
+        ]
       }
     },
     {
-      "type": "html-attr-val",
+      "type": "elm-type",
+      "value": "panel",
       "plan": {
-        "scorer": "html-attr-val",
-        "param":"<value>",
-        "weight": 1
+        "or": [
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "value": "div"
+              },
+              {
+                "scorer": "css-class",
+                "value": "toolbar"
+              }
+            ]
+          }
+        ]
       }
     },
     {
-      "type": "html-attr-name-and-val",
+      "type": "elm-type",
+      "value": "tab",
       "plan": {
-        "scorer": "html-attr-name-and-val",
-        "param":"<value>",
-        "weight": 1
+        "or": [
+          {
+            "and": [
+              {
+                "scorer": "html-tag",
+                "value": "div"
+              },
+              {
+                "scorer": "css-class",
+                "value": "tab"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "dropdown",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "value": "select"
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "item",
+      "plan": {
+        "or": [
+          {
+            "scorer": "html-tag",
+            "value": "option"
+          }
+        ]
+      }
+    },
+    {
+      "type": "elm-ordinal",
+      "plan": {
+        "scorer": "elm-ordinal",
+        "is-ordinal": true
+      }
+    },
+    {
+      "type": "elm-size",
+      "plan": {
+        "scorer": "elm-size"
+      }
+    },
+    {
+      "type": "elm-color",
+      "plan": {
+        "scorer": "elm-color"
       }
     },
     {
       "type": "free-text",
       "plan": {
-        "scorer": "free-text",
-        "param":"<value>",
-        "weight": 1
+        "scorer": "free-text"
+      }
+    },
+    {
+      "type": "elm-location",
+      "plan": {
+        "scorer": "elm-location"
+      }
+    },
+    {
+      "type": "html-tag",
+      "plan": {
+        "scorer": "html-tag"
+      }
+    },
+    {
+      "type": "html-attr-name",
+      "plan": {
+        "scorer": "html-attr-name"
+      }
+    },
+    {
+      "type": "html-attr-val",
+      "plan": {
+        "scorer": "html-attr-val"
+      }
+    },
+    {
+      "type": "html-attr-name-and-val",
+      "plan": {
+        "scorer": "html-attr-name-and-val"
       }
     },
     {
       "type": "css-class",
       "plan": {
-        "scorer": "css-class",
-        "param":"<value>",
-        "weight": 1
+        "scorer": "css-class"
+      }
+    },
+    {
+      "type": "css-style-name-and-val",
+      "plan": {
+        "scorer": "css-style-name-and-val"
+      }
+    },
+    {
+      "type": "rel-position",
+      "plan": {
+        "scorer": "rel-position",
+        "is-relation": true
       }
     }
   ],
   "colors": {
-    "single-match-color": "#00FF00",
+    "single-match-color": "#339933",
     "score-colors": [
-      {"value": 1, "color": "#FF0000"},
-      {"value": 0.95, "color": "#FF3300"},
-      {"value": 0.9, "color": "#FF6600"},
-      {"value": 0.85, "color": "#FF9900"}
+      '#FFFFCC',
+      '#FFFFB3',
+      '#FFFF99',
+      '#FFFF80',
+      '#FFFF66',
+      '#FFFF4D',
+      '#FFFF33',
+      '#FFFF1A',
+      '#FFFF00',
+      '#FFE600',
+      '#FFCC00',
+      '#FFB300',
+      '#FF9900',
+      '#FF8000',
+      '#FF6600',
+      '#FF4D00',
+      '#FF3300',
+      '#FF1A00',
+      '#FF0000',
+      '#E30000',
+      '#CC0000'
     ]
   }
 };
