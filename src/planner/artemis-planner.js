@@ -53,8 +53,10 @@ export class Planner {
 
       //node with object
     } else if (descNode.object) {
+      planNode = this._getPlanByTypeAndValue(descNode.type, descNode.value);
+      planNode.object = this._recursiveGetPlan(descNode.object);
 
-      //leaf node
+    //leaf node
     } else {
       planNode = this._getPlanByTypeAndValue(descNode.type, descNode.value);
     }
@@ -65,9 +67,7 @@ export class Planner {
   plan(modeledElmDesc) {
     log.debug('Planner.plan() - start');
     log.debug(`modeledElmDesc: ${Helper.toJSON(modeledElmDesc)}`);
-    let scoringPlan = {
-      object: {}
-    };
+    let scoringPlan = {};
     scoringPlan.object = this._recursiveGetPlan(modeledElmDesc.object);
     log.debug(`scoringPlan: ${Helper.toJSON(scoringPlan)}`);
     log.debug('Planner.plan() - end');
