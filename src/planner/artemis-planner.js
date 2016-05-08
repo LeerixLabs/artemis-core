@@ -1,99 +1,77 @@
 import {log} from '../common/logger';
+import {Helper} from  '../common/common-helper';
 
 export class Planner {
 
   constructor(settings) {
     this._settings = settings;
-    this.plans = settings.plans;
+    this._plans = settings.plans;
   }
 
-  findPlan(term){
-     let plan = this.plans.find(pln => pln.type === "elm-type" && pln.value === term);
-     return plan ? plan.plan : null;
+  _getPlanByTypeAndValue(type, value) {
+    console.log(`Searching for relevant plan. type: ${type}, value: ${value}`);
+    let plan = {};
+    let planEntryInSettings = this._plans.find((p) => {
+      return p.type === type && p.value === value;
+    });
+    if (planEntryInSettings) {
+      log.debug(`found plan by type and value: ${Helper.toJSON(planEntryInSettings)}`);
+    }
+    if (!planEntryInSettings) {
+      planEntryInSettings = this._plans.find((p) => {
+        return p.type === type;
+      });
+      if (planEntryInSettings) {
+        log.debug(`found plan by type only: ${Helper.toJSON(planEntryInSettings)}`);
+      }
+    }
+    if (planEntryInSettings) {
+      if (planEntryInSettings.plan.value) {
+        log.debug(`plan already has a value: ${Helper.toJSON(planEntryInSettings.plan.value)}`);
+        plan = planEntryInSettings.plan;
+      } else {
+        log.debug(`plan does not have a value. using: ${Helper.toJSON(value)}`);
+        plan = JSON.parse(JSON.stringify(planEntryInSettings.plan));
+        plan.value = value;
+      }
+    } else {
+      log.error(`Unable to find relevant plan node. type: ${type}, value: ${value}`);
+    }
+    return plan;
   }
 
-  static  isOneOfElements(wrd){
-    return wrd.type === "elm-type";
-  }
+  _recursiveGetPlan(descNode) {
+    let planNode = {};
 
-  itemPlans(json){
-      return this.plans.find(x => x.type === json.type); 
+    //node with 'and' items
+    if (descNode.and) {
+      planNode.and = [];
+      descNode.and.forEach(n => {
+        let p = this._recursiveGetPlan(n);
+        planNode.and.push(p);
+      });
+
+      //node with object
+    } else if (descNode.object) {
+
+      //leaf node
+    } else {
+      planNode = this._getPlanByTypeAndValue(descNode.type, descNode.value);
+    }
+
+    return planNode;
   }
 
   plan(modeledElmDesc) {
     log.debug('Planner.plan() - start');
-    let jsonIncoming = modeledElmDesc;
-    let currentplan = {
-       "target": {
-        "and": []
-      }
+    log.debug(`modeledElmDesc: ${Helper.toJSON(modeledElmDesc)}`);
+    let scoringPlan = {
+      object: {}
     };
-
-    function getLastInPlan() {
-      return currentplan.target.and.length ?
-        currentplan.target.and[currentplan.target.and.length-1] :
-        null;
-    }
-
-    function isInsideRelation() {
-      let last = getLastInPlan();
-      return (last && last.scorer === 'rel-position');
-    }
-
-    let isRelation = function(word) {        
-      return word.type === 'rel-position';
-    };
-    //replace all the '-' in the beginning 
-    jsonIncoming.forEach(d=>{d.value = Array.isArray(d.value) ? d.value : d.value.replace(/^-/,'');});
-
-    jsonIncoming.forEach( word => {
-        let node = this.__model_node(word); 
-        if(node){
-            if (isInsideRelation()) {
-                if(!getLastInPlan().target){
-                    getLastInPlan().target = {
-                        "and": []
-                      };
-                }
-                getLastInPlan().target.and.push(node.plan);
-            } else {
-                currentplan.target.and.push(node.plan);
-            }
-        } else if (isRelation(word)) {
-            let relationPlan = {
-                "scorer": "rel-position",
-                "param": word.value,
-                "weight": 1,
-                "target": null
-            };
-            currentplan.target.and.push(relationPlan);
-        } else {
-            let mynode = this.itemPlans(word);
-            if(!mynode) throw new Error(`There is no such node: ${JSON.stringify(word,0,5)}`);
-            
-            node = JSON.parse(JSON.stringify(mynode)); // it must!!! - clone node
-            node.plan.param = word.value;
-            if (isInsideRelation()) {
-                if(!getLastInPlan().target){
-                    getLastInPlan().target = {
-                        "and": []
-                      };
-                }
-                getLastInPlan().target.and.push(node.plan);
-            } else {
-                currentplan.target.and.push(node.plan);
-            }
-        }
-
-    });
-
-    let scoringPlan = currentplan;
-    log.debug(`scoringPlan: ${JSON.stringify(scoringPlan, null, 4)}`);
+    scoringPlan.object = this._recursiveGetPlan(modeledElmDesc.object);
+    log.debug(`scoringPlan: ${Helper.toJSON(scoringPlan)}`);
     log.debug('Planner.plan() - end');
     return scoringPlan;
   }
 
-  __model_node(json) {
-      return this.plans.find(x => x.type === json.type && x.value === json.value);
-  }
 }
