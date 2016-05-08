@@ -54,7 +54,7 @@ export class Parser {
     return matchResult;
   }
 
-  _modelElmDescription(elmDescStr) {
+  _buildElementDescriptionModel(elmDescStr) {
     let modeledElmDesc = {
       object: {}
     };
@@ -96,7 +96,7 @@ export class Parser {
   parse(elmDescStr) {
     log.debug('Parser.parse() - start');
     log.debug(`elmDescStr: ${elmDescStr}`);
-    let modeledElmDesc = this._modelElmDescription(elmDescStr);
+    let modeledElmDesc = this._buildElementDescriptionModel(elmDescStr);
     log.debug(`modeledElmDesc: ${JSON.stringify(modeledElmDesc, null, 4)}`);
     log.debug('Parser.parse() - end');
     return modeledElmDesc;
