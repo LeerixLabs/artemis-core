@@ -1,4 +1,5 @@
 import {log} from '../common/logger';
+import {Helper} from  '../common/common-helper';
 
 export class Parser {
 
@@ -44,7 +45,7 @@ export class Parser {
             isObjectRelation: !!p['is-object-relation'],
             matchedStrLength: matchedStrLength
           };
-          log.debug(`matchResult: ${JSON.stringify(matchResult, null, 4)}`);
+          log.debug(`matchResult: ${Helper.toJSON(matchResult)}`);
         }
       }
     });
@@ -115,7 +116,7 @@ export class Parser {
     log.debug('Parser.parse() - start');
     log.debug(`elmDescStr: ${elmDescStr}`);
     let modeledElmDesc = this._buildElementDescriptionModel(elmDescStr);
-    log.debug(`modeledElmDesc: ${JSON.stringify(modeledElmDesc, null, 4)}`);
+    log.debug(`modeledElmDesc: ${Helper.toJSON(modeledElmDesc)}`);
     log.debug('Parser.parse() - end');
     return modeledElmDesc;
   }
