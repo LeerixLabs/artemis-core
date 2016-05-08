@@ -138,12 +138,8 @@ export let settings = {
       "type": "elm-type",
       "value": "element",
       "plan": {
-        "or": [
-          {
-            "scorer": "html-tag",
-            "value": "*"
-          }
-        ]
+        "scorer": "html-tag",
+        "value": "*"
       }
     },
     {
@@ -225,18 +221,14 @@ export let settings = {
       "type": "elm-type",
       "value": "link",
       "plan": {
-        "or": [
+        "and": [
           {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "value": "a"
-              },
-              {
-                "scorer": "html-attr-name",
-                "value": "href"
-              }
-            ]
+            "scorer": "html-tag",
+            "value": "a"
+          },
+          {
+            "scorer": "html-attr-name",
+            "value": "href"
           }
         ]
       }
@@ -245,18 +237,14 @@ export let settings = {
       "type": "elm-type",
       "value": "checkbox",
       "plan": {
-        "or": [
+        "and": [
           {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "value": "input"
-              },
-              {
-                "scorer": "html-attr-name-and-val",
-                "value": ["type", "checkbox"]
-              }
-            ]
+            "scorer": "html-tag",
+            "value": "input"
+          },
+          {
+            "scorer": "html-attr-name-and-val",
+            "value": ["type", "checkbox"]
           }
         ]
       }
@@ -265,18 +253,14 @@ export let settings = {
       "type": "elm-type",
       "value": "radio",
       "plan": {
-        "or": [
+        "and": [
           {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "value": "input"
-              },
-              {
-                "scorer": "html-attr-name-and-val",
-                "value": ["type", "radio"]
-              }
-            ]
+            "scorer": "html-tag",
+            "value": "input"
+          },
+          {
+            "scorer": "html-attr-name-and-val",
+            "value": ["type", "radio"]
           }
         ]
       }
@@ -285,12 +269,8 @@ export let settings = {
       "type": "elm-type",
       "value": "label",
       "plan": {
-        "or": [
-          {
-            "scorer": "html-tag",
-            "value": "label"
-          }
-        ]
+        "scorer": "html-tag",
+        "value": "label"
       }
     },
     {
@@ -322,10 +302,22 @@ export let settings = {
       "type": "elm-type",
       "value": "image",
       "plan": {
-        "or": [
+        "scorer": "html-tag",
+        "value": "img"
+      }
+    },
+    {
+      "type": "elm-type",
+      "value": "panel",
+      "plan": {
+        "and": [
           {
             "scorer": "html-tag",
-            "value": "img"
+            "value": "div"
+          },
+          {
+            "scorer": "elm-size",
+            "value": "large"
           }
         ]
       }
@@ -334,38 +326,14 @@ export let settings = {
       "type": "elm-type",
       "value": "panel",
       "plan": {
-        "or": [
+        "and": [
           {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "value": "div"
-              },
-              {
-                "scorer": "elm-size",
-                "value": "large"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "type": "elm-type",
-      "value": "panel",
-      "plan": {
-        "or": [
+            "scorer": "html-tag",
+            "value": "div"
+          },
           {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "value": "div"
-              },
-              {
-                "scorer": "css-class",
-                "value": "toolbar"
-              }
-            ]
+            "scorer": "css-class",
+            "value": "toolbar"
           }
         ]
       }
@@ -374,18 +342,14 @@ export let settings = {
       "type": "elm-type",
       "value": "tab",
       "plan": {
-        "or": [
+        "and": [
           {
-            "and": [
-              {
-                "scorer": "html-tag",
-                "value": "div"
-              },
-              {
-                "scorer": "css-class",
-                "value": "tab"
-              }
-            ]
+            "scorer": "html-tag",
+            "value": "div"
+          },
+          {
+            "scorer": "css-class",
+            "value": "tab"
           }
         ]
       }
@@ -394,24 +358,16 @@ export let settings = {
       "type": "elm-type",
       "value": "dropdown",
       "plan": {
-        "or": [
-          {
-            "scorer": "html-tag",
-            "value": "select"
-          }
-        ]
+        "scorer": "html-tag",
+        "value": "select"
       }
     },
     {
       "type": "elm-type",
       "value": "item",
       "plan": {
-        "or": [
-          {
-            "scorer": "html-tag",
-            "value": "option"
-          }
-        ]
+        "scorer": "html-tag",
+        "value": "option"
       }
     },
     {
