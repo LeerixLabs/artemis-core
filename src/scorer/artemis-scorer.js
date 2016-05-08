@@ -2,6 +2,7 @@ import {IGNORED_TAGS} from '../common/common-constants';
 import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
 import {ARTEMIS_CLASS} from '../common/common-constants';
 import {log} from '../common/logger';
+import {Helper} from  '../common/common-helper';
 import {HtmlDOM} from './../common/html-dom';
 import {Element} from './../common/element';
 import CssClassScorer from './scorers/css-class-scorer.js';
@@ -82,7 +83,7 @@ export class Scorer{
 
     //unknown node
     else {
-      log.error(`Unknown plan node type: ${JSON.stringify(planNode, null, 4)}`);
+      log.error(`Unknown plan node type: ${Helper.toJSON(planNode)}`);
     }
 
     return score;
@@ -134,7 +135,7 @@ export class Scorer{
 
     scoringResult.duration = endTime.getTime() - startTime.getTime();
 
-    log.debug(`scoringResult: ${JSON.stringify(scoringResult, null, 4)}`);
+    log.debug(`scoringResult: ${Helper.toJSON(scoringResult)}`);
     log.debug('Scorer.score() - end');
     return scoringResult;
   }
