@@ -36,6 +36,7 @@ export class Scorer{
     if (!weight && weight !== 0) {
       weight = 1;
     }
+
     //node with 'and' items
     if (planNode.and){
       for (let i = 0; i < planNode.and.length; i++) {
@@ -46,6 +47,7 @@ export class Scorer{
         score *= weight;
       }
     }
+
     //node with 'or' items
     else if (planNode.or) {
       let partScore = [];
@@ -55,7 +57,8 @@ export class Scorer{
       }
       score = Math.max.apply(null, partScore);
     }
-    //next node with object
+
+    //node with object
     else if (planNode.scorer && planNode.object) {
       let maxScore = 0;
       for (let i=0; i<this._allElms.length; i++) {
@@ -70,15 +73,18 @@ export class Scorer{
       }
       score = weight * maxScore;
     }
+
     //leaf node
     else if (planNode.scorer) {
       let scorer = this._scorersMap.get(planNode.scorer);
       score = weight * scorer.score(planNode.param, elm);
     }
-    //error
+
+    //unknown node
     else {
       log.error(`Unknown plan node type: ${JSON.stringify(planNode, null, 4)}`);
     }
+
     return score;
   }
 
