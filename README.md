@@ -31,7 +31,7 @@ gulp pack
 ```
 
 ### Running Tests
-This will run the Jasmin tests via Karma
+This will run the tests
 ```sh
 gulp test
 ```
