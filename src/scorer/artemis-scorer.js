@@ -30,6 +30,58 @@ export class Scorer{
     this._scorersMap.set('free-text', new FreeTextScorer());
   }
 
+  _recursiveScore(planNode, elm){
+    let score = null;
+    let weight = planNode.weight;
+    if (!weight && weight !== 0) {
+      weight = 1;
+    }
+    //node with 'and' items
+    if (planNode.and){
+      for (let i = 0; i < planNode.and.length; i++) {
+        score = (score !== null) ? score * this._recursiveScore(planNode.and[i], elm)
+        : this._recursiveScore(planNode.and[i], elm);
+      }
+      if (weight > 0) {
+        score *= weight;
+      }
+    }
+    //node with 'or' items
+    else if (planNode.or) {
+      let partScore = [];
+      for (let i = 0; i < planNode.or.length; i++) {
+        let result = this._recursiveScore(planNode.or[i], elm);
+        partScore.push(result);
+      }
+      score = Math.max.apply(null, partScore);
+    }
+    //next node with object
+    else if (planNode.scorer && planNode.object) {
+      let maxScore = 0;
+      for (let i=0; i<this._allElms.length; i++) {
+        let secondaryElm = this._allElms[i];
+        if (elm !== secondaryElm) {
+          let scorer = this._scorersMap.get(planNode.scorer);
+          let relationScore = scorer.score(planNode.param, elm, secondaryElm, this._html.bodyRect);
+          let planItemNode = planNode.object;
+          let secondaryScore = this._recursiveScore(planItemNode, secondaryElm);
+          maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
+        }
+      }
+      score = weight * maxScore;
+    }
+    //leaf node
+    else if (planNode.scorer) {
+      let scorer = this._scorersMap.get(planNode.scorer);
+      score = weight * scorer.score(planNode.param, elm);
+    }
+    //error
+    else {
+      log.error(`Unknown plan node type: ${JSON.stringify(planNode, null, 4)}`);
+    }
+    return score;
+  }
+
   score(scoringPlan){
     log.debug('Scorer.score() - start');
     let startTime = new Date();
@@ -52,7 +104,7 @@ export class Scorer{
 
     // Score each element
     for (let elm of this._allElms){
-      elm.score = this.recursiveScore(scoringPlan.target, elm);
+      elm.score = this._recursiveScore(scoringPlan.object, elm);
       scoringResult.elements.push(elm);
     }
 
@@ -81,53 +133,5 @@ export class Scorer{
     return scoringResult;
   }
 
-  recursiveScore(planNode, elm){
-    let score = null;
-    let weight = planNode.weight;
-    if (!weight && weight !== 0) {
-      weight = 1;
-    }
-
-    //leaf node
-    if (planNode.scorer && !planNode.target) {
-      let scorer = this._scorersMap.get(planNode.scorer);
-      score = weight * scorer.score(planNode.param, elm);
-    }
-    //node with 'and' items
-    else if (planNode.and){
-      for (let i = 0; i < planNode.and.length; i++) {
-        score = (score !== null) ? score * this.recursiveScore(planNode.and[i], elm)
-        : this.recursiveScore(planNode.and[i], elm);
-      }
-      if (weight > 0) {
-        score *= weight;
-      }
-    }
-    //node with 'or' items
-    else if (planNode.or) {
-      let partScore = [];
-      for (let i = 0; i < planNode.or.length; i++) {
-        let result = this.recursiveScore(planNode.or[i], elm);
-        partScore.push(result);
-      }
-      score = Math.max.apply(null, partScore);
-    }
-    //next node with target
-    else if (planNode.scorer && planNode.target) {
-      let maxScore = 0;
-      for (let i=0; i<this._allElms.length; i++) {
-        let secondaryElm = this._allElms[i];
-        if (elm !== secondaryElm) {
-          let scorer = this._scorersMap.get(planNode.scorer);
-          let relationScore = scorer.score(planNode.param, elm, secondaryElm, this._html.bodyRect);
-          let planItemNode = planNode.target;
-          let secondaryScore = this.recursiveScore(planItemNode, secondaryElm);
-          maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
-        }
-      }
-      score = weight * maxScore;
-    }
-    return score;
-  }
 
 }
