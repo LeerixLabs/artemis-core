@@ -8,12 +8,8 @@ describe('Parser', () => {
     let modeledElmDesc = parser.parse('element');
     let expectedModel = {
       object: {
-        and: [
-          {
-            type: 'elm-type',
-            value: 'element'
-          }
-        ]
+        type: 'elm-type',
+        value: 'element'
       }
     };
     expect(JSON.stringify(modeledElmDesc, null, 4)).toEqual(JSON.stringify(expectedModel, null, 4));
@@ -21,20 +17,20 @@ describe('Parser', () => {
 
   it('test trim single spaces', () => {
     let modeledElmDesc = parser.parse(' element ');
-    expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
-    expect(modeledElmDesc.object.and[0].value).toEqual('element');
+    expect(modeledElmDesc.object.type).toEqual('elm-type');
+    expect(modeledElmDesc.object.value).toEqual('element');
   });
 
   it('test trim double spaces', () => {
     let modeledElmDesc = parser.parse('  element  ');
-    expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
-    expect(modeledElmDesc.object.and[0].value).toEqual('element');
+    expect(modeledElmDesc.object.type).toEqual('elm-type');
+    expect(modeledElmDesc.object.value).toEqual('element');
   });
 
   it('test trim the word "the"', () => {
     let modeledElmDesc = parser.parse('the element');
-    expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
-    expect(modeledElmDesc.object.and[0].value).toEqual('element');
+    expect(modeledElmDesc.object.type).toEqual('elm-type');
+    expect(modeledElmDesc.object.value).toEqual('element');
   });
 
   it('test element types', () => {
@@ -55,8 +51,8 @@ describe('Parser', () => {
     ];
     elmTypes.forEach( et => {
       let modeledElmDesc = parser.parse(et);
-      expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
-      expect(modeledElmDesc.object.and[0].value).toEqual(et);
+      expect(modeledElmDesc.object.type).toEqual('elm-type');
+      expect(modeledElmDesc.object.value).toEqual(et);
     });
   });
 
@@ -71,8 +67,8 @@ describe('Parser', () => {
     ];
     elmOrdinals.forEach( eo => {
       let modeledElmDesc = parser.parse(eo.s);
-      expect(modeledElmDesc.object.and[0].type).toEqual('elm-ordinal');
-      expect(modeledElmDesc.object.and[0].value).toEqual(eo.v);
+      expect(modeledElmDesc.object.type).toEqual('elm-ordinal');
+      expect(modeledElmDesc.object.value).toEqual(eo.v);
     });
   });
 
@@ -84,8 +80,8 @@ describe('Parser', () => {
     ];
     elmOrdinals.forEach( eo => {
       let modeledElmDesc = parser.parse(eo.s);
-      expect(modeledElmDesc.object.and[0].type).toEqual('elm-ordinal');
-      expect(modeledElmDesc.object.and[0].value).toEqual(eo.v);
+      expect(modeledElmDesc.object.type).toEqual('elm-ordinal');
+      expect(modeledElmDesc.object.value).toEqual(eo.v);
     });
   });
 
@@ -97,8 +93,8 @@ describe('Parser', () => {
     ];
     elmSizes.forEach( es => {
       let modeledElmDesc = parser.parse(es);
-      expect(modeledElmDesc.object.and[0].type).toEqual('elm-size');
-      expect(modeledElmDesc.object.and[0].value).toEqual(es);
+      expect(modeledElmDesc.object.type).toEqual('elm-size');
+      expect(modeledElmDesc.object.value).toEqual(es);
     });
   });
 
@@ -118,51 +114,51 @@ describe('Parser', () => {
     ];
     elmColors.forEach( ec => {
       let modeledElmDesc = parser.parse(ec);
-      expect(modeledElmDesc.object.and[0].type).toEqual('elm-color');
-      expect(modeledElmDesc.object.and[0].value).toEqual(ec);
+      expect(modeledElmDesc.object.type).toEqual('elm-color');
+      expect(modeledElmDesc.object.value).toEqual(ec);
     });
   });
 
   it('test free text', () => {
     let modeledElmDesc = parser.parse(`MyFreeText`);
-    expect(modeledElmDesc.object.and[0].type).toEqual('free-text');
-    expect(modeledElmDesc.object.and[0].value).toEqual('MyFreeText');
+    expect(modeledElmDesc.object.type).toEqual('free-text');
+    expect(modeledElmDesc.object.value).toEqual('MyFreeText');
   });
 
   it('test free text with underscores', () => {
     let modeledElmDesc = parser.parse(`my_free_text`);
-    expect(modeledElmDesc.object.and[0].type).toEqual('free-text');
-    expect(modeledElmDesc.object.and[0].value).toEqual('my_free_text');
+    expect(modeledElmDesc.object.type).toEqual('free-text');
+    expect(modeledElmDesc.object.value).toEqual('my_free_text');
   });
 
   it('test free text with hyphens', () => {
     let modeledElmDesc = parser.parse(`my-free-text`);
-    expect(modeledElmDesc.object.and[0].type).toEqual('free-text');
-    expect(modeledElmDesc.object.and[0].value).toEqual('my-free-text');
+    expect(modeledElmDesc.object.type).toEqual('free-text');
+    expect(modeledElmDesc.object.value).toEqual('my-free-text');
   });
 
   it('test free text with underscores and hyphens', () => {
     let modeledElmDesc = parser.parse(`my_free-text`);
-    expect(modeledElmDesc.object.and[0].type).toEqual('free-text');
-    expect(modeledElmDesc.object.and[0].value).toEqual('my_free-text');
+    expect(modeledElmDesc.object.type).toEqual('free-text');
+    expect(modeledElmDesc.object.value).toEqual('my_free-text');
   });
 
   it('test free text with single quotes', () => {
     let modeledElmDesc = parser.parse(`'My Free Text'`);
-    expect(modeledElmDesc.object.and[0].type).toEqual('free-text');
-    expect(modeledElmDesc.object.and[0].value).toEqual('My Free Text');
+    expect(modeledElmDesc.object.type).toEqual('free-text');
+    expect(modeledElmDesc.object.value).toEqual('My Free Text');
   });
 
   it('test free text with double quotes', () => {
     let modeledElmDesc = parser.parse(`"My Free Text"`);
-    expect(modeledElmDesc.object.and[0].type).toEqual('free-text');
-    expect(modeledElmDesc.object.and[0].value).toEqual('My Free Text');
+    expect(modeledElmDesc.object.type).toEqual('free-text');
+    expect(modeledElmDesc.object.value).toEqual('My Free Text');
   });
 
   it('test complex free text', () => {
     let modeledElmDesc = parser.parse(`"My_Free-Text __1 --2"`);
-    expect(modeledElmDesc.object.and[0].type).toEqual('free-text');
-    expect(modeledElmDesc.object.and[0].value).toEqual('My_Free-Text __1 --2');
+    expect(modeledElmDesc.object.type).toEqual('free-text');
+    expect(modeledElmDesc.object.value).toEqual('My_Free-Text __1 --2');
   });
 
   it('test element location', () => {
@@ -276,8 +272,8 @@ describe('Parser', () => {
       expect(modeledElmDesc.object.and[0].value).toEqual('element');
       expect(modeledElmDesc.object.and[1].type).toEqual('rel-position');
       expect(modeledElmDesc.object.and[1].value).toEqual(erp.v);
-      expect(modeledElmDesc.object.and[1].object.and[0].type).toEqual('elm-type');
-      expect(modeledElmDesc.object.and[1].object.and[0].value).toEqual('element');
+      expect(modeledElmDesc.object.and[1].object.type).toEqual('elm-type');
+      expect(modeledElmDesc.object.and[1].object.value).toEqual('element');
     });
   });
 

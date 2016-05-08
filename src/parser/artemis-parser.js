@@ -54,6 +54,23 @@ export class Parser {
     return matchResult;
   }
 
+  static _recursiveRemoveExtraAndNodes(node) {
+    if (node.object.object) {
+      Parser._recursiveRemoveExtraAndNodes(node.object);
+    }
+    if (node.object.and) {
+      node.object.and.forEach( n => {
+        if (n.object) {
+          Parser._recursiveRemoveExtraAndNodes(n);
+        }
+      });
+    }
+    if (node.object.and && node.object.and.length === 1) {
+      node.object = node.object.and[0];
+      delete node.object.and;
+    }
+  }
+
   _buildElementDescriptionModel(elmDescStr) {
     let modeledElmDesc = {
       object: {}
@@ -89,6 +106,8 @@ export class Parser {
         sentence = '';
       }
     }
+
+    Parser._recursiveRemoveExtraAndNodes(modeledElmDesc);
     return modeledElmDesc;
   };
 
