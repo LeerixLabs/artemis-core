@@ -89,7 +89,6 @@ export class Parser {
         sentence = '';
       }
     }
-
     return modeledElmDesc;
   };
 
