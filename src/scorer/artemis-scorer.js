@@ -30,7 +30,7 @@ export class Scorer{
     this._scorersMap.set('free-text', new FreeTextScorer());
   }
 
-  _recursiveScore(planNode, elm){
+  _recursiveGetScore(planNode, elm){
     let score = null;
     let weight = planNode.weight;
     if (!weight && weight !== 0) {
@@ -39,8 +39,8 @@ export class Scorer{
     //node with 'and' items
     if (planNode.and){
       for (let i = 0; i < planNode.and.length; i++) {
-        score = (score !== null) ? score * this._recursiveScore(planNode.and[i], elm)
-        : this._recursiveScore(planNode.and[i], elm);
+        score = (score !== null) ? score * this._recursiveGetScore(planNode.and[i], elm)
+        : this._recursiveGetScore(planNode.and[i], elm);
       }
       if (weight > 0) {
         score *= weight;
@@ -50,7 +50,7 @@ export class Scorer{
     else if (planNode.or) {
       let partScore = [];
       for (let i = 0; i < planNode.or.length; i++) {
-        let result = this._recursiveScore(planNode.or[i], elm);
+        let result = this._recursiveGetScore(planNode.or[i], elm);
         partScore.push(result);
       }
       score = Math.max.apply(null, partScore);
@@ -64,7 +64,7 @@ export class Scorer{
           let scorer = this._scorersMap.get(planNode.scorer);
           let relationScore = scorer.score(planNode.param, elm, secondaryElm, this._html.bodyRect);
           let planItemNode = planNode.object;
-          let secondaryScore = this._recursiveScore(planItemNode, secondaryElm);
+          let secondaryScore = this._recursiveGetScore(planItemNode, secondaryElm);
           maxScore = Math.max(maxScore, weight * relationScore * secondaryScore);
         }
       }
@@ -104,7 +104,7 @@ export class Scorer{
 
     // Score each element
     for (let elm of this._allElms){
-      elm.score = this._recursiveScore(scoringPlan.object, elm);
+      elm.score = this._recursiveGetScore(scoringPlan.object, elm);
       scoringResult.elements.push(elm);
     }
 
