@@ -38,7 +38,7 @@ gulp
 ```sh
 gulp pack
 ```
-This will build 3 files into the ./dist/ directory
+This will build 3 files into the ./dist/ directory:
 1. artemis.core.js
 2. artemis.core.js.map
 3. artemis.core.min.js
