@@ -39,6 +39,7 @@ gulp
 gulp pack
 ```
 This will build 3 files  - artemis.core.js, artemis.core.js.map, and artemis.core.min.js
+
 The files will be created in the ./dist/ directory.
 
 ### Running the Tests
@@ -52,7 +53,8 @@ This will execute all the tests inside the ./test/jasmine/ directory
 gulp serve
 ```
 This will launch the dev server with a dummy site on http://localhost:8082/
-Note: The port can be changed in ./gulp/gulp-dev-server.js
+
+If needed, the port can be changed in ./gulp/gulp-dev-server.js
 
 ## Publishing
 
