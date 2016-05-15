@@ -31,7 +31,7 @@ export class Planner {
         plan = planEntryInSettings.plan;
       } else {
         log.debug(`plan does not have a value. using: ${Helper.toJSON(value)}`);
-        plan = JSON.parse(JSON.stringify(planEntryInSettings.plan));
+        plan = Object.assign(planEntryInSettings.plan);
         plan.value = value;
       }
     } else {
