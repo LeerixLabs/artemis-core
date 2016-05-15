@@ -1,19 +1,34 @@
-import {ARTEMIS_SCORE_ATTR} from './common-constants';
-import {ARTEMIS_CLASS} from './common-constants';
-
 export default class Element {
 
   constructor(id, domElm){
+    this.id = id;
     this.domElm = domElm;
-    this.idIntenal = id;
-    this.tagName = this.domElm.tagName.toLowerCase();
-    this.classes = this.domElm.classList;
-    this.scoreAttr = '';
-    this.attrs = this.domElm.attributes;
-    this._weight = 0;
-    this._rect = this.getRect();
-    this.unique = false;
-    this._score = 0;
+    this.htmlTagName = domElm.tagName.toLowerCase();
+    this.score = 0;
+
+    //this.classes = this.domElm.classList;
+    //this.scoreAttr = '';
+    //this.attrs = this.domElm.attributes;
+    //this._weight = 0;
+    //this._rect = this.getRect();
+    //this.unique = false;
+    //this._score = 0;
+  }
+
+  get id() {return this._id;}
+  set id(value) {this._id = value;}
+
+  get domElm() {return this._domElm;}
+  set domElm(value) {this._domElm = value;}
+
+  get htmlTagName() {return this._htmlTagName;}
+  set htmlTagName(value) {this._htmlTagName = value;}
+
+  get score() {return this._score;}
+  set score(value) {this._score = value;}
+
+  markScoreOnHtml() {
+    this.domElm.setAttribute(ARTEMIS_SCORE_ATTR, score);
   }
 
   //return position rectangle element; use: elem.rect
@@ -28,30 +43,6 @@ export default class Element {
     rectElm.leftPage = rectElm.left + window.scrollX;
     rectElm.rightPage = rectElm.right + window.scrollX;
     return rectElm;
-  }
-
-  //use: elem.score
-  get score() {
-    if(this.domElm.hasAttribute(ARTEMIS_SCORE_ATTR)){
-      return this._score;
-    }
-    return 0;
-  }
-
-  //use: elem.score = 0.2;
-  set score(score) {
-    this._score = score;
-    this.domElm.setAttribute(ARTEMIS_SCORE_ATTR, score);
-  }
-
-  //use: elem.weight
-  get weight() {
-    return this._weight;
-  }
-
-  //use: elem.weight = 0.2;
-  set weight(score) {
-    this._weight = score;
   }
 
   //use: elem.artemisClass

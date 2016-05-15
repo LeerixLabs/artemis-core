@@ -1,6 +1,3 @@
-import {IGNORED_TAGS} from '../common/common-constants';
-import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
-import {ARTEMIS_CLASS} from '../common/common-constants';
 import {log} from '../common/logger';
 import Helper from  '../common/common-helper';
 import HtmlDOM from './../common/html-dom';
@@ -106,56 +103,78 @@ export class Scorer{
     return score;
   }
 
-  score(scoringPlan){
-    log.debug('Scorer.score() - start');
-    let startTime = new Date();
+  _getAllElements(htmlDom) {
+    let elms = [];
+    let id = 0;
+    let relevantDomElms = htmlDom.getRelevantDomElms();
+    relevantDomElms.forEach( de => {
+      id++;
+      let elm = new Element(id, de);
+      elms.push(elm);
+    });
+    return elms;
+  }
 
-    let scoringResult = {
-      duration: 0,
-      hasSingleMatch: false,
-      elements: []
-    };
+  _normalizeScores() {
+    let maxScore = Math.max.apply(null, this._allElms.map(e => e.score));
+    this._allElms.forEach( e => {
+      e.score = maxScore ? Math.round(e.score / maxScore*100)/100 : 0;
+    });
+  }
 
-    // Get relevant elements
-    this._html = new HtmlDOM();
-    let relevantDomElms = this._html.getRelevantDomElms();
-    this._allElms = [];
-    for (let i = 0; i < relevantDomElms.length; i++) {
-      let elm = new Element(i, relevantDomElms[i]);
-      elm.removeAttributeScore();
-      this._allElms.push(elm);
-    }
-
-    // Score each element
-    for (let elm of this._allElms){
-      elm.score = this._recursiveGetScore(scoringPlan.object, elm);
-      scoringResult.elements.push(elm);
-    }
-
-    // Normalize scores
-    let arrScores = scoringResult.elements.map(elm => elm.score);
-    let maxScore = Math.max.apply( null, arrScores);
-    for (let i = 0; i < scoringResult.elements.length; i++) {
-      scoringResult.elements[i].score = maxScore ? Math.round(scoringResult.elements[i].score / maxScore*100)/100 : 0;
-    }
-
-    // Look for a single match
-    let perfectScore = 0;
-    scoringResult.elements.forEach( (elm) => {
-      if (elm.score === 1) {
-        perfectScore++;
+  _prepareOutput(startTime) {
+    let maxScoreElements = [];
+    this._allElms.forEach( e => {
+      if (e.score === 1) {
+        maxScoreElements.push(e);
       }
     });
-    scoringResult.hasSingleMatch = perfectScore === 1;
+    let scoringResult = {
+      duration: (new Date().getTime() - startTime.getTime()) + 'ms',
+      isSingleMatch: maxScoreElements.length === 1,
+      elements: []
+    };
+    this._allElms.forEach( e => {
+      if (e.score > 0) {
+        scoringResult.elements.push({
+          id: e.id,
+          tag: e.htmlTagName,
+          score: e.score
+        });
+      }
+    });
+    return scoringResult;
+  }
 
-    let endTime = new Date();
+  score(scoringPlan) {
+    log.debug('Scorer.score() - start');
+    let startTime = new Date();
+    let htmlDom = new HtmlDOM();
 
-    scoringResult.duration = endTime.getTime() - startTime.getTime();
+    // Clean HTML DOM
+    htmlDom.cleanDom();
+
+    // Get all elements
+    this._allElms = this._getAllElements(htmlDom);
+
+    // Add element ids to HTML DOM
+    this._allElms.forEach( e => { HtmlDOM.addElmIdToHtmlDom(e.domElm, e.id); });
+
+    // Score each element
+    this._allElms.forEach( e => { e.score = this._recursiveGetScore(scoringPlan.object, e); });
+
+    // Normalize scores
+    this._normalizeScores();
+
+    // Add element scores to HTML DOM
+    this._allElms.forEach( e => { HtmlDOM.addElmScoreToHtmlDom(e.domElm, e.score); });
+
+    // Prepare output
+    let scoringResult = this._prepareOutput(startTime);
 
     log.debug(`scoringResult: ${Helper.toJSON(scoringResult)}`);
     log.debug('Scorer.score() - end');
     return scoringResult;
   }
-
 
 }

@@ -133,7 +133,7 @@ export let settings = {
     },
     {
       "location": "post-object-type",
-      "phrase": "(above|below|inside)",
+      "phrase": "(above|below|near|inside)",
       "type": "rel-position",
       "is-object-relation": true
     }
