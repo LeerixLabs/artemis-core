@@ -1,7 +1,7 @@
 import {ARTEMIS_SCORE_ATTR} from './common-constants';
 import {ARTEMIS_CLASS} from './common-constants';
 
-export class Element {
+export default class Element {
 
   constructor(id, domElm){
     this.domElm = domElm;

@@ -1,5 +1,5 @@
 import {log} from '../common/logger';
-import {Helper} from  '../common/common-helper';
+import Helper from  '../common/common-helper';
 
 export class Parser {
 

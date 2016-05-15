@@ -1,6 +1,6 @@
 import {IGNORED_TAGS} from './common-constants';
 
-export class HtmlDOM {
+export default class HtmlDOM {
 
   constructor(){
     this.console = console;

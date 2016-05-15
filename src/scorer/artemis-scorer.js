@@ -2,9 +2,9 @@ import {IGNORED_TAGS} from '../common/common-constants';
 import {ARTEMIS_SCORE_ATTR} from '../common/common-constants';
 import {ARTEMIS_CLASS} from '../common/common-constants';
 import {log} from '../common/logger';
-import {Helper} from  '../common/common-helper';
-import {HtmlDOM} from './../common/html-dom';
-import {Element} from './../common/element';
+import Helper from  '../common/common-helper';
+import HtmlDOM from './../common/html-dom';
+import Element from './../common/element';
 import CssClassScorer from './scorers/css-class-scorer.js';
 import CssStyleNameAndValScorer from './scorers/css-style-name-and-val-scorer.js';
 import ElmColorScorer from './scorers/elm-color-scorer.js';
@@ -41,6 +41,15 @@ export class Scorer{
     this._scorersMap.set('rel-position', new RelPositionScorer('rel-position', this._settings));
   }
 
+  _getScorer(scorerName) {
+    let scorer = this._scorersMap.get(scorerName);
+    if (scorer) {
+      return scorer;
+    } else {
+      log.error(`Unable to find scorer by name: ${scorerName}`);
+    }
+  }
+
   _recursiveGetScore(planNode, elm){
     let score = 0;
     let weight = planNode.weight;
@@ -48,7 +57,7 @@ export class Scorer{
       weight = 1;
     }
 
-    //node with 'and' items
+    // Node with 'and' items
     if (planNode.and) {
       score = 1;
       planNode.and.forEach( n => {
@@ -56,7 +65,7 @@ export class Scorer{
       });
     }
 
-    //node with 'or' items
+    // Node with 'or' items
     else if (planNode.or) {
       score = 0;
       planNode.or.forEach( n => {
@@ -64,34 +73,30 @@ export class Scorer{
       });
     }
 
-    //node with object
+    // Node with object
     else if (planNode.object) {
       score = 0;
-      this._allElms.forEach( e => {
-        if (elm.id !== e.id) {
-          let scorer = this._scorersMap.get(planNode.scorer);
+      this._allElms.forEach( secondaryElm => {
+        if (elm.id !== secondaryElm.id) {
+          let scorer = this._getScorer(planNode.scorer);
           if (scorer) {
-            let relationScore = scorer.score(planNode.value, elm, e, this._html.bodyRect);
-            let secondaryScore = this._recursiveGetScore(planNode.object, e);
+            let relationScore = scorer.score(planNode.value, elm, secondaryElm);
+            let secondaryScore = this._recursiveGetScore(planNode.object, secondaryElm);
             score = Math.max(score, relationScore * secondaryScore);
-          } else {
-            log.error(`Unknown scorer name: ${planNode.scorer}`);
           }
         }
       });
     }
 
-    //leaf node
+    // Leaf node
     else if (planNode.scorer) {
-      let scorer = this._scorersMap.get(planNode.scorer);
+      let scorer = this._getScorer(planNode.scorer);
       if (scorer) {
         score = scorer.score(planNode.value, elm);
-      } else {
-        log.error(`Unknown scorer name: ${planNode.scorer}`);
       }
     }
 
-    //unknown node
+    // Unknown node
     else {
       log.error(`Unknown plan node type: ${Helper.toJSON(planNode)}`);
     }
