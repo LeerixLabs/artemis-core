@@ -27,18 +27,18 @@ export class Scorer{
   }
 
   _registerScorers() {
-    this._scorersMap.set('css-class', new CssClassScorer());
-    this._scorersMap.set('css-style-name-and-val', new CssStyleNameAndValScorer());
-    this._scorersMap.set('elm-color', new ElmColorScorer());
-    this._scorersMap.set('elm-location', new ElmLocationScorer());
-    this._scorersMap.set('elm-ordinal', new ElmOrdinalScorer());
-    this._scorersMap.set('elm-size', new ElmSizeScorer());
-    this._scorersMap.set('free-text', new FreeTextScorer());
-    this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer());
-    this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer());
-    this._scorersMap.set('html-attr-val', new HtmlAttrValScorer());
-    this._scorersMap.set('html-tag', new HtmlTagScorer());
-    this._scorersMap.set('rel-position', new RelPositionScorer());
+    this._scorersMap.set('css-class', new CssClassScorer('css-class', this._settings));
+    this._scorersMap.set('css-style-name-and-val', new CssStyleNameAndValScorer('css-style-name-and-val', this._settings));
+    this._scorersMap.set('elm-color', new ElmColorScorer('elm-color', this._settings));
+    this._scorersMap.set('elm-location', new ElmLocationScorer('elm-location', this._settings));
+    this._scorersMap.set('elm-ordinal', new ElmOrdinalScorer('elm-ordinal', this._settings));
+    this._scorersMap.set('elm-size', new ElmSizeScorer('elm-size', this._settings));
+    this._scorersMap.set('free-text', new FreeTextScorer('free-text', this._settings));
+    this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer('html-attr-name-and-val', this._settings));
+    this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer('html-attr-name', this._settings));
+    this._scorersMap.set('html-attr-val', new HtmlAttrValScorer('html-attr-val', this._settings));
+    this._scorersMap.set('html-tag', new HtmlTagScorer('html-tag', this._settings));
+    this._scorersMap.set('rel-position', new RelPositionScorer('rel-position', this._settings));
   }
 
   _recursiveGetScore(planNode, elm){

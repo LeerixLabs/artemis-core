@@ -1,5 +1,10 @@
 export default class HtmlTagScorer {
 
+  constructor(name, settings){
+    this.name = name;
+    this._settings = settings;
+  }
+
   score(param, elm){
     if (param === "element"){
         return 1;

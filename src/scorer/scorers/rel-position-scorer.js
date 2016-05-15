@@ -2,6 +2,11 @@ import {REL_LOCATION_TYPE} from '../../common/common-constants';
 
 export default class RelPositionScorer {
 
+    constructor(name, settings){
+        this.name = name;
+        this._settings = settings;
+    }
+
     score(param, elm, comparingElement, bodyRect){
         let elmRect1 = elm.rect;
         let elmRect2 = comparingElement.rect;
