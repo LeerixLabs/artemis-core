@@ -6,12 +6,17 @@ import {Helper} from  '../common/common-helper';
 import {HtmlDOM} from './../common/html-dom';
 import {Element} from './../common/element';
 import CssClassScorer from './scorers/css-class-scorer.js';
+import CssStyleNameAndValScorer from './scorers/css-style-name-and-val-scorer.js';
+import ElmColorScorer from './scorers/elm-color-scorer.js';
+import ElmLocationScorer from './scorers/elm-location-scorer.js';
+import ElmOrdinalScorer from './scorers/elm-ordinal-scorer.js';
+import ElmSizeScorer from './scorers/elm-size-scorer.js';
+import FreeTextScorer from './scorers/free-text-scorer.js';
 import HtmlAttrNameAndValScorer from './scorers/html-attr-name-and-val-scorer.js';
 import HtmlAttrNameScorer from './scorers/html-attr-name-scorer.js';
 import HtmlAttrValScorer from './scorers/html-attr-val-scorer.js';
 import HtmlTagScorer from './scorers/html-tag-scorer.js';
 import RelPositionScorer from './scorers/rel-position-scorer.js';
-import FreeTextScorer from './scorers/free-text-scorer.js';
 
 export class Scorer{
 
@@ -23,12 +28,17 @@ export class Scorer{
 
   _registerScorers() {
     this._scorersMap.set('css-class', new CssClassScorer());
+    this._scorersMap.set('css-style-name-and-val', new CssStyleNameAndValScorer());
+    this._scorersMap.set('elm-color', new ElmColorScorer());
+    this._scorersMap.set('elm-location', new ElmLocationScorer());
+    this._scorersMap.set('elm-ordinal', new ElmOrdinalScorer());
+    this._scorersMap.set('elm-size', new ElmSizeScorer());
+    this._scorersMap.set('free-text', new FreeTextScorer());
     this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer());
     this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer());
     this._scorersMap.set('html-attr-val', new HtmlAttrValScorer());
     this._scorersMap.set('html-tag', new HtmlTagScorer());
     this._scorersMap.set('rel-position', new RelPositionScorer());
-    this._scorersMap.set('free-text', new FreeTextScorer());
   }
 
   _recursiveGetScore(planNode, elm){

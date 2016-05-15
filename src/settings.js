@@ -114,6 +114,11 @@ export let settings = {
     },
     {
       "location": "post-object-type",
+      "phrase": "(?:with|and) style ([\\w-]+)=([\\w-]+)",
+      "type": "css-style-name-and-val"
+    },
+    {
+      "location": "post-object-type",
       "phrase": "left of",
       "type": "rel-position",
       "value": "left-of",
