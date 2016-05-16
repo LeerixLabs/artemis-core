@@ -8,23 +8,14 @@ export default class CssClassScorer {
   }
 
   score(elm, value) {
-    let searchForClassNames = [];
-    let scoreArray = [];
-    let c;
-    if (!elm.classList || elm.classList.length === 0) {
+    if (!elm.classList || elm.classList.length === 0 || !value) {
       return 0;
     }
-    if (ScorerHelper.isArray(value)) {
-      searchForClassNames = value;
-    } else {
-      searchForClassNames = [value];
+    let classArray = [];
+    for (let c=0; c < elm.classList.length; c++) {
+      classArray.push(elm.classList.item(c));
     }
-    searchForClassNames.forEach( searchForClassName => {
-      for (c=0; c < elm.classList.length; c++) {
-        scoreArray.push(ScorerHelper.stringMatchScore(elm.classList.item(c), searchForClassName, true));
-      }
-    });
-    return ScorerHelper.getMaxScore(scoreArray);
+    return ScorerHelper.multiStringMatchScore(classArray, value, true);
   }
 
 }
