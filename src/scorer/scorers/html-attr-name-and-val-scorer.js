@@ -5,9 +5,9 @@ export default class HtmlAttrNameAndValScorer {
     this._settings = settings;
   }
 
-  score(param, elm){
-    for (let i=0; i<elm.attrs.length; i++) {
-      if (elm.attrs[i]["name"] === param[0] &&  elm.attrs[i]["value"] === param[1]) {
+  score(elm, value){
+    for (let i=0; i < elm.attributes.length; i++) {
+      if (elm.attributes[i]["name"] === value[0] &&  elm.attributes[i]["value"] === value[1]) {
         return 1;
       }
     }

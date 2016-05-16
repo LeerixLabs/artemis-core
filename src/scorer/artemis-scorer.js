@@ -21,6 +21,13 @@ export class Scorer{
     this._settings = settings;
     this._scorersMap = new Map();
     this._registerScorers();
+    this._planNodeType = {
+      AND: 'AND',
+      OR: 'OR',
+      RELATION: 'RELATION',
+      LEAF: 'LEAF',
+      UNKNOWN: 'UNKNOWN'
+    }
   }
 
   _registerScorers() {
@@ -47,7 +54,23 @@ export class Scorer{
     }
   }
 
+  _getPlanNodeType(planNode) {
+    let planNodeType = this._planNodeType.UNKNOWN;
+    if (planNode.and) {
+      planNodeType = this._planNodeType.AND;
+    } else if (planNode.or) {
+      planNodeType = this._planNodeType.OR;
+    } else if (planNode.object) {
+      planNodeType = this._planNodeType.RELATION;
+    } else if (planNode.scorer) {
+      planNodeType = this._planNodeType.LEAF;
+    }
+    return planNodeType;
+  }
+
   _recursiveGetScore(planNode, elm){
+    let planNodeType = this._getPlanNodeType(planNode);
+    log.debug(`${elm.tagName} ${elm.id} planNodeType: ${planNodeType} - start`);
     let score = 0;
     let weight = planNode.weight;
     if (!weight && weight !== 0) {
@@ -55,7 +78,7 @@ export class Scorer{
     }
 
     // Node with 'and' items
-    if (planNode.and) {
+    if (planNodeType === this._planNodeType.AND) {
       score = 1;
       planNode.and.forEach( n => {
         score *= this._recursiveGetScore(n, elm);
@@ -63,7 +86,7 @@ export class Scorer{
     }
 
     // Node with 'or' items
-    else if (planNode.or) {
+    else if (planNodeType === this._planNodeType.OR) {
       score = 0;
       planNode.or.forEach( n => {
         score = Math.max(score, this._recursiveGetScore(n, elm));
@@ -71,13 +94,14 @@ export class Scorer{
     }
 
     // Node with object
-    else if (planNode.object) {
+    else if (planNodeType === this._planNodeType.RELATION) {
       score = 0;
       this._allElms.forEach( secondaryElm => {
         if (elm.id !== secondaryElm.id) {
           let scorer = this._getScorer(planNode.scorer);
           if (scorer) {
-            let relationScore = scorer.score(planNode.value, elm, secondaryElm);
+            let relationScore = scorer.score(elm, secondaryElm, planNode.value);
+            log.debug(`${scorer.name} relation score between ${elm.tagName} ${elm.id} and ${secondaryElm.tagName} ${secondaryElm.id} is ${relationScore}`);
             let secondaryScore = this._recursiveGetScore(planNode.object, secondaryElm);
             score = Math.max(score, relationScore * secondaryScore);
           }
@@ -86,10 +110,11 @@ export class Scorer{
     }
 
     // Leaf node
-    else if (planNode.scorer) {
+    else if (planNodeType === this._planNodeType.LEAF) {
       let scorer = this._getScorer(planNode.scorer);
       if (scorer) {
-        score = scorer.score(planNode.value, elm);
+        log.debug(`${scorer.name}`);
+        score = scorer.score(elm, planNode.value);
       }
     }
 
@@ -100,6 +125,7 @@ export class Scorer{
 
     score *= weight;
 
+    log.debug(`${elm.tagName} ${elm.id} planNodeType: ${planNodeType} - end. weight: ${weight}, score: ${score}`);
     return score;
   }
 
@@ -116,9 +142,11 @@ export class Scorer{
   }
 
   _normalizeScores() {
-    let maxScore = Math.max.apply(null, this._allElms.map(e => e.score));
+    let maxScore = Math.max.apply(null, this._allElms.map( e => e.score ));
+    log.debug(`Max score for normalizing is ${maxScore}`);
     this._allElms.forEach( e => {
       e.score = maxScore ? Math.round(e.score / maxScore*100)/100 : 0;
+      log.debug(`Final score for ${e.tagName} ${e.id} is ${e.score}`);
     });
   }
 
@@ -160,7 +188,11 @@ export class Scorer{
     this._allElms.forEach( e => {e.markIdOnHtmlDom(); });
 
     // Score each element
-    this._allElms.forEach( e => { e.score = this._recursiveGetScore(scoringPlan.object, e); });
+    this._allElms.forEach( e => {
+      log.debug(`Scoring ${e.tagName} ${e.id} - start`);
+      e.score = this._recursiveGetScore(scoringPlan.object, e);
+      log.debug(`Scoring ${e.tagName} ${e.id} - end`);
+    });
 
     // Normalize scores
     this._normalizeScores();

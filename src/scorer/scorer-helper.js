@@ -1,52 +1,45 @@
 export class ScorerHelper {
 
-  static stringMatchScores(datas, standard, allowPartialMatch) {
-    var i;
-    var score = 0;
-    if (standard instanceof Array) {
-      standard.forEach(param => {
-        for (i = 0; i < datas.length; i++) {
-          score = Math.max(score, ScorerHelper.stringMatchScore(datas[i], param, allowPartialMatch));
-        }
-      });
-      return score;
-    }
-    for (i = 0; i < datas.length; i++) {
-      score = Math.max(score, ScorerHelper.stringMatchScore(datas[i], standard, allowPartialMatch));
-    }
-    return score;
-  }
-
-  static stringMatchScore(data, standard, allowPartialMatch) {
-    var score = 0;
-    if (!data) {
-      return 0;
-    }
-    var dat = ScorerHelper.pascalCase(data).toLowerCase();
-    var str = ScorerHelper.pascalCase(standard).toLowerCase();
-    if (dat.indexOf(str) === -1) {
-      return 0;
-    }
-    if (allowPartialMatch) {
-      score = str.length / dat.length;
-      if (score < 0.1) {
-        score = 0;
-      }
-    } else if (str.length === dat.length) {
-      score = 1;
-    }
-    return score;
+  static isArray(variable) {
+    return variable.constructor === Array;
   }
 
   static pascalCase(str) {
     if (!str) {
       return '';
-    }
+  }
     return str.trim().replace(/_/g, '-').replace(/\-/g, ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
       return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
-    }).replace(/\s+/g, '').replace(/^[a-z]/, function(m) {
-      return m.toUpperCase();
-    });
+    }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
+  }
+
+  static stringMatchScore(searchIn, searchFor, allowPartialMatch) {
+    let score = 0;
+    if (searchIn) {
+      let searchInStr = ScorerHelper.pascalCase(searchIn).toLowerCase();
+      let searchForStr = ScorerHelper.pascalCase(searchFor).toLowerCase();
+      let index = searchInStr.indexOf(searchForStr);
+      if (!allowPartialMatch && index === 0) {
+        score = 1;
+      } else if (allowPartialMatch && index > -1 ) {
+        score = searchForStr.length / searchInStr.length;
+        if (score < 0.1) {
+          score = 0;
+        }
+      }
+    }
+    return score;
+  }
+
+  static getMaxScore(scoreArray) {
+    if (!scoreArray || scoreArray.length === 0) {
+      return 0;
+    }
+    return Math.max.apply(null, scoreArray);
+  }
+
+  static getBoundScore(score) {
+    return Math.min(Math.max(0, score), 1.0);
   }
 
 }
