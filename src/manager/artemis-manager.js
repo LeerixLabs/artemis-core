@@ -30,8 +30,6 @@ export class Manager {
     this._planner = new Planner(this._settings);
     this._scorer = new Scorer(this._settings);
     this._marker = new Marker(this._settings);
-
-    this._marker.addColorClassesToHtmlDocHead();
   }
 
   locate(elmDescStr) {

@@ -1,5 +1,9 @@
 export default class Constants {
 
+  static get artemisColorClassesExistAttr() {
+    return 'artemis-color-classes-exist';
+  }
+
   static get artemisElmIdsExistAttr() {
     return 'artemis-elm-ids-exist';
   }
@@ -22,6 +26,10 @@ export default class Constants {
 
   static get artemisElmClassPrefix() {
     return 'artemis-class-';
+  }
+
+  static get artemisElmClassSingleMatchSuffix() {
+    return 'single-match';
   }
 
 }
