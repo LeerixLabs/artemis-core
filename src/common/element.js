@@ -2,14 +2,17 @@ import Constants from './common-constants';
 
 export default class Element {
 
-  constructor(id, domElm){
+  constructor(id, domElm) {
     this._id = id;
-    this._domElm = domElm;
     this._score = 0;
+    this._domElm = domElm;
   }
 
   get id() {return this._id;}
   set id(value) {this._id = value;}
+
+  get score() {return this._score;}
+  set score(value) {this._score = value;}
 
   get domElm() {return this._domElm;}
   set domElm(value) {this._domElm = value;}
@@ -19,9 +22,6 @@ export default class Element {
   get classList() {return this._domElm.classList;}
 
   get attributes() {return this._domElm.attributes;}
-
-  get score() {return this._score;}
-  set score(value) {this._score = value;}
 
   get rect() { return this._domElm.getBoundingClientRect() }
 
@@ -49,28 +49,26 @@ export default class Element {
   //  rectElm.rightPage = rectElm.right + window.scrollX;
   //  return rectElm;
   //}
-
-  //use: elem.artemisClass
-  get colorClassIndex() {
-    for(let classElem of this.classes){
-      if(classElem.includes(ARTEMIS_CLASS)){
-        return classElem;
-      }
-    }
-    return '';
-  }
-
-  //use: elem.artemisClass = "red";
-  set colorClassIndex(colorClassIndex) {
-    this.classes.add(`${ARTEMIS_CLASS}${colorClassIndex}`);
-  }
-
-  removeColorClassIndex(){
-    for(let classElem of this.classes){
-      if(classElem.includes(ARTEMIS_CLASS)){
-        this.classes.remove(classElem);
-      }
-    }
-  }
+  //
+  //get colorClassIndex() {
+  //  for(let classElem of this.classes){
+  //    if(classElem.includes(ARTEMIS_CLASS)){
+  //      return classElem;
+  //    }
+  //  }
+  //  return '';
+  //}
+  //
+  //set colorClassIndex(colorClassIndex) {
+  //  this.classes.add(`${ARTEMIS_CLASS}${colorClassIndex}`);
+  //}
+  //
+  //removeColorClassIndex(){
+  //  for(let classElem of this.classes){
+  //    if(classElem.includes(ARTEMIS_CLASS)){
+  //      this.classes.remove(classElem);
+  //    }
+  //  }
+  //}
 
 }

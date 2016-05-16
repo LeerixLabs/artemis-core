@@ -16,5 +16,4 @@ export default class Constants {
     return 'artemis-class-';
   }
 
-
 }
