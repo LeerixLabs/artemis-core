@@ -5,11 +5,11 @@ export default class HtmlTagScorer {
     this._settings = settings;
   }
 
-  score(elm, value){
-    if (value === '*') {
+  score(elm, tagName){
+    if (tagName === '*') {
         return 1;
     } else {
-        return value.toLowerCase() === elm.tagName.toLowerCase() ? 1 : 0;
+        return tagName.toLowerCase() === elm.tagName.toLowerCase() ? 1 : 0;
     }
   }
 

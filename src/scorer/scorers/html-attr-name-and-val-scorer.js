@@ -1,3 +1,5 @@
+import {ScorerHelper} from './../scorer-helper';
+
 export default class HtmlAttrNameAndValScorer {
 
   constructor(name, settings){
@@ -5,13 +7,15 @@ export default class HtmlAttrNameAndValScorer {
     this._settings = settings;
   }
 
-  score(elm, value){
+  score(elm, attrNameAndVal){
+    let score = 0;
     for (let i=0; i < elm.attributes.length; i++) {
-      if (elm.attributes[i]["name"] === value[0] &&  elm.attributes[i]["value"] === value[1]) {
-        return 1;
+      if (elm.attributes[i].name === attrNameAndVal[0]) {
+        score = ScorerHelper.stringMatchScore(elm.attributes[i].value, attrNameAndVal[1]);
+        break;
       }
     }
-    return 0;
+    return score;
   }
 
 }
