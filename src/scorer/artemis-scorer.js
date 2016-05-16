@@ -181,11 +181,9 @@ export class Scorer{
     // Get all elements
     this._allElms = this._getAllElements(htmlDom);
 
-    // Add attribute to HTML DOM body
-    htmlDom.addArtemisBodyAttr();
-
     // Add element ids to HTML DOM
-    this._allElms.forEach( e => {e.markIdOnHtmlDom(); });
+    this._allElms.forEach( e => {HtmlDOM.markElmIdOnHtmlDom(e.domElm, e.id);});
+    htmlDom.artemisIdsExistOnHtmlDom = true;
 
     // Score each element
     this._allElms.forEach( e => {
@@ -198,7 +196,8 @@ export class Scorer{
     this._normalizeScores();
 
     // Add element scores to HTML DOM
-    this._allElms.forEach( e => { e.markScoreOnHtmlDom(); });
+    this._allElms.forEach( e => {HtmlDOM.markElmScoreOnHtmlDom(e.domElm, e.score);});
+    htmlDom.artemisScoresExistOnHtmlDom = true;
 
     // Prepare output
     let scoringResult = this._prepareOutput(startTime);

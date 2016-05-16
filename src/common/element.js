@@ -1,4 +1,4 @@
-import Constants from './common-constants';
+import HtmlDOM from './html-dom';
 
 export default class Element {
 
@@ -24,14 +24,6 @@ export default class Element {
   get attributes() {return this._domElm.attributes;}
 
   get rect() { return this._domElm.getBoundingClientRect() }
-
-  markIdOnHtmlDom() {
-    this._domElm.setAttribute(Constants.artemisIdAttr, '' + this.id);
-  }
-
-  markScoreOnHtmlDom() {
-    this._domElm.setAttribute(Constants.artemisScoreAttr, '' + this.score);
-  }
 
   reportData() {
     return {

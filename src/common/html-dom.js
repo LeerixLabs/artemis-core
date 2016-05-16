@@ -12,9 +12,12 @@ export default class HtmlDOM {
     this._ignoredTags = ['script', 'noscript'];
   }
 
-  isDomElmVisible(domElm) {
-    while (domElm.nodeName.toLowerCase() !== 'body' && this.window.getComputedStyle(domElm).display.toLowerCase() !== 'none' && this.window.getComputedStyle(domElm).visibility.toLowerCase() !== 'hidden') {
-      domElm = domElm.parentNode;
+  _isDomElmVisible(domElm) {
+    while (
+      domElm.nodeName.toLowerCase() !== 'body'
+      && this.window.getComputedStyle(domElm).display.toLowerCase() !== 'none'
+      && this.window.getComputedStyle(domElm).visibility.toLowerCase() !== 'hidden') {
+        domElm = domElm.parentNode;
     }
     return domElm.nodeName.toLowerCase() === 'body';
   }
@@ -24,22 +27,61 @@ export default class HtmlDOM {
     let allDomElms = this.body.getElementsByTagName('*');
     for (let i = 0; i < allDomElms.length; i++) {
       let de = allDomElms[i];
-      if (!this._ignoredTags.includes(de.tagName.toLowerCase()) && this.isDomElmVisible(de)) {
+      if (!this._ignoredTags.includes(de.tagName.toLowerCase()) && this._isDomElmVisible(de)) {
         relevantDomElms.push(de);
       }
     }
     return relevantDomElms;
   }
 
-  cleanDom() {
-    if (this.body.hasAttribute(Constants.artemisBodyAttr)) {
-      let relevantDomElms = this.getRelevantDomElms();
-      relevantDomElms.forEach(de => {
-        de.removeAttribute(Constants.artemisIdAttr);
-        de.removeAttribute(Constants.artemisScoreAttr);
+  _hasArtemisAttr(attrName) {
+    return this.body.hasAttribute(attrName);
+  }
+
+  _setArtemisAttr(attrName, value) {
+    if (value) {
+      this.body.setAttribute(attrName, 'true');
+    } else {
+      this.body.removeAttribute(attrName);
+    }
+  }
+
+  get artemisElmIdsExistOnHtmlDom() { return this._hasArtemisAttr(Constants.artemisElmIdsExistAttr); }
+  set artemisElmIdsExistOnHtmlDom(value) { this._setArtemisAttr(Constants.artemisElmIdsExistAttr, value); }
+
+  get artemisElmScoresExistOnHtmlDom() { return this._hasArtemisAttr(Constants.artemisElmScoresExistAttr); }
+  set artemisElmScoresExistOnHtmlDom(value) { this._setArtemisAttr(Constants.artemisElmScoresExistAttr, value); }
+
+  get artemisElmClassesExistOnHtmlDom() { return this._hasArtemisAttr(Constants.artemisElmClassesExistAttr); }
+  set artemisElmClassesExistOnHtmlDom(value) { this._setArtemisAttr(Constants.artemisElmClassesExistAttr, value); }
+
+  _cleanElmIdsFromHtmlDom(domElms) {
+    if (this.artemisElmIdsExistOnHtmlDom) {
+      domElms.forEach(de => {
+        de.removeAttribute(Constants.artemisElmIdAttr);
+      });
+      this.artemisElmIdsExistOnHtmlDom = false;
+    }
+  }
+
+  _cleanElmScoresFromHtmlDom(domElms) {
+    if (this.artemisElmScoresExistOnHtmlDom) {
+      domElms.forEach(de => {
+        de.removeAttribute(Constants.artemisElmScoreAttr);
+      });
+      this.artemisElmScoresExistOnHtmlDom = false;
+    }
+  }
+
+  _cleanElmClassesFromHtmlDom(domElms) {
+    if (this.artemisElmClassesExistOnHtmlDom) {
+      domElms.forEach(de => {
         let artemisClassName = '';
         for (let i = 0; i < de.classList.length; i++) {
-          if (!artemisClassName && de.classList.item(i).indexOf(Constants.artemisClassPrefix) === 0) {
+          if (artemisClassName) {
+            break;
+          }
+          if (de.classList.item(i).indexOf(Constants.artemisElmClassPrefix) === 0) {
             artemisClassName = de.classList.item(i);
           }
         }
@@ -47,20 +89,25 @@ export default class HtmlDOM {
           de.classList.remove(artemisClassName);
         }
       });
-      this.body.removeAttribute(Constants.artemisBodyAttr);
+      this.artemisElmClassesExistOnHtmlDom = false;
     }
   }
 
-  addArtemisBodyAttr() {
-    this.body.setAttribute(Constants.artemisBodyAttr, 'true');
+  cleanDom() {
+    if (this.artemisElmIdsExistOnHtmlDom || this.artemisElmScoresExistOnHtmlDom || this.artemisElmClassesExistOnHtmlDom) {
+      let domElms = this.getRelevantDomElms();
+      this._cleanElmIdsFromHtmlDom(domElms);
+      this._cleanElmScoresFromHtmlDom(domElms);
+      this._cleanElmClassesFromHtmlDom(domElms);
+    }
   }
 
-  static addElmIdToHtmlDom(domElm, id) {
-    domElm.setAttribute(Constants.artemisIdAttr, '' + id);
+  static markElmIdOnHtmlDom(domElm, id) {
+    domElm.setAttribute(Constants.artemisElmIdAttr, '' + id);
   }
 
-  static addElmScoreToHtmlDom(domElm, score) {
-    domElm.setAttribute(Constants.artemisScoreAttr, '' + score);
+  static markElmScoreOnHtmlDom(domElm, score) {
+    domElm.setAttribute(Constants.artemisElmScoreAttr, '' + score);
   }
 
   //getRect() {

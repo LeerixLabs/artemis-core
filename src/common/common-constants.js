@@ -1,18 +1,26 @@
 export default class Constants {
 
-  static get artemisBodyAttr() {
-    return 'artemis-body';
+  static get artemisElmIdsExistAttr() {
+    return 'artemis-elm-ids-exist';
   }
 
-  static get artemisIdAttr() {
+  static get artemisElmScoresExistAttr() {
+    return 'artemis-elm-scores-exist';
+  }
+
+  static get artemisElmClassesExistAttr() {
+    return 'artemis-elm-classes-exist';
+  }
+
+  static get artemisElmIdAttr() {
     return 'artemis-id';
   }
 
-  static get artemisScoreAttr() {
+  static get artemisElmScoreAttr() {
     return 'artemis-score';
   }
 
-  static get artemisClassPrefix() {
+  static get artemisElmClassPrefix() {
     return 'artemis-class-';
   }
 
