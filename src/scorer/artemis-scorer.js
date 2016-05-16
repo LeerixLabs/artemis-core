@@ -136,11 +136,7 @@ export class Scorer{
     };
     this._allElms.forEach( e => {
       if (e.score > 0) {
-        scoringResult.elements.push({
-          id: e.id,
-          tag: e.htmlTagName,
-          score: e.score
-        });
+        scoringResult.elements.push(e.reportData());
       }
     });
     return scoringResult;
@@ -161,7 +157,7 @@ export class Scorer{
     htmlDom.addArtemisBodyAttr();
 
     // Add element ids to HTML DOM
-    this._allElms.forEach( e => { HtmlDOM.addElmIdToHtmlDom(e.domElm, e.id); });
+    this._allElms.forEach( e => {e.markIdOnHtmlDom(); });
 
     // Score each element
     this._allElms.forEach( e => { e.score = this._recursiveGetScore(scoringPlan.object, e); });
@@ -170,7 +166,7 @@ export class Scorer{
     this._normalizeScores();
 
     // Add element scores to HTML DOM
-    this._allElms.forEach( e => { HtmlDOM.addElmScoreToHtmlDom(e.domElm, e.score); });
+    this._allElms.forEach( e => { e.markScoreOnHtmlDom(); });
 
     // Prepare output
     let scoringResult = this._prepareOutput(startTime);
