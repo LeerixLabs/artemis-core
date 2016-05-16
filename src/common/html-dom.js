@@ -32,20 +32,27 @@ export default class HtmlDOM {
   }
 
   cleanDom() {
-    let relevantDomElms = this.getRelevantDomElms();
-    relevantDomElms.forEach( de => {
-      de.removeAttribute(Constants.artemisIdAttr);
-      de.removeAttribute(Constants.artemisScoreAttr);
-      let artemisClassName = '';
-      for (let i = 0; i < de.classList.length; i++) {
-        if (!artemisClassName && de.classList.item[i].indexOf(Constants.artemisClassPrefix) === 0) {
-          artemisClassName = de.classList.item[i];
+    if (this.body.hasAttribute(Constants.artemisBodyAttr)) {
+      let relevantDomElms = this.getRelevantDomElms();
+      relevantDomElms.forEach(de => {
+        de.removeAttribute(Constants.artemisIdAttr);
+        de.removeAttribute(Constants.artemisScoreAttr);
+        let artemisClassName = '';
+        for (let i = 0; i < de.classList.length; i++) {
+          if (!artemisClassName && de.classList.item(i).indexOf(Constants.artemisClassPrefix) === 0) {
+            artemisClassName = de.classList.item(i);
+          }
         }
-      }
-      if (artemisClassName) {
-        de.classList.remove(artemisClassName);
-      }
-    });
+        if (artemisClassName) {
+          de.classList.remove(artemisClassName);
+        }
+      });
+      this.body.removeAttribute(Constants.artemisBodyAttr);
+    }
+  }
+
+  addArtemisBodyAttr() {
+    this.body.setAttribute(Constants.artemisBodyAttr, 'true');
   }
 
   static addElmIdToHtmlDom(domElm, id) {

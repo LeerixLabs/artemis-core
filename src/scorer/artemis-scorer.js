@@ -108,9 +108,9 @@ export class Scorer{
     let id = 0;
     let relevantDomElms = htmlDom.getRelevantDomElms();
     relevantDomElms.forEach( de => {
-      id++;
       let elm = new Element(id, de);
       elms.push(elm);
+      id++;
     });
     return elms;
   }
@@ -156,6 +156,9 @@ export class Scorer{
 
     // Get all elements
     this._allElms = this._getAllElements(htmlDom);
+
+    // Add attribute to HTML DOM body
+    htmlDom.addArtemisBodyAttr();
 
     // Add element ids to HTML DOM
     this._allElms.forEach( e => { HtmlDOM.addElmIdToHtmlDom(e.domElm, e.id); });
