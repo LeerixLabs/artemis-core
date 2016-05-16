@@ -7,7 +7,7 @@ export default class RelPositionScorer {
         this._settings = settings;
     }
 
-    score(param, elm, comparingElement, bodyRect){
+    score(elm, comparingElement, param, bodyRect){
         let elmRect1 = elm.rect;
         let elmRect2 = comparingElement.rect;
         let score = 0;

@@ -7,7 +7,10 @@ export default class FreeTextScorer {
         this._settings = settings;
     }
 
-    score(param, elm){
-        return ScorerHelper.stringMatchScores([elm.domElm.text, elm.domElm.value, elm.domElm.innerText, elm.domElm.textContent], param, true);
+    score(elm, val){
+        if (!elm || !elm.domElm || !val) {
+            return 0;
+        }
+        return ScorerHelper.multiStringMatchScore([elm.domElm.text, elm.domElm.value, elm.domElm.innerText, elm.domElm.textContent], val, true);
     }
 }

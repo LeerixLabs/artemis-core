@@ -1,3 +1,5 @@
+import {ScorerHelper} from './../scorer-helper';
+
 export default class HtmlAttrNameScorer {
 
   constructor(name, settings){
@@ -5,13 +7,17 @@ export default class HtmlAttrNameScorer {
     this._settings = settings;
   }
 
-  score(param, elm){
-    for (let i=0; i<elm.attrs.length; i++) {
-      if (elm.attrs[i]["name"] === param) {
-        return 1;
-      }
+  score(elm, val){
+    if (!elm || !elm.attributes || elm.attributes.length === 0 || !val) {
+      return 0;
     }
-    return 0;
+    let score;
+    let attrNames = [];
+    for (let i = 0; i < elm.attributes.length; i++) {
+      attrNames.push(elm.attributes[i].name);
+    }
+    score = ScorerHelper.multiStringMatchScore(attrNames, val, true);
+    return score;
   }
 
 }

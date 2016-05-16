@@ -7,7 +7,7 @@ export default class CssStyleNameAndValScorer {
     this._settings = settings;
   }
 
-  score(param, elm) {
+  score(elm, val) {
     return 0;
   }
 

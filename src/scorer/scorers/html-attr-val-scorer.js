@@ -7,12 +7,17 @@ export default class HtmlAttrValScorer {
     this._settings = settings;
   }
 
-  score(param, elm){
-      let  attrs = [];
-      for (var i = 0; i < elm.attrs.length; i++) {
-          attrs.push(elm.attrs[i].value);
-      }
-      return ScorerHelper.stringMatchScores(attrs, param, true);
+  score(elm, val){
+    if (!elm || !elm.attributes || elm.attributes.length === 0 || !val) {
+      return 0;
+    }
+    let score;
+    let attrValues = [];
+    for (let i = 0; i < elm.attributes.length; i++) {
+      attrValues.push(elm.attributes[i].value);
+    }
+    score = ScorerHelper.multiStringMatchScore(attrValues, val, true);
+    return score;
   }
 
 }

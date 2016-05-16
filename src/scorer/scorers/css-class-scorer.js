@@ -7,15 +7,17 @@ export default class CssClassScorer {
     this._settings = settings;
   }
 
-  score(elm, cls) {
-    if (!elm.classList || elm.classList.length === 0 || !cls) {
+  score(elm, val) {
+    if (!elm || !elm.classList || elm.classList.length === 0 || !val) {
       return 0;
     }
+    let score;
     let elmClassArray = [];
     for (let c=0; c < elm.classList.length; c++) {
       elmClassArray.push(elm.classList.item(c));
     }
-    return ScorerHelper.multiStringMatchScore(elmClassArray, cls, true);
+    score = ScorerHelper.multiStringMatchScore(elmClassArray, val, true);
+    return score;
   }
 
 }
