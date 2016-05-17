@@ -1,5 +1,6 @@
 import {settings} from '../settings';
 import {log} from '../common/logger';
+import HtmlDOM from '../common/html-dom';
 import {Parser} from '../parser/artemis-parser';
 import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
@@ -16,6 +17,7 @@ export class Manager {
   }
 
   init(config) {
+    this._htmlDom = new HtmlDOM();
     if (!config) {
       this._settings = settings;
     } else if (typeof config == 'string' || config instanceof String) {
@@ -28,8 +30,8 @@ export class Manager {
     }
     this._parser = new Parser(this._settings);
     this._planner = new Planner(this._settings);
-    this._scorer = new Scorer(this._settings);
-    this._marker = new Marker(this._settings);
+    this._scorer = new Scorer(this._settings, this._htmlDom);
+    this._marker = new Marker(this._settings, this._htmlDom);
   }
 
   locate(elmDescStr) {

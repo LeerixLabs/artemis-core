@@ -29,7 +29,8 @@ export default class Element {
     return {
       id: this.id,
       tag: this.tagName,
-      score: this.score
+      score: this.score,
+      domElm: this.domElm
     }
   }
 

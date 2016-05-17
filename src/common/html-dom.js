@@ -8,7 +8,6 @@ export default class HtmlDOM {
     this.document = document;
     this.head = this.document.head;
     this.body = this.document.body;
-    //this.bodyRect = this.body.getBoundingClientRect();
     this._ignoredTags = ['script', 'noscript'];
   }
 
@@ -128,6 +127,10 @@ export default class HtmlDOM {
 
   static markElmScoreOnHtmlDom(domElm, score) {
     domElm.setAttribute(Constants.artemisElmScoreAttr, '' + score);
+  }
+
+  static addElmClassToHtmlDom(domElm, className) {
+    domElm.classList.add(className);
   }
 
   //getRect() {

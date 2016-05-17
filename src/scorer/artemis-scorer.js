@@ -17,8 +17,9 @@ import RelPositionScorer from './scorers/rel-position-scorer.js';
 
 export class Scorer{
 
-  constructor(settings){
+  constructor(settings, htmlDom){
     this._settings = settings;
+    this._htmlDom = htmlDom;
     this._scorersMap = new Map();
     this._registerScorers();
     this._planNodeType = {
@@ -129,10 +130,10 @@ export class Scorer{
     return score;
   }
 
-  _getAllElements(htmlDom) {
+  _getAllElements() {
     let elms = [];
     let id = 0;
-    let relevantDomElms = htmlDom.getRelevantDomElms();
+    let relevantDomElms = this._htmlDom.getRelevantDomElms();
     relevantDomElms.forEach( de => {
       let elm = new Element(id, de);
       elms.push(elm);
@@ -151,15 +152,8 @@ export class Scorer{
   }
 
   _prepareOutput(startTime) {
-    let maxScoreElements = [];
-    this._allElms.forEach( e => {
-      if (e.score === 1) {
-        maxScoreElements.push(e);
-      }
-    });
     let scoringResult = {
       duration: (new Date().getTime() - startTime.getTime()) + 'ms',
-      isSingleMatch: maxScoreElements.length === 1,
       elements: []
     };
     this._allElms.forEach( e => {
@@ -173,17 +167,16 @@ export class Scorer{
   score(scoringPlan) {
     log.debug('Scorer.score() - start');
     let startTime = new Date();
-    let htmlDom = new HtmlDOM();
 
     // Clean HTML DOM
-    htmlDom.cleanDom();
+    this._htmlDom.cleanDom();
 
     // Get all elements
-    this._allElms = this._getAllElements(htmlDom);
+    this._allElms = this._getAllElements();
 
     // Add element ids to HTML DOM
     this._allElms.forEach( e => {HtmlDOM.markElmIdOnHtmlDom(e.domElm, e.id);});
-    htmlDom.artemisIdsExistOnHtmlDom = true;
+    this._htmlDom.artemisIdsExistOnHtmlDom = true;
 
     // Score each element
     this._allElms.forEach( e => {
@@ -197,7 +190,7 @@ export class Scorer{
 
     // Add element scores to HTML DOM
     this._allElms.forEach( e => {HtmlDOM.markElmScoreOnHtmlDom(e.domElm, e.score);});
-    htmlDom.artemisScoresExistOnHtmlDom = true;
+    this._htmlDom.artemisScoresExistOnHtmlDom = true;
 
     // Prepare output
     let scoringResult = this._prepareOutput(startTime);
