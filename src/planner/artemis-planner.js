@@ -26,12 +26,13 @@ export class Planner {
       }
     }
     if (planEntryInSettings) {
-      if (planEntryInSettings.plan.value) {
-        log.debug(`plan already has a value: ${Helper.toJSON(planEntryInSettings.plan.value)}`);
-        plan = planEntryInSettings.plan;
+      let planEntry = JSON.parse(JSON.stringify(planEntryInSettings));
+      if (planEntry.plan.value) {
+        log.debug(`plan already has a value: ${Helper.toJSON(planEntry.plan.value)}`);
+        plan = planEntry.plan;
       } else {
         log.debug(`plan does not have a value. using: ${Helper.toJSON(value)}`);
-        plan = Object.assign(planEntryInSettings.plan);
+        plan = Object.assign(planEntry.plan);
         plan.value = value;
       }
     } else {
@@ -66,7 +67,6 @@ export class Planner {
 
   plan(modeledElmDesc) {
     log.debug('Planner.plan() - start');
-    log.debug(`modeledElmDesc: ${Helper.toJSON(modeledElmDesc)}`);
     let scoringPlan = {};
     scoringPlan.object = this._recursiveGetPlan(modeledElmDesc.object);
     log.debug(`scoringPlan: ${Helper.toJSON(scoringPlan)}`);
