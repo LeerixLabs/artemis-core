@@ -26,13 +26,8 @@ export class Planner {
       }
     }
     if (planEntryInSettings) {
-      let planEntry = JSON.parse(JSON.stringify(planEntryInSettings));
-      if (planEntry.plan.value) {
-        log.debug(`plan already has a value: ${Helper.toJSON(planEntry.plan.value)}`);
-        plan = planEntry.plan;
-      } else {
-        log.debug(`plan does not have a value. using: ${Helper.toJSON(value)}`);
-        plan = Object.assign(planEntry.plan);
+      plan = JSON.parse(JSON.stringify(planEntryInSettings.plan));
+      if (!plan.and && !plan.or && !plan.value && plan.value !== 0) {
         plan.value = value;
       }
     } else {
