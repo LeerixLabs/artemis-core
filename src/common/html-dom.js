@@ -95,8 +95,8 @@ export default class HtmlDOM {
     }
   }
 
-  cleanDom() {
-    if (this.artemisElmIdsExistOnHtmlDom || this.artemisElmScoresExistOnHtmlDom || this.artemisElmClassesExistOnHtmlDom) {
+  cleanDom(force) {
+    if (force || this.artemisElmIdsExistOnHtmlDom || this.artemisElmScoresExistOnHtmlDom || this.artemisElmClassesExistOnHtmlDom) {
       let domElms = this.getRelevantDomElms();
       this._cleanElmIdsFromHtmlDom(domElms);
       this._cleanElmScoresFromHtmlDom(domElms);

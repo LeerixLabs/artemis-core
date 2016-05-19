@@ -14,6 +14,7 @@ export class Manager {
   registerGlobalFunctions() {
     document.artemisInit = this.init;
     document.artemisLocate = this.locate;
+    document.artemisClean = Manager.clean;
   }
 
   init(config) {
@@ -28,10 +29,12 @@ export class Manager {
     if (this._settings && this._settings['log-level']) {
       log.setLogLevel(this._settings['log-level']);
     }
+    log.debug('Manager.init() - start');
     this._parser = new Parser(this._settings);
     this._planner = new Planner(this._settings);
     this._scorer = new Scorer(this._settings, this._htmlDom);
     this._marker = new Marker(this._settings, this._htmlDom);
+    log.debug('Manager.init() - end');
   }
 
   locate(elmDescStr) {
@@ -51,5 +54,11 @@ export class Manager {
 
     log.debug('Manager.locate() - end');
     return scoringResult;
+  }
+
+  static clean() {
+    log.debug('Manager.clean() - start');
+    (new HtmlDOM()).cleanDom(true);
+    log.debug('Manager.clean() - end');
   }
 }

@@ -1,5 +1,6 @@
 window.testPageInit = function testPageInit() {
   document.artemisInit("");
+  document.artemisClean();
 };
 
 window.testPageLocate = function testPageLocate() {
