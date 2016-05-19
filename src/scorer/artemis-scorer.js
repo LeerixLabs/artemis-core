@@ -71,7 +71,8 @@ export class Scorer{
 
   _recursiveGetScore(planNode, elm){
     let planNodeType = this._getPlanNodeType(planNode);
-    log.debug(`${elm.tagName} ${elm.id} planNodeType: ${planNodeType} - start`);
+    let logMsgPrefix = `${elm.tagName} ${elm.id}`;
+    log.debug(`${logMsgPrefix} planNodeType: ${planNodeType} - start`);
     let score = 0;
     let weight = planNode.weight;
     if (!weight && weight !== 0) {
@@ -102,7 +103,7 @@ export class Scorer{
           let scorer = this._getScorer(planNode.scorer);
           if (scorer) {
             let relationScore = scorer.score(elm, secondaryElm, planNode.value);
-            log.debug(`${scorer.name} relation score between ${elm.tagName} ${elm.id} and ${secondaryElm.tagName} ${secondaryElm.id} is ${relationScore}`);
+            log.debug(`${logMsgPrefix} ${scorer.name} relation score with ${secondaryElm.tagName} ${secondaryElm.id} is ${relationScore}`);
             let secondaryScore = this._recursiveGetScore(planNode.object, secondaryElm);
             score = Math.max(score, relationScore * secondaryScore);
           }
@@ -114,7 +115,7 @@ export class Scorer{
     else if (planNodeType === this._planNodeType.LEAF) {
       let scorer = this._getScorer(planNode.scorer);
       if (scorer) {
-        log.debug(`${scorer.name}`);
+        log.debug(`${logMsgPrefix} ${scorer.name} ${planNode.value}`);
         score = scorer.score(elm, planNode.value);
       }
     }
@@ -126,7 +127,7 @@ export class Scorer{
 
     score *= weight;
 
-    log.debug(`${elm.tagName} ${elm.id} planNodeType: ${planNodeType} - end. weight: ${weight}, score: ${score}`);
+    log.debug(`${logMsgPrefix} planNodeType: ${planNodeType} - end. weight: ${weight}, score: ${score}`);
     return score;
   }
 
