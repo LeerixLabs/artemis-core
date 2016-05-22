@@ -17,13 +17,17 @@ export default class Element {
   get domElm() {return this._domElm;}
   set domElm(value) {this._domElm = value;}
 
-  get tagName() {return this._domElm.tagName.toLowerCase();}
+  get document() { return this._domElm && this._domElm.ownerDocument;}
 
-  get classList() {return this._domElm.classList;}
+  get window() { return this.document && this.document.defaultView || this.document && this.document.parentWindow;}
 
-  get attributes() {return this._domElm.attributes;}
+  get tagName() {return this._domElm && this._domElm.tagName.toLowerCase();}
 
-  get rect() { return this._domElm.getBoundingClientRect() }
+  get classList() {return this._domElm && this._domElm.classList;}
+
+  get attributes() {return this._domElm && this._domElm.attributes;}
+
+  get rect() { return this._domElm && this._domElm.getBoundingClientRect() }
 
   reportData() {
     return {
