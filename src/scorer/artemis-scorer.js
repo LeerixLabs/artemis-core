@@ -19,6 +19,7 @@ export class Scorer{
 
   constructor(settings, htmlDom){
     this._settings = settings;
+    this._minScore = (settings && settings.scoring && settings.scoring['min-score']) || 0;
     this._htmlDom = htmlDom;
     this._scorersMap = new Map();
     this._registerScorers();
@@ -106,6 +107,7 @@ export class Scorer{
             log.debug(`${logMsgPrefix} ${scorer.name} relation score with ${secondaryElm.tagName} ${secondaryElm.id} is ${relationScore}`);
             let secondaryScore = this._recursiveGetScore(planNode.object, secondaryElm);
             score = Math.max(score, relationScore * secondaryScore);
+            score = Math.max(score, this._minScore);
           }
         }
       });
@@ -117,6 +119,7 @@ export class Scorer{
       if (scorer) {
         log.debug(`${logMsgPrefix} ${scorer.name} ${planNode.value}`);
         score = scorer.score(elm, planNode.value);
+        score = Math.max(score, this._minScore);
       }
     }
 
@@ -143,11 +146,14 @@ export class Scorer{
     return elms;
   }
 
-  _normalizeScores() {
+  _finalizeScores() {
     let maxScore = Math.max.apply(null, this._allElms.map( e => e.score ));
     log.debug(`Max score for normalizing is ${maxScore}`);
     this._allElms.forEach( e => {
       e.score = maxScore ? Math.round(e.score / maxScore*100)/100 : 0;
+      if (e.score <= this._minScore) {
+        e.score = 0;
+      }
       log.debug(`Final score for ${e.tagName} ${e.id} is ${e.score}`);
     });
   }
@@ -186,8 +192,8 @@ export class Scorer{
       log.debug(`Scoring ${e.tagName} ${e.id} - end`);
     });
 
-    // Normalize scores
-    this._normalizeScores();
+    // Finalize scores
+    this._finalizeScores();
 
     // Add element scores to HTML DOM
     this._allElms.forEach( e => {HtmlDOM.markElmScoreOnHtmlDom(e.domElm, e.score);});

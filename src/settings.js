@@ -450,6 +450,9 @@ export let settings = {
       }
     }
   ],
+  "scoring": {
+    "min-score": 0.01
+  },
   "colors": {
     "single-match-color": "#339933",
     "score-colors": [
