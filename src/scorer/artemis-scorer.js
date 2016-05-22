@@ -150,8 +150,9 @@ export class Scorer{
     let maxScore = Math.max.apply(null, this._allElms.map( e => e.score ));
     log.debug(`Max score for normalizing is ${maxScore}`);
     this._allElms.forEach( e => {
-      e.score = maxScore ? Math.round(e.score / maxScore*100)/100 : 0;
-      if (e.score <= this._minScore) {
+      if (e.score > this._minScore) {
+        e.score = maxScore ? Math.round(e.score / maxScore * 100) / 100 : 0;
+      } else {
         e.score = 0;
       }
       log.debug(`Final score for ${e.tagName} ${e.id} is ${e.score}`);
