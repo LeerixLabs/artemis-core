@@ -59,13 +59,21 @@ If needed, the port can be changed in ./gulp/gulp-dev-server.js
 
 ## Publishing
 
-1) Update the new version number on ./package.json, commit, and push.
-
-2) Create a new release on GitHub.
-
-3) Run these via cmd:
+1) Validate that everything is okay by running cmd:
 ```sh
 gulp
+```
+
+2) Update the new version number on ./package.json
+
+3) Commit and push the change.
+
+4) Validate Travis build passes.
+
+5) Create a new release on GitHub.
+
+6) Run these via cmd:
+```sh
 npm login
 npm publish
 ```
