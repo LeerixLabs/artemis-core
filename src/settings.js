@@ -450,6 +450,10 @@ export let settings = {
       }
     }
   ],
+  "elm-size": {
+    "small": 1024,
+    "large": 16384
+  },
   "scoring": {
     "min-score": 0.01
   },
