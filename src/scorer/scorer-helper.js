@@ -13,13 +13,13 @@ export class ScorerHelper {
     }).replace(/\s+/g, '').replace(/^[a-z]/, function(m){ return m.toUpperCase(); });
   }
 
-  static stringMatchScore(searchIn, searchFor, allowPartialMatch) {
+  static stringMatchScore(searchIn, searchFor, allowPartialMatch, NeedToNormalize) {
     let score = 0;
     if (searchIn) {
-      let searchInStr = ScorerHelper.pascalCase(searchIn).toLowerCase();
-      let searchForStr = ScorerHelper.pascalCase(searchFor).toLowerCase();
+      let searchInStr = NeedToNormalize ? ScorerHelper.pascalCase(searchIn).toLowerCase() : searchIn;
+      let searchForStr = NeedToNormalize ? ScorerHelper.pascalCase(searchFor).toLowerCase() : searchFor;
       let index = searchInStr.indexOf(searchForStr);
-      if (!allowPartialMatch && index === 0) {
+      if (!allowPartialMatch && index === 0 && searchInStr.length === searchForStr.length) {
         score = 1;
       } else if (allowPartialMatch && index > -1 ) {
         score = searchForStr.length / searchInStr.length;
@@ -46,16 +46,7 @@ export class ScorerHelper {
     }
     searchInArr.forEach( si => {
       searchForArr.forEach( sf => {
-        let tmpScore = 0;
-        let index = si.indexOf(sf);
-        if (!allowPartialMatch && index === 0) {
-          tmpScore = 1;
-        } else if (allowPartialMatch && index > -1 ) {
-          tmpScore = sf.length / si.length;
-          if (tmpScore < 0.1) {
-            tmpScore = 0;
-          }
-        }
+        let tmpScore = ScorerHelper.stringMatchScore(si, sf, allowPartialMatch, false);
         score = Math.max(score, tmpScore);
       });
     });

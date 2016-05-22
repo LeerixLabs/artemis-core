@@ -14,7 +14,7 @@ export default class HtmlAttrNameAndValScorer {
     let score = 0;
     for (let i=0; i < elm.attributes.length; i++) {
       if (elm.attributes[i].name === val[0]) {
-        score = ScorerHelper.stringMatchScore(elm.attributes[i].value, val[1]);
+        score = ScorerHelper.stringMatchScore(elm.attributes[i].value, val[1], true);
         break;
       }
     }
