@@ -6,7 +6,7 @@ export default class HtmlTagScorer {
   }
 
   score(elm, val){
-    if (!elm || !elm.tagName || !val) {
+    if (!val || !elm || !elm.tagName) {
       return 0;
     }
     if (val === '*') {

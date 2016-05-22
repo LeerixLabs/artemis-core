@@ -9,7 +9,7 @@ export default class CssStyleNameAndValScorer {
 
   score(elm, val) {
     //val should be an array of css style name and css style value
-    if (!elm || !elm.window || !val || val.length !== 2) {
+    if (!val || val.length !== 2 || !elm || !elm.window) {
       return 0;
     }
     let score = 0;

@@ -8,7 +8,7 @@ export default class FreeTextScorer {
     }
 
     score(elm, val){
-        if (!elm || !elm.domElm || !val) {
+        if (!val || !elm || !elm.domElm) {
             return 0;
         }
         return ScorerHelper.multiStringMatchScore([elm.domElm.text, elm.domElm.value, elm.domElm.innerText, elm.domElm.textContent], val, true);

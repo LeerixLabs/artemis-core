@@ -8,7 +8,7 @@ export default class HtmlAttrNameAndValScorer {
   }
 
   score(elm, val){
-    if (!elm || !elm.attributes || !val || val.length != 2) {
+    if (!val || val.length != 2 || !elm || !elm.attributes) {
       return 0;
     }
     let score = 0;

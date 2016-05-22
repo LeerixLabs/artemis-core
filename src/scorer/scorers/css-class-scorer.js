@@ -9,7 +9,7 @@ export default class CssClassScorer {
 
   score(elm, val) {
     //val can be a single class name or an array of class names
-    if (!elm || !elm.classList || elm.classList.length === 0 || !val) {
+    if (!val || !elm || !elm.classList || elm.classList.length === 0) {
       return 0;
     }
     let score;
