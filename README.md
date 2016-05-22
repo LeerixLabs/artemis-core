@@ -72,12 +72,15 @@ gulp
 
 5) Create a new release on GitHub.
 
-6) Run these via cmd:
+6) Login to npm by running cmd:
 ```sh
 npm login
+```
+
+7) Publish artemis.core.min.js to the npm registry by running cmd:
+```sh
 npm publish
 ```
-This will publish artemis.core.min.js to the npm registry.
 
 ## Links
 
