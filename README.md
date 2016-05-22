@@ -59,15 +59,17 @@ If needed, the port can be changed in ./gulp/gulp-dev-server.js
 
 ## Publishing
 
-1) Update the new version number on package.json
+1) Update the new version number on ./package.json, commit, and push.
 
-2) Run these via cmd:
+2) Create a new release on GitHub.
+
+3) Run these via cmd:
 ```sh
 gulp
 npm login
 npm publish
 ```
-This will publish artemis.core.min.js to the npm Registry.
+This will publish artemis.core.min.js to the npm registry.
 
 ## Links
 
