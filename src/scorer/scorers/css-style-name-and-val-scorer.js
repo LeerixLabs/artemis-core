@@ -5,7 +5,6 @@ export default class CssStyleNameAndValScorer {
   constructor(name, settings){
     this.name = name;
     this._settings = settings;
-    this._window = null;
   }
 
   score(elm, val) {
