@@ -260,8 +260,8 @@ describe('Parser', () => {
 
   it('test element relative position', () => {
     let elmRelPositions = [
-      {s: 'left of',  v: 'left-of'},
-      {s: 'right of', v: 'right-of'},
+      {s: 'left of',  v: 'left'},
+      {s: 'right of', v: 'right'},
       {s: 'above',    v: 'above'},
       {s: 'below',    v: 'below'},
       {s: 'inside',   v: 'inside'}

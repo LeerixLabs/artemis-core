@@ -121,14 +121,14 @@ export let settings = {
       "location": "post-object-type",
       "phrase": "left of",
       "type": "rel-position",
-      "value": "left-of",
+      "value": "left",
       "is-object-relation": true
     },
     {
       "location": "post-object-type",
       "phrase": "right of",
       "type": "rel-position",
-      "value": "right-of",
+      "value": "right",
       "is-object-relation": true
     },
     {
