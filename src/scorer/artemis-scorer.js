@@ -24,11 +24,11 @@ export class Scorer{
     this._scorersMap = new Map();
     this._registerScorers();
     this._planNodeType = {
-      AND: 'AND',
-      OR: 'OR',
-      RELATION: 'RELATION',
-      LEAF: 'LEAF',
-      UNKNOWN: 'UNKNOWN'
+      AND: 'and',
+      OR: 'or',
+      RELATION: 'relation',
+      LEAF: 'leaf',
+      UNKNOWN: 'unknown'
     }
   }
 
