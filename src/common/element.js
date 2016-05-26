@@ -38,34 +38,4 @@ export default class Element {
     }
   }
 
-  //getRect() {
-  //  let rectElm = this.domElm.getBoundingClientRect();
-  //  rectElm.topPage = rectElm.top + window.scrollY;
-  //  rectElm.bottomPage = rectElm.bottom + window.scrollY;
-  //  rectElm.leftPage = rectElm.left + window.scrollX;
-  //  rectElm.rightPage = rectElm.right + window.scrollX;
-  //  return rectElm;
-  //}
-  //
-  //get colorClassIndex() {
-  //  for(let classElem of this.classes){
-  //    if(classElem.includes(ARTEMIS_CLASS)){
-  //      return classElem;
-  //    }
-  //  }
-  //  return '';
-  //}
-  //
-  //set colorClassIndex(colorClassIndex) {
-  //  this.classes.add(`${ARTEMIS_CLASS}${colorClassIndex}`);
-  //}
-  //
-  //removeColorClassIndex(){
-  //  for(let classElem of this.classes){
-  //    if(classElem.includes(ARTEMIS_CLASS)){
-  //      this.classes.remove(classElem);
-  //    }
-  //  }
-  //}
-
 }
