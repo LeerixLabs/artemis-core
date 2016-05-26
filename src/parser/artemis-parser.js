@@ -32,7 +32,12 @@ export class Parser {
     relevantPhrases.forEach( p => {
       if (!matchResult) {
         let matches = new RegExp(`^${p.phrase}`, `i`).exec(sentence);
-        if (matches && matches.length > 0 && (sentence.length === matches[0].length || sentence.charAt(matches[0].length) === ' ')) {
+        if (matches
+            && matches.length > 0
+            && matches[0]
+            && (sentence.length === matches[0].length
+              ||  sentence.length > matches[0].length
+                  && sentence.charAt(matches[0].length) === ' ')) {
           log.debug(`Match found for: ${matches[0]}`);
           let matchedStrLength = matches[0].length;
           if (matches.length > 1) {
