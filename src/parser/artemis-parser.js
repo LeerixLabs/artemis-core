@@ -31,7 +31,7 @@ export class Parser {
     let relevantPhrases = (state === 'pre-object-type')? this._objectTypePhrases.concat(this._preObjectTypePhrases) : this._postObjectTypePhrases;
     relevantPhrases.forEach( p => {
       if (!matchResult) {
-        let matches = new RegExp(`^${p.phrase}$`, `i`).exec(sentence);
+        let matches = new RegExp(`^${p.phrase}`, `i`).exec(sentence);
         if (matches && matches.length > 0) {
           log.debug(`Match found for: ${matches[0]}`);
           let matchedStrLength = matches[0].length;
