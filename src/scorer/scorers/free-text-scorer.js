@@ -11,6 +11,10 @@ export default class FreeTextScorer {
         if (!val || !elm || !elm.domElm) {
             return 0;
         }
-        return ScorerHelper.multiStringMatchScore([elm.domElm.text, elm.domElm.value, elm.domElm.innerText, elm.domElm.textContent], val, true);
+        let checkedValuesArray = [elm.domElm.text, elm.domElm.value, elm.domElm.innerText, elm.domElm.textContent];
+        for (let c = 0; c < elm.classList.length; c++) {
+            checkedValuesArray.push(elm.classList.item(c));
+        }
+        return ScorerHelper.multiStringMatchScore(checkedValuesArray, val, true);
     }
 }
