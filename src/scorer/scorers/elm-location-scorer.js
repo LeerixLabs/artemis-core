@@ -5,7 +5,6 @@ export default class ElmLocationScorer {
   constructor(name, settings){
     this.name = name;
     this._settings = settings;
-    this._bodyRect = null;
     this._locationType = {
       TOP: 'top',
       BOTTOM: 'bottom',
@@ -25,22 +24,20 @@ export default class ElmLocationScorer {
     if (!rect || rect.width === 0 || rect.height === 0) {
       return 0;
     }
-    if (!this._bodyRect) {
-      this._bodyRect = elm.document && elm.document.body && elm.document.body.getBoundingClientRect();
-    }
-    if (!this._bodyRect) {
+    let bodyRect = elm.document && elm.document.body && elm.document.body.getBoundingClientRect();
+    if (!bodyRect) {
       return 0;
     }
     let score = 0;
     let locationType = this._locationType[val.toUpperCase()] || this._locationType.UNKNOWN;
     if (locationType === this._locationType.TOP) {
-      score = 1 - ((rect.top + rect.bottom) / 2 / this._bodyRect.bottom);
+      score = 1 - ((rect.top + rect.bottom) / 2 / bodyRect.bottom);
     } else if (locationType === this._locationType.BOTTOM) {
-      score = (rect.top + rect.bottom) / 2 / this._bodyRect.bottom;
+      score = (rect.top + rect.bottom) / 2 / bodyRect.bottom;
     } else if (locationType === this._locationType.LEFT) {
-      score = 1 - ((rect.left + rect.right) / 2 / this._bodyRect.right);
+      score = 1 - ((rect.left + rect.right) / 2 / bodyRect.right);
     } else if (locationType === this._locationType.RIGHT) {
-      score = (rect.left + rect.right) / 2 / this._bodyRect.right;
+      score = (rect.left + rect.right) / 2 / bodyRect.right;
     } else if (locationType === this._locationType.MIDDLE) {
       let maxScore = 0;
       maxScore = Math.max(maxScore, this.score(elm, this._locationType.TOP));

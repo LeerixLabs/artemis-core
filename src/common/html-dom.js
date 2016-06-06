@@ -133,13 +133,4 @@ export default class HtmlDOM {
     domElm.classList.add(className);
   }
 
-  //getRect() {
-  //  let rectElm = this.body.getBoundingClientRect();
-  //  rectElm.topPage = rectElm.top + this.window.scrollY;
-  //  rectElm.bottomPage = rectElm.bottom + this.window.scrollY;
-  //  rectElm.leftPage = rectElm.left + this.window.scrollX;
-  //  rectElm.rightPage = rectElm.right + this.window.scrollX;
-  //  return rectElm;
-  //}
-
 }

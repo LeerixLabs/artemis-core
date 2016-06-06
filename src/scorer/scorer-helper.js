@@ -64,4 +64,9 @@ export class ScorerHelper {
     return Math.min(Math.max(0, score), 1.0);
   }
 
+  static getPartialScore(value, maxValue, reversed) {
+    var score = maxValue > 0 ? Math.min(Math.max(0, value / maxValue), 1.0) : 0;
+    return reversed ? 1 - score : score;
+  }
+
 }
