@@ -15,6 +15,10 @@ export default class FreeTextScorer {
         for (let c = 0; c < elm.classList.length; c++) {
             checkedValuesArray.push(elm.classList.item(c));
         }
+        for (let a = 0; a < elm.attributes.length; a++) {
+            checkedValuesArray.push(elm.attributes[a].name);
+            checkedValuesArray.push(elm.attributes[a].value);
+        }
         return ScorerHelper.multiStringMatchScore(checkedValuesArray, val, true);
     }
 }
