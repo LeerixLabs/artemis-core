@@ -1,7 +1,7 @@
 # artemis-core
 
-[![NPM version](http://img.shields.io/npm/v/artemis-core.svg)](https://www.npmjs.org/package/artemis-core)
 [![Build Status](https://travis-ci.org/LeerixLabs/artemis-core.svg?branch=master)](https://travis-ci.org/LeerixLabs/artemis-core)
+[![NPM version](http://img.shields.io/npm/v/artemis-core.svg)](https://www.npmjs.org/package/artemis-core)
 
 ## Description
 
