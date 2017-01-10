@@ -53,7 +53,7 @@ export default class RelPositionScorer {
          if ((elmRect1.left >= elmRect2.right) &&
              (elmRect1.top < elmRect2.bottom) &&
              (elmRect1.bottom > elmRect2.top)) {
-             score = ScorerHelper.getPartialScore(elmRect1.leftPage - elmRect2.rightPage, bodyRect.rightPage, true);
+             score = ScorerHelper.getPartialScore(elmRect1.left - elmRect2.right, bodyRect.right, true);
          }
       } else if (val === this._relPositionType.INSIDE) {
          if ((elmRect1.left >= elmRect2.left) &&
