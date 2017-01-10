@@ -20,7 +20,7 @@ export default class ElmSizeScorer {
     if (!val || !elm) {
       return 0;
     }
-    var rect = elm.rect;
+    let rect = elm.rect;
     if (!rect || rect.width === 0 || rect.height === 0) {
       return 0;
     }

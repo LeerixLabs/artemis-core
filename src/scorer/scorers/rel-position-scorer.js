@@ -63,10 +63,10 @@ export default class RelPositionScorer {
              score = 1;
          }
       } else if (val === this._relPositionType.NEAR) {
-          var deltaX = Math.abs((elmRect1.left + (elmRect1.right - elmRect1.left) / 2) - (elmRect2.left + (elmRect2.right - elmRect2.left) / 2));
-          var deltaY = Math.abs((elmRect1.top + (elmRect1.bottom - elmRect1.top) / 2) - (elmRect2.top + (elmRect2.bottom - elmRect2.top) / 2));
-          var dist = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-          var maxDist = Math.sqrt(Math.pow(300, 2) + Math.pow(300, 2));
+          let deltaX = Math.abs((elmRect1.left + (elmRect1.right - elmRect1.left) / 2) - (elmRect2.left + (elmRect2.right - elmRect2.left) / 2));
+          let deltaY = Math.abs((elmRect1.top + (elmRect1.bottom - elmRect1.top) / 2) - (elmRect2.top + (elmRect2.bottom - elmRect2.top) / 2));
+	        let dist = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+	        let maxDist = Math.sqrt(Math.pow(300, 2) + Math.pow(300, 2));
           score = ScorerHelper.getPartialScore(dist, maxDist, true);
       }
       return score;
