@@ -1,5 +1,3 @@
-import HtmlDOM from './html-dom';
-
 export default class Element {
 
   constructor(id, domElm) {
