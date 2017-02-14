@@ -15,27 +15,22 @@ TBD
 
 3) Open cmd.
 
-4) If needed, install Gulp by running cmd:
-```sh
-npm install -g gulp
-```
-
-5) Clone the Git repository to your local machine by running cmd:
+4) Clone the Git repository to your local machine by running cmd:
 ```sh
 git clone https://github.com/LeerixLabs/artemis-core.git c:/github/artemis-core
 ```
 
-6) Change directory to within your local repository by running cmd:
+5) Change directory to within your local repository by running cmd:
 ```sh
 cd c:/github/artemis-core
 ```
 
-7) Import npm dependencies by running cmd:
+6) Import npm dependencies by running cmd:
 ```sh
 npm i
 ```
 
-8) Ensure all was done correctly by running cmd:
+7) Ensure all was done correctly by running cmd:
 ```sh
 gulp
 ```
