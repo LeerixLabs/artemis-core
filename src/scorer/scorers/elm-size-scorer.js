@@ -1,5 +1,3 @@
-import {ScorerHelper} from './../scorer-helper';
-
 export default class ElmSizeScorer {
 
   constructor(name, settings){
@@ -11,8 +9,8 @@ export default class ElmSizeScorer {
       LARGE: 'large',
       UNKNOWN: 'unknown'
     };
-    this._small = settings && settings["elm-size"] && settings["elm-size"].small || 32*32;
-    this._large = settings && settings["elm-size"] && settings["elm-size"].large || 128*128;
+    this._small = settings && settings['scorers'] && settings['scorers']['elm-size'] && settings['scorers']['elm-size'].small || 32*32;
+    this._large = settings && settings['scorers'] && settings['scorers']['elm-size'] && settings['scorers']['elm-size'].large || 128*128;
   }
 
   score(elm, val) {
