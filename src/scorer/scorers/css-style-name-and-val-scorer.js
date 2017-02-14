@@ -1,5 +1,3 @@
-import {ScorerHelper} from './../scorer-helper';
-
 export default class CssStyleNameAndValScorer {
 
   constructor(name, settings){

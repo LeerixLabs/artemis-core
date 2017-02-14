@@ -1,5 +1,3 @@
-import {ScorerHelper} from './../scorer-helper';
-
 export default class ElmOrdinalScorer {
 
   constructor(name, settings){
