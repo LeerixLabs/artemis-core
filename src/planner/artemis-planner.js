@@ -9,7 +9,7 @@ export class Planner {
   }
 
   _getPlanByTypeAndValue(type, value) {
-    console.log(`Searching for relevant plan. type: ${type}, value: ${value}`);
+    log.debug(`Searching for relevant plan. type: ${type}, value: ${value}`);
     let plan = {};
     let planEntryInSettings = this._plans.find((p) => {
       return p.type === type && p.value === value;
