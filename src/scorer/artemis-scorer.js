@@ -19,7 +19,7 @@ export class Scorer{
 
   constructor(settings, htmlDom){
     this._settings = settings;
-    this._minScore = (settings && settings.scoring && settings.scoring['min-score']) || 0;
+    this._pruneScore = (settings && settings.scoring && settings.scoring['prune-score']) || 0;
     this._htmlDom = htmlDom;
     this._scorersMap = new Map();
     this._registerScorers();
@@ -84,7 +84,9 @@ export class Scorer{
     if (planNodeType === this._planNodeType.AND) {
       score = 1;
       planNode.and.forEach( n => {
-        score *= this._recursiveGetScore(n, elm);
+        if (score !== 0) {
+			score *= this._recursiveGetScore(n, elm);
+		}
       });
     }
 
@@ -107,7 +109,6 @@ export class Scorer{
             log.debug(`${logMsgPrefix} ${scorer.name} relation score with ${secondaryElm.tagName} ${secondaryElm.id} is ${relationScore}`);
             let secondaryScore = this._recursiveGetScore(planNode.object, secondaryElm);
             score = Math.max(score, relationScore * secondaryScore);
-            score = Math.max(score, this._minScore);
           }
         }
       });
@@ -119,7 +120,6 @@ export class Scorer{
       if (scorer) {
         log.debug(`${logMsgPrefix} ${scorer.name} ${planNode.value}`);
         score = scorer.score(elm, planNode.value);
-        score = Math.max(score, this._minScore);
       }
     }
 
@@ -131,6 +131,12 @@ export class Scorer{
     score *= weight;
 
     log.debug(`${logMsgPrefix} planNodeType: ${planNodeType} - end. weight: ${weight}, score: ${score}`);
+
+    if (score < this._pruneScore) {
+		log.debug(`${logMsgPrefix} Node score is too low`);
+		score = 0;
+    }
+
     return score;
   }
 
@@ -150,7 +156,7 @@ export class Scorer{
     let maxScore = Math.max.apply(null, this._allElms.map( e => e.score ));
     log.debug(`Max score for normalizing is ${maxScore}`);
     this._allElms.forEach( e => {
-      if (e.score > this._minScore) {
+      if (e.score > this._pruneScore) {
         e.score = maxScore ? Math.round(e.score / maxScore * 100) / 100 : 0;
       } else {
         e.score = 0;
