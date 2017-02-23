@@ -3,35 +3,52 @@ export default class ElmColorScorer {
 	constructor(name, settings){
 		this.name = name;
 		this._settings = settings;
-		this._colors = [
-			{name: 'black',  rgb: '#000000'},
-			{name: 'navy',   rgb: '#000080'},
-			{name: 'blue',   rgb: '#0000FF'},
-			{name: 'green',  rgb: '#008000'},
-			{name: 'teal',   rgb: '#008080'},
-			{name: 'lime',   rgb: '#00FF00'},
-			{name: 'aqua',   rgb: '#00FFFF'},
-			{name: 'maroon', rgb: '#800000'},
-			{name: 'purple', rgb: '#800080'},
-			{name: 'olive',  rgb: '#808000'},
-			{name: 'gray',   rgb: '#808080'},
-			{name: 'brown',  rgb: '#994C00'},
-			{name: 'silver', rgb: '#C0C0C0'},
-			{name: 'red',    rgb: '#FF0000'},
-			{name: 'pink',   rgb: '#FF00FF'},
-			{name: 'orange', rgb: '#FFA500'},
-			{name: 'yellow', rgb: '#FFFF00'},
-			{name: 'white',  rgb: '#FFFFFF'}
-		];
-		this._factors = [
-			1.0, //Hue
-			0.2, //Saturation
-			0.6  //Lightness
-		];
+		this._config = this._settings && this._settings.scorers && this._settings.scorers['elm-color'];
+		if (!this._config) {
+			this._config = {
+				colors: [
+					{name: 'maroon', rgb: '#800000'},
+					{name: 'red',    rgb: '#FF0000'},
+					{name: 'brown',  rgb: '#994C00'},
+					{name: 'orange', rgb: '#FF9900'},
+					{name: 'yellow', rgb: '#FFFF00'},
+					{name: 'olive',  rgb: '#808000'},
+					{name: 'lime',   rgb: '#00FF00'},
+					{name: 'green',  rgb: '#008000'},
+					{name: 'teal',   rgb: '#008080'},
+					{name: 'aqua',   rgb: '#00FFFF'},
+					{name: 'blue',   rgb: '#0000FF'},
+					{name: 'navy',   rgb: '#000080'},
+					{name: 'pink',   rgb: '#FF00FF'},
+					{name: 'purple', rgb: '#800080'}
+				],
+				black: {
+					name: 'black',
+					rgb: '#000000',
+					value: 0.1
+				},
+				white: {
+					name: 'white',
+					rgb: '#FFFFFF',
+					value: 0.9
+				},
+				gray: {
+					name: 'gray',
+					rgb: '#808080',
+					value: 0.1
+				},
+				'hsl-factors': [1, 0.2, 0.6]
+			};
+		}
+		for (let i = 0; i < this._config.colors.length; i++) {
+			let rgb = ElmColorScorer.strToRgb(this._config.colors[i].rgb);
+			let hsl = ElmColorScorer.rgbToHsl(rgb[0], rgb[1], rgb[2]);
+			this._config.colors[i].hsl = [hsl[0], hsl[1], hsl[2]];
+		}
 	}
 
 	score(elm, val) {
-		//val can be a value from the supported color list below
+		//val can be a value from the supported color list
 		if (!val || !elm) {
 			return 0;
 		}
@@ -46,27 +63,33 @@ export default class ElmColorScorer {
 		return 0;
 	}
 
-	_getClosestColor(colorStr, colorArray, factors) {
-		//CodePen: http://codepen.io/anon/pen/LxwjGN
+	_getClosestColor(colorStr) {
 		let rgb, hsl, closestDiff, diff;
+		let config = this._config;
 		let closestColorIndex = -1;
-		let colorsHsl = [];
-		for (let i = 0; i < this._colors.length; i++) {
-			rgb = ElmColorScorer.strToRgb(colorArray[i].rgb);
-			hsl = ElmColorScorer.rgbToHsl(rgb[0], rgb[1], rgb[2]);
-			colorsHsl.push([hsl[0], hsl[1], hsl[2]]);
-		}
 		rgb = ElmColorScorer.strToRgb(colorStr);
 		hsl = ElmColorScorer.rgbToHsl(rgb[0], rgb[1], rgb[2]);
+		if (hsl[2] < config.black.value) {
+			return config.black;
+		}
+		if (hsl[2] > config.white.value) {
+			return config.white;
+		}
+		if (hsl[1] < config.gray.value) {
+			return config.gray;
+		}
 		closestDiff = Number.MAX_VALUE;
-		for (let i = 0; i < colorsHsl.length; i++) {
-			diff = factors[0]*Math.abs(colorsHsl[i][0] - hsl[0]) + factors[1]*Math.abs(colorsHsl[i][1] - hsl[1]) + factors[2]*Math.abs(colorsHsl[i][2] - hsl[2]);
+		for (let i = 0; i < config.colors.length; i++) {
+			diff =
+			config['hsl-factors'][0]*Math.abs(config.colors[i].hsl[0] - hsl[0]) +
+			config['hsl-factors'][1]*Math.abs(config.colors[i].hsl[1] - hsl[1]) +
+			config['hsl-factors'][2]*Math.abs(config.colors[i].hsl[2] - hsl[2]);
 			if (diff < closestDiff) {
 				closestDiff = diff;
 				closestColorIndex = i;
 			}
 		}
-		return colorArray[closestColorIndex];
+		return config.colors[closestColorIndex];
 	}
 
 	static strToRgb(str) {
