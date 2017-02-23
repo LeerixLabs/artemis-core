@@ -3,43 +3,43 @@ export default class ElmColorScorer {
 	constructor(name, settings){
 		this.name = name;
 		this._settings = settings;
-		this._config = this._settings && this._settings.scorers && this._settings.scorers['elm-color'];
-		if (!this._config) {
-			this._config = {
-				colors: [
-					{name: 'maroon', rgb: '#800000'},
-					{name: 'red',    rgb: '#FF0000'},
-					{name: 'brown',  rgb: '#994C00'},
-					{name: 'orange', rgb: '#FF9900'},
-					{name: 'yellow', rgb: '#FFFF00'},
-					{name: 'olive',  rgb: '#808000'},
-					{name: 'lime',   rgb: '#00FF00'},
-					{name: 'green',  rgb: '#008000'},
-					{name: 'teal',   rgb: '#008080'},
-					{name: 'aqua',   rgb: '#00FFFF'},
-					{name: 'blue',   rgb: '#0000FF'},
-					{name: 'navy',   rgb: '#000080'},
-					{name: 'pink',   rgb: '#FF00FF'},
-					{name: 'purple', rgb: '#800080'}
-				],
-				black: {
-					name: 'black',
-					rgb: '#000000',
-					value: 0.1
-				},
-				white: {
-					name: 'white',
-					rgb: '#FFFFFF',
-					value: 0.9
-				},
-				gray: {
-					name: 'gray',
-					rgb: '#808080',
-					value: 0.1
-				},
-				'hsl-factors': [1, 0.2, 0.6]
+		this._config = {};
+		this._config.colors = this._settings.colors ||
+			[
+				{name: 'maroon', rgb: '#800000'},
+				{name: 'red',    rgb: '#FF0000'},
+				{name: 'brown',  rgb: '#994C00'},
+				{name: 'orange', rgb: '#FF9900'},
+				{name: 'yellow', rgb: '#FFFF00'},
+				{name: 'olive',  rgb: '#808000'},
+				{name: 'lime',   rgb: '#00FF00'},
+				{name: 'green',  rgb: '#008000'},
+				{name: 'teal',   rgb: '#008080'},
+				{name: 'aqua',   rgb: '#00FFFF'},
+				{name: 'blue',   rgb: '#0000FF'},
+				{name: 'navy',   rgb: '#000080'},
+				{name: 'pink',   rgb: '#FF00FF'},
+				{name: 'purple', rgb: '#800080'}
+			];
+		this._config.black = this._settings.black ||
+			{
+				name: 'black',
+				rgb: '#000000',
+				value: 0.1
 			};
-		}
+		this._config.white = this._settings.white ||
+			{
+				name: 'white',
+				rgb: '#FFFFFF',
+				value: 0.9
+			};
+		this._config.gray = this._settings.gray ||
+			{
+				name: 'gray',
+				rgb: '#808080',
+				value: 0.1
+			};
+		this._config['hsl-factors'] = this._settings['hsl-factors'] || [1, 0.2, 0.6];
 		for (let i = 0; i < this._config.colors.length; i++) {
 			let rgb = ElmColorScorer.strToRgb(this._config.colors[i].rgb);
 			let hsl = ElmColorScorer.rgbToHsl(rgb[0], rgb[1], rgb[2]);

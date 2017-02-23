@@ -33,18 +33,22 @@ export class Scorer{
   }
 
   _registerScorers() {
-    this._scorersMap.set('css-class', new CssClassScorer('css-class', this._settings));
-    this._scorersMap.set('css-style-name-and-val', new CssStyleNameAndValScorer('css-style-name-and-val', this._settings));
-    this._scorersMap.set('elm-color', new ElmColorScorer('elm-color', this._settings));
-    this._scorersMap.set('elm-location', new ElmLocationScorer('elm-location', this._settings));
-    this._scorersMap.set('elm-ordinal', new ElmOrdinalScorer('elm-ordinal', this._settings));
-    this._scorersMap.set('elm-size', new ElmSizeScorer('elm-size', this._settings));
-    this._scorersMap.set('free-text', new FreeTextScorer('free-text', this._settings));
-    this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer('html-attr-name-and-val', this._settings));
-    this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer('html-attr-name', this._settings));
-    this._scorersMap.set('html-attr-val', new HtmlAttrValScorer('html-attr-val', this._settings));
-    this._scorersMap.set('html-tag', new HtmlTagScorer('html-tag', this._settings));
-    this._scorersMap.set('rel-position', new RelPositionScorer('rel-position', this._settings));
+    this._scorersMap.set('css-class', new CssClassScorer('css-class', this._getScorerSettings('css-class')));
+    this._scorersMap.set('css-style-name-and-val', new CssStyleNameAndValScorer('css-style-name-and-val', this._getScorerSettings('css-style-name-and-val')));
+    this._scorersMap.set('elm-color', new ElmColorScorer('elm-color', this._getScorerSettings('elm-color')));
+    this._scorersMap.set('elm-location', new ElmLocationScorer('elm-location', this._getScorerSettings('elm-location')));
+    this._scorersMap.set('elm-ordinal', new ElmOrdinalScorer('elm-ordinal', this._getScorerSettings('elm-ordinal')));
+    this._scorersMap.set('elm-size', new ElmSizeScorer('elm-size', this._getScorerSettings('elm-size')));
+    this._scorersMap.set('free-text', new FreeTextScorer('free-text', this._getScorerSettings('free-text')));
+    this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer('html-attr-name-and-val', this._getScorerSettings('html-attr-name-and-val')));
+    this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer('html-attr-name', this._getScorerSettings('html-attr-name')));
+    this._scorersMap.set('html-attr-val', new HtmlAttrValScorer('html-attr-val', this._getScorerSettings('html-attr-val')));
+    this._scorersMap.set('html-tag', new HtmlTagScorer('html-tag', this._getScorerSettings('html-tag')));
+    this._scorersMap.set('rel-position', new RelPositionScorer('rel-position', this._getScorerSettings('rel-position')));
+  }
+  
+  _getScorerSettings(scorerName) {
+	  return this._settings && this._settings.scorers && this._settings.scorers[scorerName] || {};  
   }
 
   _getScorer(scorerName) {
