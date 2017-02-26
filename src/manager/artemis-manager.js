@@ -31,6 +31,12 @@ export class Manager {
     log.debug('Manager.init() - end');
   }
 
+  clean() {
+    log.debug('Manager.clean() - start');
+    (new HtmlDOM()).cleanDom(true);
+    log.debug('Manager.clean() - end');
+  }
+
   locate(elmDescStr) {
     log.debug('Manager.locate() - start');
 
@@ -50,9 +56,41 @@ export class Manager {
     return scoringResult;
   }
 
-  clean() {
-    log.debug('Manager.clean() - start');
-    (new HtmlDOM()).cleanDom(true);
-    log.debug('Manager.clean() - end');
+  run(command) {
+  	let locateResult = this.locate(command.target);
+    let found = false;
+    locateResult.elements.forEach( elm => {
+  		if (!found && elm.score === 1) {
+			found = true;
+			if (command.action === 'click') {
+				if (typeof angular !== 'undefined') {
+					angular.element(elm.domElm).trigger('click');
+				} else {
+					elm.domElm.click();
+				}
+			} else if (command.action === 'write') {
+				setTimeout(function () {
+					elm.domElm.value = command.value;
+					if (typeof angular !== 'undefined') {
+						angular.element(elm.domElm).trigger('keydown');
+						angular.element(elm.domElm).trigger('change');
+					} else {
+						elm.domElm.keydown();
+						elm.domElm.change();
+					}
+				}, 0);
+			}
+	  	}
+    });
+  }
+
+  command(command) {
+    if (command.mode === 'debug') {
+      this.locate(command.target);
+    } else if (command.mode === 'run') {
+      this.run(command)
+    } else {
+		log.debug('Usupported command mode');
+    }
   }
 }
