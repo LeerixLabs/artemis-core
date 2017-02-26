@@ -108,7 +108,7 @@ export default class HtmlDOM {
     let colorClassesText = [];
     colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {background-color: ${singleMatchColor} !important; outline: 5px solid ${singleMatchColor} !important;}`);
     for (let i = 0; i < scoreColors.length; i++) {
-      colorClassesText.push(`.${Constants.artemisElmClassPrefix}${i} {background-color: ${scoreColors[i]} !important; outline: 5px solid ${scoreColors[i]} !important;}`);
+      colorClassesText.push(`.${Constants.artemisElmClassPrefix}${i} {background-color: ${scoreColors[i]} !important; background-image: none !important; outline: 5px solid ${scoreColors[i]} !important;}`);
     }
     let style = this.document.createElement('style');
     style.type = 'text/css';
