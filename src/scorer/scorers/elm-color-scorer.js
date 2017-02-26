@@ -60,6 +60,13 @@ export default class ElmColorScorer {
 				return 1;
 			}
 		}
+		colorStr = computedStyle['color'];
+		if (colorStr) {
+			let closestColor = this._getClosestColor(colorStr, this._colors, this._factors);
+			if (closestColor.name === val) {
+				return 1;
+			}
+		}
 		return 0;
 	}
 
