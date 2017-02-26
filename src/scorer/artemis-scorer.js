@@ -20,7 +20,6 @@ export class Scorer{
 	constructor(settings, htmlDom){
 		this._settings = settings;
 		this._isDebug = log.isDebug();
-		alert(this._isDebug);
 		this._pruneScore = (settings && settings.scoring && settings.scoring['prune-score']) || 0;
 		this._htmlDom = htmlDom;
 		this._scorersMap = new Map();
