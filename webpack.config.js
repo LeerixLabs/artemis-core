@@ -8,7 +8,7 @@ module.exports = {
     publicPath: '/',
     filename: 'dist/[name].js',
     libraryTarget: "var",
-    library: 'artemis'
+    library: 'artemisCore'
   },
   debug:'true',
   devtool: 'source-map',
