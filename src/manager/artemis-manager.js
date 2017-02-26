@@ -56,11 +56,11 @@ export class Manager {
     return scoringResult;
   }
 
-  run(command) {
+  execute(command) {
   	let locateResult = this.locate(command.target);
-    let found = false;
-    locateResult.elements.forEach( elm => {
-  		if (!found && elm.score === 1) {
+	let found = false;
+	locateResult.elements.forEach( elm => {
+		if (!found && elm.score === 1) {
 			found = true;
 			if (command.action === 'click') {
 				if (typeof angular !== 'undefined') {
@@ -80,17 +80,24 @@ export class Manager {
 					}
 				}, 0);
 			}
-	  	}
-    });
+		}
+	});
   }
 
-  command(command) {
-    if (command.mode === 'debug') {
-      this.locate(command.target);
-    } else if (command.mode === 'run') {
-      this.run(command)
-    } else {
-		log.debug('Usupported command mode');
-    }
+  run(commands) {
+	  let that = this;
+	  if (commands[0].mode === 'debug') {
+		  this.locate(commands[0].target);
+	  } else if (commands[0].mode === 'run') {
+		  this.execute(commands[0])
+	  } else {
+		  log.debug('Unsupported command mode');
+	  }
+	  if (commands.length > 1) {
+		  commands.splice(0, 1);
+		  setTimeout(function() {
+			  that.run(commands);
+		  }, 3000);
+	  }
   }
 }
