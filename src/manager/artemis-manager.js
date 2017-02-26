@@ -11,12 +11,6 @@ export class Manager {
   constructor() {
   }
 
-  registerGlobalFunctions() {
-    document.artemisInit = this.init;
-    document.artemisLocate = this.locate;
-    document.artemisClean = Manager.clean;
-  }
-
   init(config) {
     this._htmlDom = new HtmlDOM();
     if (!config) {
@@ -56,7 +50,7 @@ export class Manager {
     return scoringResult;
   }
 
-  static clean() {
+  clean() {
     log.debug('Manager.clean() - start');
     (new HtmlDOM()).cleanDom(true);
     log.debug('Manager.clean() - end');
