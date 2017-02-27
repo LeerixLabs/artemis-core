@@ -11,7 +11,7 @@ export class Manager {
 	constructor() {
 	}
 
-	_load() {
+	_loadFromStorage() {
 		let si = localStorage.getItem('artemisCore');
 		if (si) {
 			return JSON.parse(si);
@@ -22,7 +22,7 @@ export class Manager {
 		}
 	}
 
-	_save(si) {
+	_saveToStorage(si) {
 		localStorage.setItem('artemisCore', JSON.stringify(si));
 	}
 
@@ -72,6 +72,7 @@ export class Manager {
 	}
 
 	_click(command) {
+		log.debug('Manager.click() - start');
 		let locateResult = this._locate(command.target);
 		let found = false;
 		locateResult.elements.forEach( elm => {
@@ -86,9 +87,11 @@ export class Manager {
 				//}, 0);
 			}
 		});
+		log.debug('Manager.click() - end');
 	}
 
 	_write(command) {
+		log.debug('Manager.write() - start');
 		let locateResult = this._locate(command.target);
 		let found = false;
 		locateResult.elements.forEach( elm => {
@@ -106,46 +109,61 @@ export class Manager {
 				//}, 0);
 			}
 		});
+		log.debug('Manager.write() - end');
 	}
 
 	_run() {
+		log.debug('Manager.run() - start');
 		let that = this;
-		let artemisCoreStorageItem = this._load();
-		if (artemisCoreStorageItem['commands'].length === 0) {
-			return;
-		}
-		this._init(null);
-		this._clean();
-		let cmd = artemisCoreStorageItem['commands'][0];
-		if (cmd.mode === 'debug') {
-			this._locate(cmd.target);
-		} else if (cmd.mode === 'run') {
-			if (cmd.action === 'locate') {
+		let artemisCoreStorageItem = this._loadFromStorage();
+		if (artemisCoreStorageItem.commands.length > 0) {
+			this._init(null);
+			this._clean();
+			let cmd = artemisCoreStorageItem.commands[0];
+			if (cmd.mode === 'debug') {
 				this._locate(cmd.target);
-			} else if (cmd.action === 'click') {
-				this._click(cmd);
-			} else if (cmd.action === 'write') {
-				this._write(cmd);
+			} else if (cmd.mode === 'run') {
+				if (cmd.action === 'locate') {
+					this._locate(cmd.target);
+				} else if (cmd.action === 'click') {
+					this._click(cmd);
+				} else if (cmd.action === 'write') {
+					this._write(cmd);
+				} else {
+					log.error('Unsupported command action');
+				}
 			} else {
-				log.error('Unsupported command action');
+				log.error('Unsupported command mode');
 			}
-		} else {
-			log.error('Unsupported command mode');
+			artemisCoreStorageItem.commands.splice(0, 1);
+			this._saveToStorage(artemisCoreStorageItem);
+			if (artemisCoreStorageItem.commands.length > 0) {
+				setTimeout(function () {
+					that._run();
+				}, 4000);
+			}
 		}
-		artemisCoreStorageItem['commands'].splice(0, 1);
-		this._save(artemisCoreStorageItem);
-		if (artemisCoreStorageItem['commands'].length > 0) {
-			setTimeout(function () {
-				that._run();
-			}, 4000);
-		}
+		log.debug('Manager.run() - end');
 	}
 
-	execute(commands) {
-		let artemisCoreStorageItem = this._load();
-		artemisCoreStorageItem['commands'].push.apply(artemisCoreStorageItem['commands'], commands);
-		this._save(artemisCoreStorageItem);
+	runCommands(commands) {
+		log.debug('Manager.runCommands() - start');
+		let artemisCoreStorageItem = this._loadFromStorage();
+		artemisCoreStorageItem.commands.push.apply(artemisCoreStorageItem.commands, commands);
+		this._saveToStorage(artemisCoreStorageItem);
 		this._run();
+		log.debug('Manager.runCommands() - end');
+	}
+
+	clearCommands() {
+		log.debug('Manager.clearCommands() - start');
+		let artemisCoreStorageItem = this._loadFromStorage();
+		if (artemisCoreStorageItem.commands.length > 1) {
+			artemisCoreStorageItem.commands = [];
+		}
+		this._saveToStorage(artemisCoreStorageItem);
+		this._clean();
+		log.debug('Manager.clearCommands() - end');
 	}
 
 }
