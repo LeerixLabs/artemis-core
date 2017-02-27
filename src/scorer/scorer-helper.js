@@ -38,11 +38,11 @@ export class ScorerHelper {
     let score = 0;
     let searchInArr = ScorerHelper.isArray(searchIn) ? searchIn : [searchIn];
     for (let i = 0; i < searchInArr.length; i++) {
-      searchInArr[i] = ScorerHelper.pascalCase(searchInArr[i]).toLowerCase();
+      searchInArr[i] = ScorerHelper.pascalCase(searchInArr[i]).trim().toLowerCase();
     }
     let searchForArr = ScorerHelper.isArray(searchFor) ? searchFor : [searchFor];
     for (let i = 0; i < searchForArr.length; i++) {
-      searchForArr[i] = ScorerHelper.pascalCase(searchForArr[i]).toLowerCase();
+      searchForArr[i] = ScorerHelper.pascalCase(searchForArr[i]).trim().toLowerCase();
     }
     searchInArr.forEach( si => {
       searchForArr.forEach( sf => {
