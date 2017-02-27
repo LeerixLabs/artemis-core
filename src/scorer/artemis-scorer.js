@@ -173,14 +173,18 @@ export class Scorer{
 	_prepareOutput(startTime) {
 		let scoringResult = {
 			duration: (new Date().getTime() - startTime.getTime()) + 'ms',
+			count: [0, 0, 0],
 			perfects: [],
 			elements: []
 		};
 		this._allElms.forEach( e => {
+			scoringResult.count[0]++;
 			if (e.score > 0) {
 				scoringResult.elements.push(e.reportData());
+				scoringResult.count[1]++;
 				if (e.score === 1) {
 					scoringResult.perfects.push(e.reportData());
+					scoringResult.count[2]++;
 				}
 			}
 		});
