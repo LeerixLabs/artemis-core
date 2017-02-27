@@ -173,11 +173,15 @@ export class Scorer{
 	_prepareOutput(startTime) {
 		let scoringResult = {
 			duration: (new Date().getTime() - startTime.getTime()) + 'ms',
+			perfects: [],
 			elements: []
 		};
 		this._allElms.forEach( e => {
 			if (e.score > 0) {
 				scoringResult.elements.push(e.reportData());
+				if (e.score === 1) {
+					scoringResult.perfects.push(e.reportData());
+				}
 			}
 		});
 		return scoringResult;
