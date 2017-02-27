@@ -39,7 +39,7 @@ export let settings = {
 		},
 		{
 			"location": "pre-object-type",
-			"phrase": "(red|orange|yellow|green|blue|purple|pink|brown|gray|black|white)",
+			"phrase": "(maroon|red|brown|orange|yellow|olive|lime|green|teal|aqua|blue|navy|pink|purple|black|white|gray)",
 			"type": "elm-color"
 		},
 		{
