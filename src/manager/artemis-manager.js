@@ -156,13 +156,18 @@ export class Manager {
 	}
 
 	clearCommands() {
+		let that = this;
 		log.debug('Manager.clearCommands() - start');
 		let artemisCoreStorageItem = this._loadFromStorage();
 		if (artemisCoreStorageItem.commands.length > 1) {
 			artemisCoreStorageItem.commands = [];
 		}
 		this._saveToStorage(artemisCoreStorageItem);
-		this._clean();
+		this._init(null);
+		this._locate('element');
+		setTimeout(function () {
+			that._clean();
+		}, 100);
 		log.debug('Manager.clearCommands() - end');
 	}
 
