@@ -556,6 +556,9 @@ export let settings = {
 				value: 0.1
 			},
 			"hsl-factors": [1, 0.2, 0.6]
+		},
+		"elm-ordinal": {
+			"min-score": 1
 		}
 	},
 	"scoring": {

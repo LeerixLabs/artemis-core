@@ -24,13 +24,16 @@ export class Scorer{
 		this._htmlDom = htmlDom;
 		this._scorersMap = new Map();
 		this._registerScorers();
+		this._ordinalScorerName = 'elm-ordinal';
+		this._ordinalValue = 0;
 		this._planNodeType = {
+			LEAF: 'leaf',
 			AND: 'and',
 			OR: 'or',
 			RELATION: 'relation',
-			LEAF: 'leaf',
+			ORDINAL: 'ordinal',
 			UNKNOWN: 'unknown'
-		}
+		};
 	}
 
 	_registerScorers() {
@@ -54,11 +57,10 @@ export class Scorer{
 
 	_getScorer(scorerName) {
 		let scorer = this._scorersMap.get(scorerName);
-		if (scorer) {
-			return scorer;
-		} else {
+		if (!scorer) {
 			log.error(`Unable to find scorer by name: ${scorerName}`);
 		}
+		return scorer;
 	}
 
 	_getPlanNodeType(planNode) {
@@ -70,7 +72,11 @@ export class Scorer{
 		} else if (planNode.object) {
 			planNodeType = this._planNodeType.RELATION;
 		} else if (planNode.scorer) {
-			planNodeType = this._planNodeType.LEAF;
+			if (planNode.scorer === this._ordinalScorerName) {
+				planNodeType = this._planNodeType.ORDINAL;
+			} else {
+				planNodeType = this._planNodeType.LEAF;
+			}
 		}
 		return planNodeType;
 	}
@@ -85,8 +91,17 @@ export class Scorer{
 			weight = 1;
 		}
 
+		// Leaf node
+		if (planNodeType === this._planNodeType.LEAF) {
+			let scorer = this._getScorer(planNode.scorer);
+			if (scorer) {
+				if (this._isDebug){log.debug(`${logMsgPrefix} ${scorer.name} ${planNode.value}`)}
+				score = scorer.score(elm, planNode.value);
+			}
+		}
+
 		// Node with 'and' items
-		if (planNodeType === this._planNodeType.AND) {
+		else if (planNodeType === this._planNodeType.AND) {
 			score = 1;
 			planNode.and.forEach( n => {
 				if (score !== 0) {
@@ -103,6 +118,13 @@ export class Scorer{
 			});
 		}
 
+		// Ordinal node
+		else if (planNodeType === this._planNodeType.ORDINAL) {
+			if (this._isDebug){log.debug(`${logMsgPrefix} Ordinal: ${planNode.value}`)}
+			this._ordinalValue = planNode.value;
+			score = 1;
+		}
+
 		// Node with object
 		else if (planNodeType === this._planNodeType.RELATION) {
 			score = 0;
@@ -117,15 +139,6 @@ export class Scorer{
 					}
 				}
 			});
-		}
-
-		// Leaf node
-		else if (planNodeType === this._planNodeType.LEAF) {
-			let scorer = this._getScorer(planNode.scorer);
-			if (scorer) {
-				if (this._isDebug){log.debug(`${logMsgPrefix} ${scorer.name} ${planNode.value}`)}
-				score = scorer.score(elm, planNode.value);
-			}
 		}
 
 		// Unknown node
@@ -157,7 +170,8 @@ export class Scorer{
 		return elms;
 	}
 
-	_finalizeScores() {
+	_normalizeScores() {
+		if (this._isDebug){log.debug('Scorer.normalizeScores() - start')}
 		let maxScore = Math.max.apply(null, this._allElms.map( e => e.score ));
 		if (this._isDebug){log.debug(`Max score for normalizing is ${maxScore}`)}
 		this._allElms.forEach( e => {
@@ -166,8 +180,28 @@ export class Scorer{
 			} else {
 				e.score = 0;
 			}
-			if (this._isDebug){log.debug(`Final score for ${e.tagName} ${e.id} is ${e.score}`)}
+			if (this._isDebug){log.debug(`Normalized score for ${e.tagName} ${e.id} is ${e.score}`)}
 		});
+		if (this._isDebug){log.debug('Scorer.normalizeScores() - end')}
+	}
+
+	_handleOrdinal() {
+		if (this._isDebug){log.debug('Scorer.handleOrdinal() - start')}
+		let scorer = this._getScorer(this._ordinalScorerName);
+		if (scorer) {
+			let ordinalElm = scorer.getOrdinalElm(this._allElms, this._ordinalValue);
+			if (ordinalElm) {
+				this._allElms.forEach( e => {
+					e.score = e.id === ordinalElm.id ? 1 : 0;
+					if (this._isDebug){log.debug(`Score for ${e.tagName} ${e.id} is ${e.score}`)}
+				});
+			} else {
+				log.error(`Unable to find ordinal element. Ordinal: ${this._ordinalValue}`);
+			}
+		} else {
+			log.error(`Unable to find scorer by name: ${this._ordinalScorerName}`);
+		}
+		if (this._isDebug){log.debug('Scorer.handleOrdinal() - end')}
 	}
 
 	_prepareOutput(startTime) {
@@ -205,6 +239,9 @@ export class Scorer{
 		this._allElms.forEach( e => {HtmlDOM.markElmIdOnHtmlDom(e.domElm, e.id);});
 		this._htmlDom.artemisIdsExistOnHtmlDom = true;
 
+		// Reset ordinal
+		this._ordinalValue = 0;
+
 		// Score each element
 		this._allElms.forEach( e => {
 			if (this._isDebug){log.debug(`Scoring ${e.tagName} ${e.id} - start`)}
@@ -212,8 +249,13 @@ export class Scorer{
 			if (this._isDebug){log.debug(`Scoring ${e.tagName} ${e.id} - end`)}
 		});
 
-		// Finalize scores
-		this._finalizeScores();
+		// Normalize scores
+		this._normalizeScores();
+
+		// Handle ordinal
+		if (this._ordinalValue > 0) {
+			this._handleOrdinal();
+		}
 
 		// Add element scores to HTML DOM
 		this._allElms.forEach( e => {HtmlDOM.markElmScoreOnHtmlDom(e.domElm, e.score);});
