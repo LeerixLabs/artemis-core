@@ -11,6 +11,10 @@ export class Manager {
 	constructor() {
 	}
 
+	setLogLevel(levelName) {
+		log.setLogLevel(levelName);
+	}
+
 	_loadFromStorage() {
 		let si = localStorage.getItem('artemisCore');
 		if (si) {
