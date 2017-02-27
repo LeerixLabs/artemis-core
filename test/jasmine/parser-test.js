@@ -270,6 +270,7 @@ describe('Parser', () => {
 			{s: 'right of', v: 'right'},
 			{s: 'above',    v: 'above'},
 			{s: 'below',    v: 'below'},
+			{s: 'near',		v: 'near'},
 			{s: 'inside',   v: 'inside'}
 		];
 		elmRelPositions.forEach( erp => {
