@@ -144,7 +144,7 @@ export class Manager {
 			if (artemisCoreStorageItem.commands.length > 0) {
 				setTimeout(function () {
 					that._run();
-				}, 4000);
+				}, 3000);
 			}
 		}
 		log.debug('Manager.run() - end');
