@@ -324,6 +324,18 @@ export let settings = {
 						]
 					},
 					{
+						"and": [
+							{
+								"scorer": "html-tag",
+								"value": "input"
+							},
+							{
+								"scorer": "html-attr-name-and-val",
+								"value": ["type", "search"]
+							}
+						]
+					},
+					{
 						"scorer": "html-tag",
 						"value": "textarea",
 						"weight": 0.7
