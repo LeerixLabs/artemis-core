@@ -121,33 +121,39 @@ export class Manager {
 		let that = this;
 		let artemisCoreStorageItem = this._loadFromStorage();
 		if (artemisCoreStorageItem.commands.length > 0) {
-			this._init(null);
-			this._clean();
-			let cmd = artemisCoreStorageItem.commands[0];
-			if (cmd.mode === 'debug') {
-				this._locate(cmd.target);
-			} else if (cmd.mode === 'run') {
-				if (cmd.action === 'locate') {
+			try {
+				this._init(null);
+				this._clean();
+				let cmd = artemisCoreStorageItem.commands[0];
+				if (cmd.mode === 'debug') {
 					this._locate(cmd.target);
-				} else if (cmd.action === 'click') {
-					this._click(cmd);
-				} else if (cmd.action === 'write') {
-					this._write(cmd);
+				} else if (cmd.mode === 'run') {
+					if (cmd.action === 'locate') {
+						this._locate(cmd.target);
+					} else if (cmd.action === 'click') {
+						this._click(cmd);
+					} else if (cmd.action === 'write') {
+						this._write(cmd);
+					} else {
+						log.error('Unsupported command action');
+					}
 				} else {
-					log.error('Unsupported command action');
+					log.error('Unsupported command mode');
 				}
-			} else {
-				log.error('Unsupported command mode');
+				artemisCoreStorageItem.commands.splice(0, 1);
+				this._saveToStorage(artemisCoreStorageItem);
+				if (artemisCoreStorageItem.commands.length > 0) {
+					setTimeout(function () {
+						that._run();
+					}, 3000);
+				}
+			} catch (err) {
+				log.debug('Error: ' + err);
+				artemisCoreStorageItem.commands = [];
+				this._saveToStorage(artemisCoreStorageItem);
 			}
-			artemisCoreStorageItem.commands.splice(0, 1);
-			this._saveToStorage(artemisCoreStorageItem);
-			if (artemisCoreStorageItem.commands.length > 0) {
-				setTimeout(function () {
-					that._run();
-				}, 3000);
-			}
+			log.debug('Manager.run() - end');
 		}
-		log.debug('Manager.run() - end');
 	}
 
 	runCommands(commands) {
