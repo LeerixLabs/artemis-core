@@ -1,7 +1,7 @@
 import {settings} from '../settings';
 import {log} from '../common/logger';
 import {storage} from '../storage/artemis-storage';
-import {executor} from '../executor/artemis-executor';
+import {actioner} from '../actioner/artemis-actioner';
 import HtmlDOM from '../common/html-dom';
 import {SentenceParser} from '../parser/artemis-sentence-parser';
 import {Parser} from '../parser/artemis-parser';
@@ -16,17 +16,10 @@ export class Manager {
 			COMMAND: 'command',
 			DATA: 'data'
 		};
-
 		this._commandType = {
 			RESET: 'reset',
 			DEBUG: 'debug',
 			RUN: 'run'
-		};
-
-		this._actionType = {
-			LOCATE: 'locate',
-			CLICK: 'click',
-			WRITE: 'write'
 		};
 	}
 
@@ -94,7 +87,7 @@ export class Manager {
 		if (info.target) {
 			let res = that._locate(info.target);
 			if (res.perfects.length > 0) {
-				executor.runAction(res.perfects[0], info.action, info.value);
+				actioner.run(res.perfects[0], info.action, info.value);
 			}
 		}
 		log.debug('Manager.run() - end');

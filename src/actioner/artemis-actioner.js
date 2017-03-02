@@ -1,6 +1,6 @@
 import {log} from '../common/logger';
 
-class Executor {
+class Actioner {
 
 	constructor() {
 		this._actionType = {
@@ -11,17 +11,17 @@ class Executor {
 	}
 
 	_click(elm) {
-		log.debug('Executor.click() - start');
+		log.debug('Actioner.click() - start');
 		if (typeof angular !== 'undefined') {
 			angular.element(elm.domElm).trigger('click');
 		} else {
 			elm.domElm.click();
 		}
-		log.debug('Executor.click() - end');
+		log.debug('Actioner.click() - end');
 	}
 
 	_write(elm, value) {
-		log.debug('Executor.write() - start');
+		log.debug('Actioner.write() - start');
 		elm.domElm.value = value;
 		if (typeof angular !== 'undefined') {
 			angular.element(elm.domElm).trigger('keydown');
@@ -30,10 +30,10 @@ class Executor {
 			elm.domElm.keydown();
 			elm.domElm.change();
 		}
-		log.debug('Executor.write() - end');
+		log.debug('Actioner.write() - end');
 	}
 
-	runAction(elm, action, value) {
+	run(elm, action, value) {
 		if (action === this._actionType.CLICK) {
 			this._click(elm);
 		} else if (action === this._actionType.WRITE) {
@@ -42,4 +42,4 @@ class Executor {
 	}
 }
 
-module.exports.executor = new Executor();
+module.exports.actioner = new Actioner();
