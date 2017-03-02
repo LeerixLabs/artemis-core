@@ -6,9 +6,98 @@ export class Parser {
 	constructor(settings) {
 		this._settings = settings;
 		this._isDebug = log.isDebug();
+		this._actionType = {
+			LOCATE: 'locate',
+			CLICK: 'click',
+			WRITE: 'write'
+		};
+		this._parsingRules = [
+			{
+				regStr: '^(?:find )([\\S\\s]+)$',
+				action: this._actionType.LOCATE,
+				numOfGroups: 1,
+				groupIndexTarget: 1,
+				groupIndexValue: -1
+			},
+			{
+				regStr: '^(?:locate )([\\S\\s]+)$',
+				action: this._actionType.LOCATE,
+				numOfGroups: 1,
+				groupIndexTarget: 1,
+				groupIndexValue: -1
+			},
+			{
+				regStr: '^(?:click )([\\S\\s]+)$',
+				action: this._actionType.CLICK,
+				numOfGroups: 1,
+				groupIndexTarget: 1,
+				groupIndexValue: -1
+			},
+			{
+				regStr: '^(?:push )([\\S\\s]+)$',
+				action: this._actionType.CLICK,
+				numOfGroups: 1,
+				groupIndexTarget: 1,
+				groupIndexValue: -1
+			},
+			{
+				regStr: '^(?:press )([\\S\\s]+)$',
+				action: this._actionType.CLICK,
+				numOfGroups: 1,
+				groupIndexTarget: 1,
+				groupIndexValue: -1
+			},
+			{
+				regStr: '^(?:enter )(?:")([\\S\\s]+)(?:")(?: in )([\\S\\s]+)$',
+				action: this._actionType.WRITE,
+				numOfGroups: 2,
+				groupIndexValue: 1,
+				groupIndexTarget: 2
+			},
+			{
+				regStr: '^(?:enter )(?:\')([\\S\\s]+)(?:\')(?: in )([\\S\\s]+)$',
+				action: this._actionType.WRITE,
+				numOfGroups: 2,
+				groupIndexValue: 1,
+				groupIndexTarget: 2
+			},
+			{
+				regStr: '^(?:enter )([\\S\\s]+)(?: in )([\\S\\s]+)$',
+				action: this._actionType.WRITE,
+				numOfGroups: 2,
+				groupIndexValue: 1,
+				groupIndexTarget: 2
+			}
+		];
+		this._actionType = {
+			LOCATE: 'locate',
+			CLICK: 'click',
+			WRITE: 'write'
+		};
 		this._preObjectTypePhrases = this._settings.phrases.filter( p => p.location === 'pre-object-type');
 		this._objectTypePhrases = this._settings.phrases.filter( p => p.location === 'object-type');
 		this._postObjectTypePhrases = this._settings.phrases.filter( p => p.location === 'post-object-type');
+	}
+
+	_parseSentence(sentence) {
+		let found = false;
+		let sentenceInfo = {
+			action: '',
+			value: '',
+			target: ''
+		};
+		for (let rule of this._parsingRules) {
+			if (!found) {
+				let match = (new RegExp(rule.regStr, 'i')).exec(sentence);
+				if (match && match.length === rule.numOfGroups + 1) {
+					found = true;
+					sentenceInfo.action = rule.action;
+					sentenceInfo.value = rule.groupIndexValue === -1 ? '' : match[rule.groupIndexValue];
+					sentenceInfo.target = rule.groupIndexTarget === -1 ? '' : match[rule.groupIndexTarget];
+				}
+			}
+		}
+		return sentenceInfo;
 	}
 
 	static _trimSentence(sentence, shouldRemoveTheWordThe) {
@@ -118,13 +207,18 @@ export class Parser {
 		return modeledElmDesc;
 	};
 
-	parse(elmDescStr) {
+	parse(sentence) {
 		if (this._isDebug){log.debug('Parser.parse() - start')}
-		if (this._isDebug){log.debug(`elmDescStr: ${elmDescStr}`)}
-		let modeledElmDesc = this._buildElementDescriptionModel(elmDescStr);
-		if (this._isDebug){log.debug(`modeledElmDesc: ${Helper.toJSON(modeledElmDesc)}`)}
+		if (this._isDebug){log.debug(`sentence: ${sentence}`)}
+		let sentenceInfo = this._parseSentence(sentence);
+		let targetInfo = sentenceInfo.target ? this._buildElementDescriptionModel(sentenceInfo.target) : null;
+		let parserOutput = {
+			sentenceInfo: sentenceInfo,
+			targetInfo: targetInfo
+		};
+		if (this._isDebug){log.debug(`Parser output: ${Helper.toJSON(parserOutput)}`)}
 		if (this._isDebug){log.debug('Parser.parse() - end')}
-		return modeledElmDesc;
+		return parserOutput;
 	}
 
 }

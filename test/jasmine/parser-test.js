@@ -1,11 +1,11 @@
 import {settings} from '../../src/settings';
-import {Parser} from '../../src/parser/artemis-parser.js'
+import {Parser} from '../../src/parser/artemis-parser'
 
-describe('Parser', () => {
+describe('Target Parser Test', () => {
 	let parser = new Parser(settings);
 
 	it('test basic output structure', () => {
-		let modeledElmDesc = parser.parse('element');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element');
 		let expectedModel = {
 			object: {
 				type: 'elm-type',
@@ -16,19 +16,19 @@ describe('Parser', () => {
 	});
 
 	it('test trim single spaces', () => {
-		let modeledElmDesc = parser.parse(' element ');
+		let modeledElmDesc = parser._buildElementDescriptionModel(' element ');
 		expect(modeledElmDesc.object.type).toEqual('elm-type');
 		expect(modeledElmDesc.object.value).toEqual('element');
 	});
 
 	it('test trim double spaces', () => {
-		let modeledElmDesc = parser.parse('  element  ');
+		let modeledElmDesc = parser._buildElementDescriptionModel('  element  ');
 		expect(modeledElmDesc.object.type).toEqual('elm-type');
 		expect(modeledElmDesc.object.value).toEqual('element');
 	});
 
 	it('test trim the word "the"', () => {
-		let modeledElmDesc = parser.parse('the element');
+		let modeledElmDesc = parser._buildElementDescriptionModel('the element');
 		expect(modeledElmDesc.object.type).toEqual('elm-type');
 		expect(modeledElmDesc.object.value).toEqual('element');
 	});
@@ -50,7 +50,7 @@ describe('Parser', () => {
 			'item'
 		];
 		elmTypes.forEach( et => {
-			let modeledElmDesc = parser.parse(et);
+			let modeledElmDesc = parser._buildElementDescriptionModel(et);
 			expect(modeledElmDesc.object.type).toEqual('elm-type');
 			expect(modeledElmDesc.object.value).toEqual(et);
 		});
@@ -66,7 +66,7 @@ describe('Parser', () => {
 			{s: 'third',  v: 3}
 		];
 		elmOrdinals.forEach( eo => {
-			let modeledElmDesc = parser.parse(eo.s);
+			let modeledElmDesc = parser._buildElementDescriptionModel(eo.s);
 			expect(modeledElmDesc.object.type).toEqual('elm-ordinal');
 			expect(modeledElmDesc.object.value).toEqual(eo.v);
 		});
@@ -79,7 +79,7 @@ describe('Parser', () => {
 			{s: '10th', v: '10'}
 		];
 		elmOrdinals.forEach( eo => {
-			let modeledElmDesc = parser.parse(eo.s);
+			let modeledElmDesc = parser._buildElementDescriptionModel(eo.s);
 			expect(modeledElmDesc.object.type).toEqual('elm-ordinal');
 			expect(modeledElmDesc.object.value).toEqual(eo.v);
 		});
@@ -92,7 +92,7 @@ describe('Parser', () => {
 			'large'
 		];
 		elmSizes.forEach( es => {
-			let modeledElmDesc = parser.parse(es);
+			let modeledElmDesc = parser._buildElementDescriptionModel(es);
 			expect(modeledElmDesc.object.type).toEqual('elm-size');
 			expect(modeledElmDesc.object.value).toEqual(es);
 		});
@@ -119,50 +119,50 @@ describe('Parser', () => {
 			'gray'
 		];
 		elmColors.forEach( ec => {
-			let modeledElmDesc = parser.parse(ec);
+			let modeledElmDesc = parser._buildElementDescriptionModel(ec);
 			expect(modeledElmDesc.object.type).toEqual('elm-color');
 			expect(modeledElmDesc.object.value).toEqual(ec);
 		});
 	});
 
 	it('test free text', () => {
-		let modeledElmDesc = parser.parse(`MyFreeText`);
+		let modeledElmDesc = parser._buildElementDescriptionModel(`MyFreeText`);
 		expect(modeledElmDesc.object.type).toEqual('free-text');
 		expect(modeledElmDesc.object.value).toEqual('MyFreeText');
 	});
 
 	it('test free text with underscores', () => {
-		let modeledElmDesc = parser.parse(`my_free_text`);
+		let modeledElmDesc = parser._buildElementDescriptionModel(`my_free_text`);
 		expect(modeledElmDesc.object.type).toEqual('free-text');
 		expect(modeledElmDesc.object.value).toEqual('my_free_text');
 	});
 
 	it('test free text with hyphens', () => {
-		let modeledElmDesc = parser.parse(`my-free-text`);
+		let modeledElmDesc = parser._buildElementDescriptionModel(`my-free-text`);
 		expect(modeledElmDesc.object.type).toEqual('free-text');
 		expect(modeledElmDesc.object.value).toEqual('my-free-text');
 	});
 
 	it('test free text with underscores and hyphens', () => {
-		let modeledElmDesc = parser.parse(`my_free-text`);
+		let modeledElmDesc = parser._buildElementDescriptionModel(`my_free-text`);
 		expect(modeledElmDesc.object.type).toEqual('free-text');
 		expect(modeledElmDesc.object.value).toEqual('my_free-text');
 	});
 
 	it('test free text with single quotes', () => {
-		let modeledElmDesc = parser.parse(`'My Free Text'`);
+		let modeledElmDesc = parser._buildElementDescriptionModel(`'My Free Text'`);
 		expect(modeledElmDesc.object.type).toEqual('free-text');
 		expect(modeledElmDesc.object.value).toEqual('My Free Text');
 	});
 
 	it('test free text with double quotes', () => {
-		let modeledElmDesc = parser.parse(`"My Free Text"`);
+		let modeledElmDesc = parser._buildElementDescriptionModel(`"My Free Text"`);
 		expect(modeledElmDesc.object.type).toEqual('free-text');
 		expect(modeledElmDesc.object.value).toEqual('My Free Text');
 	});
 
 	it('test complex free text', () => {
-		let modeledElmDesc = parser.parse(`"My_Free-Text __1 --2"`);
+		let modeledElmDesc = parser._buildElementDescriptionModel(`"My_Free-Text __1 --2"`);
 		expect(modeledElmDesc.object.type).toEqual('free-text');
 		expect(modeledElmDesc.object.value).toEqual('My_Free-Text __1 --2');
 	});
@@ -176,7 +176,7 @@ describe('Parser', () => {
 			{s: 'at the middle', v: 'middle'}
 		];
 		elmLocations.forEach( el => {
-			let modeledElmDesc = parser.parse('element ' + el.s);
+			let modeledElmDesc = parser._buildElementDescriptionModel('element ' + el.s);
 			expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 			expect(modeledElmDesc.object.and[0].value).toEqual('element');
 			expect(modeledElmDesc.object.and[1].type).toEqual('elm-location');
@@ -185,7 +185,7 @@ describe('Parser', () => {
 	});
 
 	it('test html tag', () => {
-		let modeledElmDesc = parser.parse('element with tag div');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with tag div');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('html-tag');
@@ -193,7 +193,7 @@ describe('Parser', () => {
 	});
 
 	it('test html tag with hyphens', () => {
-		let modeledElmDesc = parser.parse('element with tag my-tag');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with tag my-tag');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('html-tag');
@@ -201,7 +201,7 @@ describe('Parser', () => {
 	});
 
 	it('test html attribute name', () => {
-		let modeledElmDesc = parser.parse('element with attribute aaa');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with attribute aaa');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('html-attr-name');
@@ -209,7 +209,7 @@ describe('Parser', () => {
 	});
 
 	it('test html attribute value', () => {
-		let modeledElmDesc = parser.parse('element with attribute value bbb');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with attribute value bbb');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('html-attr-val');
@@ -217,7 +217,7 @@ describe('Parser', () => {
 	});
 
 	it('test html attribute name and value', () => {
-		let modeledElmDesc = parser.parse('element with attribute aaa=bbb');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with attribute aaa=bbb');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('html-attr-name-and-val');
@@ -227,7 +227,7 @@ describe('Parser', () => {
 	});
 
 	it('test css class', () => {
-		let modeledElmDesc = parser.parse('element with class my-btn');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with class my-btn');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('css-class');
@@ -235,7 +235,7 @@ describe('Parser', () => {
 	});
 
 	it('test css style', () => {
-		let modeledElmDesc = parser.parse('element with style margin-left:10px');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with style margin-left:10px');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('css-style-name-and-val');
@@ -245,7 +245,7 @@ describe('Parser', () => {
 	});
 
 	it('test multiple post object type properties added with the word "with"', () => {
-		let modeledElmDesc = parser.parse('element with tag my-tag with class my-class');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with tag my-tag with class my-class');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('html-tag');
@@ -255,7 +255,7 @@ describe('Parser', () => {
 	});
 
 	it('test multiple post object type properties added with the word "and"', () => {
-		let modeledElmDesc = parser.parse('element with tag my-tag and class my-class');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with tag my-tag and class my-class');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('html-tag');
@@ -274,7 +274,7 @@ describe('Parser', () => {
 			{s: 'inside',   v: 'inside'}
 		];
 		elmRelPositions.forEach( erp => {
-			let modeledElmDesc = parser.parse('element ' + erp.s + ' element');
+			let modeledElmDesc = parser._buildElementDescriptionModel('element ' + erp.s + ' element');
 			expect(modeledElmDesc.object.and[0].type).toEqual('elm-type');
 			expect(modeledElmDesc.object.and[0].value).toEqual('element');
 			expect(modeledElmDesc.object.and[1].type).toEqual('rel-position');
@@ -288,7 +288,7 @@ describe('Parser', () => {
 		let elm1 = `small blue log-in button with attribute type=submit`;
 		let elm2 = `2nd "password" input with class secret-field and style margin-left:10px`;
 		let elm3 = `'user profile' panel with tag div`;
-		let modeledElmDesc = parser.parse(` ${elm1}  below   the ${elm2}  inside   the ${elm3} `);
+		let modeledElmDesc = parser._buildElementDescriptionModel(` ${elm1}  below   the ${elm2}  inside   the ${elm3} `);
 		let expectedModel = {
 			object: {
 				and: [

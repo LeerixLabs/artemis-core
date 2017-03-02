@@ -1,6 +1,6 @@
 import {settings} from '../../src/settings';
-import {Parser} from '../../src/parser/artemis-parser.js';
-import {Planner} from '../../src/planner/artemis-planner.js';
+import {Parser} from '../../src/parser/artemis-parser';
+import {Planner} from '../../src/planner/artemis-planner';
 
 describe('Planner Test: ', function(){
 
@@ -8,7 +8,7 @@ describe('Planner Test: ', function(){
      let planner = new Planner(settings);
 
      it('test basic output structure', () => {
-          let modeledElmDesc = parser.parse('element');
+          let modeledElmDesc = parser._buildElementDescriptionModel('element');
           let scoringPlan = planner.plan(modeledElmDesc);
           let expectedPlan = {
                object: {
@@ -20,7 +20,7 @@ describe('Planner Test: ', function(){
      });
 
      it('test 2 plans', () => {
-          let modeledElmDesc = parser.parse('element with class my-class');
+          let modeledElmDesc = parser._buildElementDescriptionModel('element with class my-class');
           let scoringPlan = planner.plan(modeledElmDesc);
           let expectedPlan = {
                object: {
@@ -40,7 +40,7 @@ describe('Planner Test: ', function(){
      });
 
      it('test relation', () => {
-          let modeledElmDesc = parser.parse('element below element');
+          let modeledElmDesc = parser._buildElementDescriptionModel('element below element');
           let scoringPlan = planner.plan(modeledElmDesc);
           let expectedPlan = {
                object: {

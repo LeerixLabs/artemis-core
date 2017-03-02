@@ -3,7 +3,6 @@ import {log} from '../common/logger';
 import {storage} from '../storage/artemis-storage';
 import {actioner} from '../actioner/artemis-actioner';
 import HtmlDOM from '../common/html-dom';
-import {SentenceParser} from '../parser/artemis-sentence-parser';
 import {Parser} from '../parser/artemis-parser';
 import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
@@ -36,7 +35,6 @@ export class Manager {
 			log.setLogLevel(this._settings['log-level']);
 		}
 		log.debug('Manager.init() - start');
-		this._sentenceParser = new SentenceParser(this._settings);
 		this._parser = new Parser(this._settings);
 		this._planner = new Planner(this._settings);
 		this._scorer = new Scorer(this._settings, this._htmlDom);
@@ -50,10 +48,9 @@ export class Manager {
 		log.debug('Manager.clean() - end');
 	}
 
-	_locate(elmDescStr) {
+	_locate(targetInfo) {
 		log.debug('Manager.locate() - start');
-		let modeledElmDesc = this._parser.parse(elmDescStr);
-		let scoringPlan = this._planner.plan(modeledElmDesc);
+		let scoringPlan = this._planner.plan(targetInfo);
 		let scoringResult = this._scorer.score(scoringPlan);
 		this._marker.mark(scoringResult);
 		log.debug('Manager.locate() - end');
@@ -63,7 +60,8 @@ export class Manager {
 	_reset() {
 		log.debug('Manager.reset() - start');
 		let that = this;
-		that._locate('element');
+		let info = that._parser.parse('find element');
+		that._locate(info.targetInfo);
 		setTimeout(function () {
 			that._clean();
 		}, 100);
@@ -73,9 +71,9 @@ export class Manager {
 	_debug(cmd) {
 		log.debug('Manager.debug() - start');
 		let that = this;
-		let info = that._sentenceParser.parse(cmd.data);
-		if (info.target) {
-			that._locate(info.target);
+		let info = that._parser.parse(cmd.data);
+		if (info.targetInfo) {
+			that._locate(info.targetInfo);
 		}
 		log.debug('Manager.debug() - end');
 	}
@@ -83,11 +81,11 @@ export class Manager {
 	_run(cmd) {
 		log.debug('Manager.run() - start');
 		let that = this;
-		let info = that._sentenceParser.parse(cmd.data);
-		if (info.target) {
-			let res = that._locate(info.target);
-			if (res.perfects.length > 0) {
-				actioner.run(res.perfects[0], info.action, info.value);
+		let info = that._parser.parse(cmd.data);
+		if (info.targetInfo) {
+			let locateResult = that._locate(info.targetInfo);
+			if (locateResult.perfects.length > 0) {
+				actioner.run(locateResult.perfects[0], info.sentenceInfo.action, info.sentenceInfo.value);
 			}
 		}
 		log.debug('Manager.run() - end');
