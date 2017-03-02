@@ -1,6 +1,9 @@
 import {settings} from '../settings';
 import {log} from '../common/logger';
+import {storage} from '../storage/artemis-storage';
+import {executor} from '../executor/artemis-executor';
 import HtmlDOM from '../common/html-dom';
+import {SentenceParser} from '../parser/artemis-sentence-parser';
 import {Parser} from '../parser/artemis-parser';
 import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
@@ -9,25 +12,22 @@ import {Marker} from '../marker/artemis-marker';
 export class Manager {
 
 	constructor() {
-	}
+		this._msgFieldName = {
+			COMMAND: 'command',
+			DATA: 'data'
+		};
 
-	setLogLevel(levelName) {
-		log.setLogLevel(levelName);
-	}
+		this._commandType = {
+			RESET: 'reset',
+			DEBUG: 'debug',
+			RUN: 'run'
+		};
 
-	_loadFromStorage() {
-		let si = localStorage.getItem('artemisCore');
-		if (si) {
-			return JSON.parse(si);
-		} else {
-			return {
-				'commands': []
-			};
-		}
-	}
-
-	_saveToStorage(si) {
-		localStorage.setItem('artemisCore', JSON.stringify(si));
+		this._actionType = {
+			LOCATE: 'locate',
+			CLICK: 'click',
+			WRITE: 'write'
+		};
 	}
 
 	_init(config) {
@@ -43,6 +43,7 @@ export class Manager {
 			log.setLogLevel(this._settings['log-level']);
 		}
 		log.debug('Manager.init() - start');
+		this._sentenceParser = new SentenceParser(this._settings);
 		this._parser = new Parser(this._settings);
 		this._planner = new Planner(this._settings);
 		this._scorer = new Scorer(this._settings, this._htmlDom);
@@ -58,127 +59,104 @@ export class Manager {
 
 	_locate(elmDescStr) {
 		log.debug('Manager.locate() - start');
-
-		// Parse the element description sentence
 		let modeledElmDesc = this._parser.parse(elmDescStr);
-
-		// Prepare a plan for the scorer
 		let scoringPlan = this._planner.plan(modeledElmDesc);
-
-		// Score the DOM elements
 		let scoringResult = this._scorer.score(scoringPlan);
-
-		// Color the DOM elements according to their score
 		this._marker.mark(scoringResult);
-
 		log.debug('Manager.locate() - end');
 		return scoringResult;
 	}
 
-	_click(command) {
-		log.debug('Manager.click() - start');
-		let locateResult = this._locate(command.target);
-		let found = false;
-		locateResult.elements.forEach( elm => {
-			if (!found && elm.score === 1) {
-				found = true;
-				//setTimeout(function () {
-				if (typeof angular !== 'undefined') {
-					angular.element(elm.domElm).trigger('click');
-				} else {
-					elm.domElm.click();
-				}
-				//}, 0);
-			}
-		});
-		log.debug('Manager.click() - end');
-	}
-
-	_write(command) {
-		log.debug('Manager.write() - start');
-		let locateResult = this._locate(command.target);
-		let found = false;
-		locateResult.elements.forEach( elm => {
-			if (!found && elm.score === 1) {
-				found = true;
-				//setTimeout(function () {
-				elm.domElm.value = command.value;
-				if (typeof angular !== 'undefined') {
-					angular.element(elm.domElm).trigger('keydown');
-					angular.element(elm.domElm).trigger('change');
-				} else {
-					elm.domElm.keydown();
-					elm.domElm.change();
-				}
-				//}, 0);
-			}
-		});
-		log.debug('Manager.write() - end');
-	}
-
-	_run() {
-		log.debug('Manager.run() - start');
+	_reset() {
+		log.debug('Manager.reset() - start');
 		let that = this;
-		let artemisCoreStorageItem = this._loadFromStorage();
-		if (artemisCoreStorageItem.commands.length > 0) {
-			try {
-				this._init(null);
-				this._clean();
-				let cmd = artemisCoreStorageItem.commands[0];
-				if (cmd.mode === 'debug') {
-					this._locate(cmd.target);
-				} else if (cmd.mode === 'run') {
-					if (cmd.action === 'locate') {
-						this._locate(cmd.target);
-					} else if (cmd.action === 'click') {
-						this._click(cmd);
-					} else if (cmd.action === 'write') {
-						this._write(cmd);
-					} else {
-						log.error('Unsupported command action');
-					}
-				} else {
-					log.error('Unsupported command mode');
-				}
-				artemisCoreStorageItem.commands.splice(0, 1);
-				this._saveToStorage(artemisCoreStorageItem);
-				if (artemisCoreStorageItem.commands.length > 0) {
-					setTimeout(function () {
-						that._run();
-					}, 3000);
-				}
-			} catch (err) {
-				log.debug('Error: ' + err);
-				artemisCoreStorageItem.commands = [];
-				this._saveToStorage(artemisCoreStorageItem);
-			}
-			log.debug('Manager.run() - end');
-		}
-	}
-
-	runCommands(commands) {
-		log.debug('Manager.runCommands() - start');
-		let artemisCoreStorageItem = this._loadFromStorage();
-		artemisCoreStorageItem.commands.push.apply(artemisCoreStorageItem.commands, commands);
-		this._saveToStorage(artemisCoreStorageItem);
-		this._run();
-		log.debug('Manager.runCommands() - end');
-	}
-
-	clearCommands() {
-		let that = this;
-		log.debug('Manager.clearCommands() - start');
-		let artemisCoreStorageItem = this._loadFromStorage();
-		if (artemisCoreStorageItem.commands.length > 1) {
-			artemisCoreStorageItem.commands = [];
-		}
-		this._saveToStorage(artemisCoreStorageItem);
-		this._init(null);
-		this._locate('element');
+		that._locate('element');
 		setTimeout(function () {
 			that._clean();
 		}, 100);
-		log.debug('Manager.clearCommands() - end');
+		log.debug('Manager.reset() - end');
+	}
+
+	_debug(cmd) {
+		log.debug('Manager.debug() - start');
+		let that = this;
+		let info = that._sentenceParser.parse(cmd.data);
+		if (info.target) {
+			that._locate(info.target);
+		}
+		log.debug('Manager.debug() - end');
+	}
+
+	_run(cmd) {
+		log.debug('Manager.run() - start');
+		let that = this;
+		let info = that._sentenceParser.parse(cmd.data);
+		if (info.target) {
+			let res = that._locate(info.target);
+			if (res.perfects.length > 0) {
+				if (info.action === that._actionType.CLICK) {
+					executor.click(res.perfects[0]);
+				} else if (info.action === that._actionType.WRITE) {
+					executor.write(res.perfects[0], info.value);
+				}
+			}
+		}
+		log.debug('Manager.run() - end');
+	}
+
+	_executeNextCommand() {
+		log.debug('Manager.executeNextCommand() - start');
+		let that = this;
+		that._init(null);
+		that._clean();
+		let cmd = storage.extractNextItem();
+		log.debug('cmd: ' + cmd);
+		if (cmd) {
+			if (cmd[that._msgFieldName.COMMAND] === that._commandType.RESET) {
+				that._reset();
+			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
+				that._debug(cmd);
+			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.RUN) {
+				that._run(cmd);
+			} else {
+				log.error('Unknown command type');
+			}
+		} else {
+			log.debug('No commands in storage');
+		}
+		log.debug('Manager.executeNextCommand() - end');
+	}
+
+	execute(commands) {
+		log.debug('Manager.execute() - start');
+		log.debug('commands: ' + JSON.stringify(commands));
+		let that = this;
+		storage.removeOldItems();
+		let resetFound = false;
+		commands.forEach(function(c) {
+			if (!resetFound) {
+				if (c[that._msgFieldName.COMMAND] === that._commandType.RESET) {
+					resetFound = true;
+					storage.clear();
+					storage.append(c);
+				} else if (c[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
+					storage.append(c);
+				} else if (c[that._msgFieldName.COMMAND] === that._commandType.RUN) {
+					storage.append(c);
+				} else {
+					log.error('Unknown command type');
+				}
+			}
+		});
+		that._executeNextCommand();
+		log.debug('Manager.execute() - end');
+	}
+
+	onLoad() {
+		storage.removeOldItems();
+		if (storage.hasItems()) {
+			this._executeNextCommand();
+		}
 	}
 
 }
