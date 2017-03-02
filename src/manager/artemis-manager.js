@@ -24,6 +24,7 @@ export class Manager {
 
 	_init(config) {
 		this._htmlDom = new HtmlDOM();
+		this._htmlDom.cleanDom(true);
 		if (!config) {
 			this._settings = settings;
 		} else if (typeof config == 'string' || config instanceof String) {
@@ -42,12 +43,6 @@ export class Manager {
 		log.debug('Manager.init() - end');
 	}
 
-	_clean() {
-		log.debug('Manager.clean() - start');
-		(new HtmlDOM()).cleanDom(true);
-		log.debug('Manager.clean() - end');
-	}
-
 	_locate(targetInfo) {
 		log.debug('Manager.locate() - start');
 		let scoringPlan = this._planner.plan(targetInfo);
@@ -63,7 +58,7 @@ export class Manager {
 		let info = that._parser.parse('find element');
 		that._locate(info.targetInfo);
 		setTimeout(function () {
-			that._clean();
+			that._init();
 		}, 100);
 		log.debug('Manager.reset() - end');
 	}
@@ -95,7 +90,6 @@ export class Manager {
 		log.debug('Manager.executeNextCommand() - start');
 		let that = this;
 		that._init(null);
-		that._clean();
 		let cmd = storage.extractNextItem();
 		log.debug('cmd: ' + cmd);
 		if (cmd) {

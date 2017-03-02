@@ -3,7 +3,6 @@ import Constants from './common-constants';
 export default class HtmlDOM {
 
   constructor(){
-    this.console = console;
     this.window = window;
     this.document = document;
     this.head = this.document.head;

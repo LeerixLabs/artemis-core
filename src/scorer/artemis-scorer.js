@@ -237,7 +237,7 @@ export class Scorer{
 
 		// Add element ids to HTML DOM
 		this._allElms.forEach( e => {HtmlDOM.markElmIdOnHtmlDom(e.domElm, e.id);});
-		this._htmlDom.artemisIdsExistOnHtmlDom = true;
+		this._htmlDom.artemisElmIdsExistOnHtmlDom = true;
 
 		// Reset ordinal
 		this._ordinalValue = 0;
@@ -259,7 +259,7 @@ export class Scorer{
 
 		// Add element scores to HTML DOM
 		this._allElms.forEach( e => {HtmlDOM.markElmScoreOnHtmlDom(e.domElm, e.score);});
-		this._htmlDom.artemisScoresExistOnHtmlDom = true;
+		this._htmlDom.artemisElmScoresExistOnHtmlDom = true;
 
 		// Prepare output
 		let scoringResult = this._prepareOutput(startTime);
