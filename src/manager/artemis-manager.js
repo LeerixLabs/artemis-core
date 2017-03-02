@@ -94,11 +94,7 @@ export class Manager {
 		if (info.target) {
 			let res = that._locate(info.target);
 			if (res.perfects.length > 0) {
-				if (info.action === that._actionType.CLICK) {
-					executor.click(res.perfects[0]);
-				} else if (info.action === that._actionType.WRITE) {
-					executor.write(res.perfects[0], info.value);
-				}
+				executor.runAction(res.perfects[0], info.action, info.value);
 			}
 		}
 		log.debug('Manager.run() - end');

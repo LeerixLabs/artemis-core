@@ -3,10 +3,14 @@ import {log} from '../common/logger';
 class Executor {
 
 	constructor() {
-
+		this._actionType = {
+			LOCATE: 'locate',
+			CLICK: 'click',
+			WRITE: 'write'
+		};
 	}
 
-	click(elm) {
+	_click(elm) {
 		log.debug('Executor.click() - start');
 		if (typeof angular !== 'undefined') {
 			angular.element(elm.domElm).trigger('click');
@@ -16,7 +20,7 @@ class Executor {
 		log.debug('Executor.click() - end');
 	}
 
-	write(elm, value) {
+	_write(elm, value) {
 		log.debug('Executor.write() - start');
 		elm.domElm.value = value;
 		if (typeof angular !== 'undefined') {
@@ -27,6 +31,14 @@ class Executor {
 			elm.domElm.change();
 		}
 		log.debug('Executor.write() - end');
+	}
+
+	runAction(elm, action, value) {
+		if (action === this._actionType.CLICK) {
+			this._click(elm);
+		} else if (action === this._actionType.WRITE) {
+			this._write(elm, value);
+		}
 	}
 }
 
