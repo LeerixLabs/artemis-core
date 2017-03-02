@@ -6,77 +6,10 @@ export class Parser {
 	constructor(settings) {
 		this._settings = settings;
 		this._isDebug = log.isDebug();
-		this._actionType = {
-			LOCATE: 'locate',
-			CLICK: 'click',
-			WRITE: 'write'
-		};
-		this._parsingRules = [
-			{
-				regStr: '^(?:find )([\\S\\s]+)$',
-				action: this._actionType.LOCATE,
-				numOfGroups: 1,
-				groupIndexTarget: 1,
-				groupIndexValue: -1
-			},
-			{
-				regStr: '^(?:locate )([\\S\\s]+)$',
-				action: this._actionType.LOCATE,
-				numOfGroups: 1,
-				groupIndexTarget: 1,
-				groupIndexValue: -1
-			},
-			{
-				regStr: '^(?:click )([\\S\\s]+)$',
-				action: this._actionType.CLICK,
-				numOfGroups: 1,
-				groupIndexTarget: 1,
-				groupIndexValue: -1
-			},
-			{
-				regStr: '^(?:push )([\\S\\s]+)$',
-				action: this._actionType.CLICK,
-				numOfGroups: 1,
-				groupIndexTarget: 1,
-				groupIndexValue: -1
-			},
-			{
-				regStr: '^(?:press )([\\S\\s]+)$',
-				action: this._actionType.CLICK,
-				numOfGroups: 1,
-				groupIndexTarget: 1,
-				groupIndexValue: -1
-			},
-			{
-				regStr: '^(?:enter )(?:")([\\S\\s]+)(?:")(?: in )([\\S\\s]+)$',
-				action: this._actionType.WRITE,
-				numOfGroups: 2,
-				groupIndexValue: 1,
-				groupIndexTarget: 2
-			},
-			{
-				regStr: '^(?:enter )(?:\')([\\S\\s]+)(?:\')(?: in )([\\S\\s]+)$',
-				action: this._actionType.WRITE,
-				numOfGroups: 2,
-				groupIndexValue: 1,
-				groupIndexTarget: 2
-			},
-			{
-				regStr: '^(?:enter )([\\S\\s]+)(?: in )([\\S\\s]+)$',
-				action: this._actionType.WRITE,
-				numOfGroups: 2,
-				groupIndexValue: 1,
-				groupIndexTarget: 2
-			}
-		];
-		this._actionType = {
-			LOCATE: 'locate',
-			CLICK: 'click',
-			WRITE: 'write'
-		};
-		this._preObjectTypePhrases = this._settings.phrases.filter( p => p.location === 'pre-object-type');
-		this._objectTypePhrases = this._settings.phrases.filter( p => p.location === 'object-type');
-		this._postObjectTypePhrases = this._settings.phrases.filter( p => p.location === 'post-object-type');
+		this._sentencePhrases = this._settings['sentence-phrases'];
+		this._preObjectTypePhrases = this._settings['target-phrases'].filter( p => p.location === 'pre-object-type');
+		this._objectTypePhrases = this._settings['target-phrases'].filter( p => p.location === 'object-type');
+		this._postObjectTypePhrases = this._settings['target-phrases'].filter( p => p.location === 'post-object-type');
 	}
 
 	_parseSentence(sentence) {
@@ -86,14 +19,14 @@ export class Parser {
 			value: '',
 			target: ''
 		};
-		for (let rule of this._parsingRules) {
+		for (let rule of this._sentencePhrases) {
 			if (!found) {
-				let match = (new RegExp(rule.regStr, 'i')).exec(sentence);
-				if (match && match.length === rule.numOfGroups + 1) {
+				let match = (new RegExp(rule['phrase'], 'i')).exec(sentence);
+				if (match && match.length === rule['num-of-groups'] + 1) {
 					found = true;
-					sentenceInfo.action = rule.action;
-					sentenceInfo.value = rule.groupIndexValue === -1 ? '' : match[rule.groupIndexValue];
-					sentenceInfo.target = rule.groupIndexTarget === -1 ? '' : match[rule.groupIndexTarget];
+					sentenceInfo.action = rule['action'];
+					sentenceInfo.value = rule['group-index-value'] === -1 ? '' : match[rule['group-index-value']];
+					sentenceInfo.target = rule['group-index-target'] === -1 ? '' : match[rule['group-index-target']];
 				}
 			}
 		}
