@@ -10,13 +10,18 @@ class Actioner {
 		};
 	}
 
+	_dispatchMouseEvent(target, var_args) {
+		let e = document.createEvent("MouseEvents");
+		e.initEvent.apply(e, Array.prototype.slice.call(arguments, 1));
+		target.dispatchEvent(e);
+	}
+
 	_click(elm) {
 		log.debug('Actioner.click() - start');
-		if (typeof angular !== 'undefined') {
-			angular.element(elm.domElm).trigger('click');
-		} else {
-			elm.domElm.click();
-		}
+		this._dispatchMouseEvent(elm.domElm, 'mouseover', true, true);
+		this._dispatchMouseEvent(elm.domElm, 'mousedown', true, true);
+		this._dispatchMouseEvent(elm.domElm, 'click', true, true);
+		this._dispatchMouseEvent(elm.domElm, 'mouseup', true, true);
 		log.debug('Actioner.click() - end');
 	}
 
