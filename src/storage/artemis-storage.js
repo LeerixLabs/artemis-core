@@ -33,16 +33,20 @@ class Storage {
 		this.save(storageItem);
 	}
 
-	hasItems() {
+	countItems() {
 		let storageItem = this.load();
-		return storageItem.commands.length > 0;
+		return storageItem.commands.length;
+	}
+
+	hasItems() {
+		return this.countItems() > 0;
 	}
 
 	removeOldItems() {
 		let currentTime = (new Date()).getTime();
 		let storageItem = this.load();
 		storageItem.commands = storageItem.commands.filter(function (cmd) {
-			return cmd.time + 300000 <= currentTime;
+			return cmd.time + 300000 >= currentTime;
 		});
 		this.save(storageItem);
 	}

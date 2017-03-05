@@ -102,6 +102,11 @@ export class Manager {
 			} else {
 				log.error('Unknown command type');
 			}
+			if (storage.hasItems()) {
+				window.setTimeout(() => {
+					that._executeNextCommand();
+				}, 3000);
+			}
 		} else {
 			log.debug('No commands in storage');
 		}
@@ -113,20 +118,16 @@ export class Manager {
 		log.debug('commands: ' + JSON.stringify(commands));
 		let that = this;
 		storage.removeOldItems();
-		let resetFound = false;
 		commands.forEach(function(c) {
-			if (!resetFound) {
-				if (c[that._msgFieldName.COMMAND] === that._commandType.RESET) {
-					resetFound = true;
-					storage.clear();
-					storage.append(c);
-				} else if (c[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
-					storage.append(c);
-				} else if (c[that._msgFieldName.COMMAND] === that._commandType.RUN) {
-					storage.append(c);
-				} else {
-					log.error('Unknown command type');
-				}
+			if (c[that._msgFieldName.COMMAND] === that._commandType.RESET) {
+				storage.clear();
+				storage.append(c);
+			} else if (c[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
+				storage.append(c);
+			} else if (c[that._msgFieldName.COMMAND] === that._commandType.RUN) {
+				storage.append(c);
+			} else {
+				log.error('Unknown command type');
 			}
 		});
 		that._executeNextCommand();
