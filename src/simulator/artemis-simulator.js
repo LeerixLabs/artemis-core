@@ -75,9 +75,9 @@ class Simulator {
 		log.debug('Simulator.write() - start');
 		elm.domElm.focus();
 		elm.domElm.value = value;
+		this._simulate(elm.domElm, 'change');
 		if (angular) {
-			angular.element(elm.domElm).trigger('keydown');
-			angular.element(elm.domElm).trigger('change');
+			angular.element(elm.domElm).scope().$apply();
 		}
 		log.debug('Simulator.write() - end');
 	}
