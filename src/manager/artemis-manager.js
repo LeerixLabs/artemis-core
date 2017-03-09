@@ -1,7 +1,7 @@
 import {settings} from '../settings';
 import {log} from '../common/logger';
 import {storage} from '../storage/artemis-storage';
-import {actioner} from '../actioner/artemis-actioner';
+import {simulator} from '../simulator/artemis-simulator';
 import HtmlDOM from '../common/html-dom';
 import {Parser} from '../parser/artemis-parser';
 import {Planner} from '../planner/artemis-planner';
@@ -80,7 +80,7 @@ export class Manager {
 		if (info.targetInfo) {
 			let locateResult = that._locate(info.targetInfo);
 			if (locateResult.perfects.length > 0) {
-				actioner.run(locateResult.perfects[0], info.sentenceInfo.action, info.sentenceInfo.value);
+				simulator.simulate(locateResult.perfects[0], info.sentenceInfo.action, info.sentenceInfo.value);
 			}
 		}
 		log.debug('Manager.run() - end');
