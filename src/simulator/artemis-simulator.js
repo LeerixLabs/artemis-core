@@ -76,9 +76,6 @@ class Simulator {
 		elm.domElm.focus();
 		elm.domElm.value = value;
 		this._simulate(elm.domElm, 'change');
-		if (angular) {
-			angular.element(elm.domElm).scope().$apply();
-		}
 		log.debug('Simulator.write() - end');
 	}
 
