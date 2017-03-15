@@ -39,6 +39,13 @@ export let settings = {
 			"group-index-value": -1
 		},
 		{
+			"phrase": "^(?:select )([\\S\\s]+)$",
+			"action": "click",
+			"num-of-groups": 1,
+			"group-index-target": 1,
+			"group-index-value": -1
+		},
+		{
 			"phrase": "^(?:enter )(?:\")([\\S\\s]+)(?:\")(?: in )([\\S\\s]+)$",
 			"action": "write",
 			"num-of-groups": 2,
