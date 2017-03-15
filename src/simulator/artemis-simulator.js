@@ -86,7 +86,7 @@ class Simulator {
 			this._click(elm);
 		} else if (action === this._actionType.WRITE) {
 			this._write(elm, value);
-		} else {
+		} else if (action !== this._actionType.LOCATE) {
 			log.error('Unsupported action');
 		}
 		log.debug('Simulator.simulate() - end');
