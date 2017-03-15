@@ -43,12 +43,15 @@ export class Manager {
 		log.debug('Manager.init() - end');
 	}
 
-	_locate(targetInfo) {
-		log.debug('Manager.locate() - start');
+	_find(targetInfo) {
+		log.debug('Manager.find() - start');
+		if (!targetInfo) {
+			return {};
+		}
 		let scoringPlan = this._planner.plan(targetInfo);
 		let scoringResult = this._scorer.score(scoringPlan);
 		this._marker.mark(scoringResult);
-		log.debug('Manager.locate() - end');
+		log.debug('Manager.find() - end');
 		return scoringResult;
 	}
 
@@ -56,7 +59,7 @@ export class Manager {
 		log.debug('Manager.reset() - start');
 		let that = this;
 		let info = that._parser.parse('find element');
-		that._locate(info.targetInfo);
+		that._find(info.targetInfo);
 		setTimeout(function () {
 			that._init();
 		}, 100);
@@ -67,9 +70,7 @@ export class Manager {
 		log.debug('Manager.debug() - start');
 		let that = this;
 		let info = that._parser.parse(cmd.data);
-		if (info.targetInfo) {
-			that._locate(info.targetInfo);
-		}
+		that._find(info.targetInfo);
 		log.debug('Manager.debug() - end');
 	}
 
@@ -78,7 +79,7 @@ export class Manager {
 		let that = this;
 		let info = that._parser.parse(cmd.data);
 		if (info.targetInfo) {
-			let locateResult = that._locate(info.targetInfo);
+			let locateResult = that._find(info.targetInfo);
 			if (locateResult.perfects.length > 0) {
 				simulator.simulate(locateResult.perfects[0], info.sentenceInfo.action, info.sentenceInfo.value);
 			}
@@ -132,6 +133,16 @@ export class Manager {
 		});
 		that._executeNextCommand();
 		log.debug('Manager.execute() - end');
+	}
+
+	locate(description) {
+		log.debug('Parser.locate() - start');
+		log.debug(`description: ${description}`);
+		let that = this;
+		let targetInfo = that._parser.parseDescription(description);
+		let scoringResult = that._find(targetInfo);
+		log.debug('Parser.locate() - end');
+		return scoringResult;
 	}
 
 	onLoad() {

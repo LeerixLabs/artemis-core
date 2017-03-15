@@ -140,11 +140,20 @@ export class Parser {
 		return modeledElmDesc;
 	};
 
+	parseDescription(description) {
+		if (this._isDebug){log.debug('Parser.parseDescription() - start')}
+		if (this._isDebug){log.debug(`description: ${description}`)}
+		let targetInfo = this._buildElementDescriptionModel(description);
+		if (this._isDebug){log.debug(`targetInfo: ${Helper.toJSON(targetInfo)}`)}
+		if (this._isDebug){log.debug('Parser.parseDescription() - end')}
+		return targetInfo;
+	}
+
 	parse(sentence) {
 		if (this._isDebug){log.debug('Parser.parse() - start')}
 		if (this._isDebug){log.debug(`sentence: ${sentence}`)}
 		let sentenceInfo = this._parseSentence(sentence);
-		let targetInfo = sentenceInfo.target ? this._buildElementDescriptionModel(sentenceInfo.target) : null;
+		let targetInfo = sentenceInfo.target ? this.parseDescription(sentenceInfo.target) : null;
 		let parserOutput = {
 			sentenceInfo: sentenceInfo,
 			targetInfo: targetInfo
