@@ -187,7 +187,7 @@ export class Scorer{
 
 	_handleOrdinal(elms, targetIndex) {
 		if (this._isDebug){log.debug('Scorer.handleOrdinal() - start')}
-		if (this._ordinalValues.length > targetIndex && this._ordinalValues[targetIndex] > 0) {
+		if (this._ordinalValues.length > targetIndex && this._ordinalValues[targetIndex] && this._ordinalValues[targetIndex] > 0) {
 			let scorer = this._getScorer(this._ordinalScorerName);
 			if (scorer) {
 				let ordinalElm = scorer.getOrdinalElm(elms, this._ordinalValues[targetIndex]);
@@ -199,7 +199,7 @@ export class Scorer{
 						}
 					});
 				} else {
-					log.error(`Unable to find ordinal element. Ordinal: ${this._ordinalValue}`);
+					log.error(`Unable to find ordinal element. targetIndex: ${targetIndex}, ordinal: ${this._ordinalValues[targetIndex]}`);
 				}
 			} else {
 				log.error(`Unable to find scorer by name: ${this._ordinalScorerName}`);
