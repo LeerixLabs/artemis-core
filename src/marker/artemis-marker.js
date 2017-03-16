@@ -24,17 +24,17 @@ export class Marker {
 		this._ensureColorClassesExistOnHtmlDom();
 		let perfectScoreCount = 0;
 		scoringResult.elements.forEach(elm => {
-			if (elm.score === 1) {
+			if (elm.primaryScore === 1) {
 				perfectScoreCount++;
 			}
 		});
 		if (this._isDebug){log.debug('perfectScoreCount: ${perfectScoreCount}')}
 		let className = '';
 		scoringResult.elements.forEach(elm => {
-			if (elm.score === 1 &&  perfectScoreCount === 1) {
+			if (elm.primaryScore === 1 &&  perfectScoreCount === 1) {
 				className = `${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix}`;
 			} else {
-				className = `${Constants.artemisElmClassPrefix}${(elm.score*20|0)}`;
+				className = `${Constants.artemisElmClassPrefix}${(elm.primaryScore*20|0)}`;
 			}
 			HtmlDOM.addElmClassToHtmlDom(elm.domElm, className);
 		});

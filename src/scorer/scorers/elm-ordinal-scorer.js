@@ -10,14 +10,14 @@ export default class ElmOrdinalScorer {
      return 1;
   }
 
-  getOrdinalElm(allElms, val) {
-    if (!allElms || !val || val < 1) {
+  getOrdinalElm(allElms, targetIndex, val) {
+    if (!allElms || targetIndex < 0 || !val || val < 1) {
       return null;
     }
     let elm = null;
     let relevantElms = [];
 	allElms.forEach( e => {
-	  if (e.score >= this._minScore) {
+	  if (e.scores[targetIndex] >= this._minScore) {
 		  relevantElms.push(e);
       }
 	});
