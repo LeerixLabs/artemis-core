@@ -26,6 +26,7 @@ export class Scorer{
 		this._registerScorers();
 		this._ordinalScorerName = 'elm-ordinal';
 		this._ordinalValues = [];
+		this._scoresCache = new Map();
 		this._planNodeType = {
 			LEAF: 'leaf',
 			AND: 'and',
@@ -128,10 +129,17 @@ export class Scorer{
 
 		// Leaf node
 		if (planNodeType === this._planNodeType.LEAF) {
-			let scorer = this._getScorer(planNode.scorer);
-			if (scorer) {
-				if (this._isDebug){log.debug(`${logMsgPrefix} ${scorer.name} ${planNode.value}`)}
-				score = scorer.score(elm, planNode.value);
+			let cacheKey = `${elm.id}|${planNode.scorer}|${planNode.value.toString()}`;
+			let cachedScore = this._scoresCache.get(cacheKey);
+			if (cachedScore) {
+				score = cachedScore;
+			} else {
+				let scorer = this._getScorer(planNode.scorer);
+				if (scorer) {
+					if (this._isDebug){log.debug(`${logMsgPrefix} ${scorer.name} ${planNode.value}`)}
+					score = scorer.score(elm, planNode.value);
+					this._scoresCache.set(cacheKey, score);
+				}
 			}
 		}
 
@@ -156,9 +164,7 @@ export class Scorer{
 		// Ordinal node
 		else if (planNodeType === this._planNodeType.ORDINAL) {
 			if (!this._ordinalValues[targetIndex]) {
-				if (this._isDebug) {
-					log.debug(`${logMsgPrefix} Ordinal: ${planNode.value}`)
-				}
+				if (this._isDebug){log.debug(`${logMsgPrefix} Ordinal: ${planNode.value}`)}
 				this._ordinalValues[targetIndex] = parseInt(planNode.value, 10);
 			}
 			score = 1;
@@ -270,6 +276,7 @@ export class Scorer{
 
 		//reset
 		this._ordinalValues = [];
+		this._scoresCache = new Map();
 
 		// Score
 		this._scoreElements(this._allElms, scoringPlan.object, 0);
