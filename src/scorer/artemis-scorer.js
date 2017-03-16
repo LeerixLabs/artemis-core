@@ -77,6 +77,27 @@ export class Scorer{
 		return elms;
 	}
 
+	_prepareOutput(startTime) {
+		let scoringResult = {
+			duration: (new Date().getTime() - startTime.getTime()) + 'ms',
+			count: [0, 0, 0],
+			perfects: [],
+			elements: []
+		};
+		this._allElms.forEach( e => {
+			scoringResult.count[0]++;
+			if (e.primaryScore > 0) {
+				scoringResult.elements.push(e.reportData());
+				scoringResult.count[1]++;
+				if (e.primaryScore === 1) {
+					scoringResult.perfects.push(e.reportData());
+					scoringResult.count[2]++;
+				}
+			}
+		});
+		return scoringResult;
+	}
+
 	_getPlanNodeType(planNode) {
 		let planNodeType = this._planNodeType.UNKNOWN;
 		if (planNode.and) {
@@ -93,19 +114,6 @@ export class Scorer{
 			}
 		}
 		return planNodeType;
-	}
-
-	_scoreElements(elms, planNode, targetIndex) {
-		if (this._isDebug){log.debug('Scorer.scoreElements() - start')}
-		this._ordinalValues[targetIndex] = 0;
-		elms.forEach( e => {
-			if (this._isDebug){log.debug(`Scoring target ${targetIndex} - ${e.tagName} ${e.id} - start`)}
-			e.setScore(targetIndex, this._recursiveGetScore(planNode, e, targetIndex));
-			if (this._isDebug){log.debug(`Scoring target ${targetIndex} - ${e.tagName} ${e.id} - end`)}
-		});
-		this._normalizeScores(elms, targetIndex);
-		this._handleOrdinal(elms, targetIndex);
-		if (this._isDebug){log.debug('Scorer.scoreElements() - end')}
 	}
 
 	_recursiveGetScore(planNode, elm, targetIndex){
@@ -232,25 +240,18 @@ export class Scorer{
 		if (this._isDebug){log.debug('Scorer.handleOrdinal() - end')}
 	}
 
-	_prepareOutput(startTime) {
-		let scoringResult = {
-			duration: (new Date().getTime() - startTime.getTime()) + 'ms',
-			count: [0, 0, 0],
-			perfects: [],
-			elements: []
-		};
-		this._allElms.forEach( e => {
-			scoringResult.count[0]++;
-			if (e.primaryScore > 0) {
-				scoringResult.elements.push(e.reportData());
-				scoringResult.count[1]++;
-				if (e.primaryScore === 1) {
-					scoringResult.perfects.push(e.reportData());
-					scoringResult.count[2]++;
-				}
-			}
+
+	_scoreElements(elms, planNode, targetIndex) {
+		if (this._isDebug){log.debug('Scorer.scoreElements() - start')}
+		this._ordinalValues[targetIndex] = 0;
+		elms.forEach( e => {
+			if (this._isDebug){log.debug(`Scoring target ${targetIndex} - ${e.tagName} ${e.id} - start`)}
+			e.setScore(targetIndex, this._recursiveGetScore(planNode, e, targetIndex));
+			if (this._isDebug){log.debug(`Scoring target ${targetIndex} - ${e.tagName} ${e.id} - end`)}
 		});
-		return scoringResult;
+		this._normalizeScores(elms, targetIndex);
+		this._handleOrdinal(elms, targetIndex);
+		if (this._isDebug){log.debug('Scorer.scoreElements() - end')}
 	}
 
 	score(scoringPlan) {
@@ -268,7 +269,6 @@ export class Scorer{
 		this._htmlDom.artemisElmIdsExistOnHtmlDom = true;
 
 		//reset
-		this._numberOfTargets = 1;
 		this._ordinalValues = [];
 
 		// Score
