@@ -25,8 +25,8 @@ export class Parser {
 				if (match && match.length === rule['num-of-groups'] + 1) {
 					found = true;
 					sentenceInfo.action = rule['action'];
-					sentenceInfo.value = rule['group-index-value'] === -1 ? '' : match[rule['group-index-value']];
-					sentenceInfo.target = rule['group-index-target'] === -1 ? '' : match[rule['group-index-target']];
+					sentenceInfo.value = rule['group-index-value'] && rule['group-index-value'] >= 0 ? match[rule['group-index-value']] : '';
+					sentenceInfo.target = rule['group-index-target'] && rule['group-index-target'] >= 0 ? match[rule['group-index-target']] : '';
 				}
 			}
 		}

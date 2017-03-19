@@ -4,46 +4,16 @@ export let settings = {
 	"language": "en",
 	"sentence-phrases" : [
 		{
-			"phrase": "^(?:find )([\\S\\s]+)$",
+			"phrase": "^(?:find |locate )([\\S\\s]+)$",
 			"action": "locate",
 			"num-of-groups": 1,
-			"group-index-target": 1,
-			"group-index-value": -1
+			"group-index-target": 1
 		},
 		{
-			"phrase": "^(?:locate )([\\S\\s]+)$",
-			"action": "locate",
-			"num-of-groups": 1,
-			"group-index-target": 1,
-			"group-index-value": -1
-		},
-		{
-			"phrase": "^(?:click )([\\S\\s]+)$",
+			"phrase": "^(?:click |push |press |select )([\\S\\s]+)$",
 			"action": "click",
 			"num-of-groups": 1,
-			"group-index-target": 1,
-			"group-index-value": -1
-		},
-		{
-			"phrase": "^(?:push )([\\S\\s]+)$",
-			"action": "click",
-			"num-of-groups": 1,
-			"group-index-target": 1,
-			"group-index-value": -1
-		},
-		{
-			"phrase": "^(?:press )([\\S\\s]+)$",
-			"action": "click",
-			"num-of-groups": 1,
-			"group-index-target": 1,
-			"group-index-value": -1
-		},
-		{
-			"phrase": "^(?:select )([\\S\\s]+)$",
-			"action": "click",
-			"num-of-groups": 1,
-			"group-index-target": 1,
-			"group-index-value": -1
+			"group-index-target": 1
 		},
 		{
 			"phrase": "^(?:enter )(?:\")([\\S\\s]+)(?:\")(?: in )([\\S\\s]+)$",
