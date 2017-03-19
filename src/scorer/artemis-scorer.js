@@ -24,7 +24,6 @@ export class Scorer{
 		this._htmlDom = htmlDom;
 		this._scorersMap = new Map();
 		this._registerScorers();
-		this._ordinalScorerName = 'elm-ordinal';
 		this._ordinalValues = [];
 		this._scoresCache = new Map();
 		this._planNodeType = {
@@ -38,18 +37,19 @@ export class Scorer{
 	}
 
 	_registerScorers() {
-		this._scorersMap.set('css-class', new CssClassScorer('css-class', this._getScorerSettings('css-class')));
-		this._scorersMap.set('css-style-name-and-val', new CssStyleNameAndValScorer('css-style-name-and-val', this._getScorerSettings('css-style-name-and-val')));
-		this._scorersMap.set('elm-color', new ElmColorScorer('elm-color', this._getScorerSettings('elm-color')));
-		this._scorersMap.set('elm-location', new ElmLocationScorer('elm-location', this._getScorerSettings('elm-location')));
-		this._scorersMap.set('elm-ordinal', new ElmOrdinalScorer('elm-ordinal', this._getScorerSettings('elm-ordinal')));
-		this._scorersMap.set('elm-size', new ElmSizeScorer('elm-size', this._getScorerSettings('elm-size')));
-		this._scorersMap.set('free-text', new FreeTextScorer('free-text', this._getScorerSettings('free-text')));
-		this._scorersMap.set('html-attr-name-and-val', new HtmlAttrNameAndValScorer('html-attr-name-and-val', this._getScorerSettings('html-attr-name-and-val')));
-		this._scorersMap.set('html-attr-name', new HtmlAttrNameScorer('html-attr-name', this._getScorerSettings('html-attr-name')));
-		this._scorersMap.set('html-attr-val', new HtmlAttrValScorer('html-attr-val', this._getScorerSettings('html-attr-val')));
-		this._scorersMap.set('html-tag', new HtmlTagScorer('html-tag', this._getScorerSettings('html-tag')));
-		this._scorersMap.set('rel-position', new RelPositionScorer('rel-position', this._getScorerSettings('rel-position')));
+		this._scorersMap.set('cssClass', new CssClassScorer('cssClass', this._getScorerSettings('cssClass')));
+		this._scorersMap.set('cssStyleNameAndVal', new CssStyleNameAndValScorer('cssStyleNameAndVal', this._getScorerSettings('cssStyleNameAndVal')));
+		this._scorersMap.set('elmColor', new ElmColorScorer('elmColor', this._getScorerSettings('elmColor')));
+		this._scorersMap.set('elmLocation', new ElmLocationScorer('elmLocation', this._getScorerSettings('elmLocation')));
+		this._scorersMap.set('elmSize', new ElmSizeScorer('elmSize', this._getScorerSettings('elmSize')));
+		this._scorersMap.set('freeText', new FreeTextScorer('freeText', this._getScorerSettings('freeText')));
+		this._scorersMap.set('htmlAttrNameAndVal', new HtmlAttrNameAndValScorer('htmlAttrNameAndVal', this._getScorerSettings('htmlAttrNameAndVal')));
+		this._scorersMap.set('htmlAttrName', new HtmlAttrNameScorer('htmlAttrName', this._getScorerSettings('htmlAttrName')));
+		this._scorersMap.set('htmlAttrVal', new HtmlAttrValScorer('htmlAttrVal', this._getScorerSettings('htmlAttrVal')));
+		this._scorersMap.set('htmlTag', new HtmlTagScorer('htmlTag', this._getScorerSettings('htmlTag')));
+		this._scorersMap.set('relPosition', new RelPositionScorer('relPosition', this._getScorerSettings('relPosition')));
+		this._scorersMap.set('elmOrdinal', new ElmOrdinalScorer('elmOrdinal', this._getScorerSettings('elmOrdinal')));
+		this._ordinalScorerName = 'elmOrdinal';
 	}
 
 	_getScorerSettings(scorerName) {

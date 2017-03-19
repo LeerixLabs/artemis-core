@@ -12,7 +12,7 @@ describe('Planner Test: ', function(){
           let scoringPlan = planner.plan(modeledElmDesc);
           let expectedPlan = {
                object: {
-                    scorer: 'html-tag',
+                    scorer: 'htmlTag',
                     value: '*'
                }
           };
@@ -26,11 +26,11 @@ describe('Planner Test: ', function(){
                object: {
                     and: [
                          {
-                              scorer: 'html-tag',
+                              scorer: 'htmlTag',
                               value: '*'
                          },
                          {
-                              scorer: 'css-class',
+                              scorer: 'cssClass',
                               value: 'my-class'
                          }
                     ]
@@ -46,15 +46,15 @@ describe('Planner Test: ', function(){
                object: {
                     and: [
                          {
-                              scorer: 'html-tag',
+                              scorer: 'htmlTag',
                               value: '*'
                          },
                          {
-                              scorer: 'rel-position',
+                              scorer: 'relPosition',
                               isRelation: true,
                               value: 'below',
                               object : {
-                                   scorer: 'html-tag',
+                                   scorer: 'htmlTag',
                                    value: '*'
                               }
                          }

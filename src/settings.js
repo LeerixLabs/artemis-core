@@ -48,164 +48,164 @@ export let settings = {
 		{
 			"location": "objectType",
 			"phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
-			"type": "elm-type",
+			"type": "elmType",
 			"isObjectType": true
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "(1st|first)",
-			"type": "elm-ordinal",
+			"type": "elmOrdinal",
 			"value": 1
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "(2nd|second)",
-			"type": "elm-ordinal",
+			"type": "elmOrdinal",
 			"value": 2
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "(3rd|third)",
-			"type": "elm-ordinal",
+			"type": "elmOrdinal",
 			"value": 3
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "([0-9]+)th",
-			"type": "elm-ordinal"
+			"type": "elmOrdinal"
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "(small|medium|large)",
-			"type": "elm-size"
+			"type": "elmSize"
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "(maroon|red|brown|orange|yellow|olive|lime|green|teal|aqua|blue|navy|pink|purple|black|white|gray)",
-			"type": "elm-color"
+			"type": "elmColor"
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "(?:['|\"])([\\w\\s-]+)(?:['|\"])",
-			"type": "free-text"
+			"type": "freeText"
 		},
 		{
 			"location": "preObjectType",
 			"phrase": "([\\w-]+)",
-			"type": "free-text"
+			"type": "freeText"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "at the top",
-			"type": "elm-location",
+			"type": "elmLocation",
 			"value": "top"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "at the bottom",
-			"type": "elm-location",
+			"type": "elmLocation",
 			"value": "bottom"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "on the left",
-			"type": "elm-location",
+			"type": "elmLocation",
 			"value": "left"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "on the right",
-			"type": "elm-location",
+			"type": "elmLocation",
 			"value": "right"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "at the middle",
-			"type": "elm-location",
+			"type": "elmLocation",
 			"value": "middle"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(?:with|and) tag ([\\w-]+)",
-			"type": "html-tag"
+			"type": "htmlTag"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(?:with|and) attribute value ([\\w-]+)",
-			"type": "html-attr-val"
+			"type": "htmlAttrVal"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(?:with|and) attribute ([\\w-]+)=([\\w-]+)",
-			"type": "html-attr-name-and-val"
+			"type": "htmlAttrNameAndVal"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(?:with|and) attribute ([\\w-]+)",
-			"type": "html-attr-name"
+			"type": "htmlAttrName"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(?:with|and) class ([\\w-]+)",
-			"type": "css-class"
+			"type": "cssClass"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(?:with|and) style ([\\w-]+):([\\w-]+)",
-			"type": "css-style-name-and-val"
+			"type": "cssStyleNameAndVal"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(?:with|and) style ([\\w-]+)=([\\w-]+)",
-			"type": "css-style-name-and-val"
+			"type": "cssStyleNameAndVal"
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "left of",
-			"type": "rel-position",
+			"type": "relPosition",
 			"value": "left",
 			"isObjectRelation": true
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "right of",
-			"type": "rel-position",
+			"type": "relPosition",
 			"value": "right",
 			"isObjectRelation": true
 		},
 		{
 			"location": "postObjectType",
 			"phrase": "(above|below|near|inside)",
-			"type": "rel-position",
+			"type": "relPosition",
 			"isObjectRelation": true
 		}
 	],
 	"plans": [
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "element",
 			"plan": {
-				"scorer": "html-tag",
+				"scorer": "htmlTag",
 				"value": "*"
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "button",
 			"plan": {
 				"or": [
 					{
-						"scorer": "html-tag",
+						"scorer": "htmlTag",
 						"value": "button"
 					},
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "input"
 							},
 							{
-								"scorer": "html-attr-name-and-val",
+								"scorer": "htmlAttrNameAndVal",
 								"value": ["type", "button"]
 							}
 						]
@@ -213,11 +213,11 @@ export let settings = {
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "input"
 							},
 							{
-								"scorer": "html-attr-name-and-val",
+								"scorer": "htmlAttrNameAndVal",
 								"value": ["type", "submit"]
 							}
 						]
@@ -225,11 +225,11 @@ export let settings = {
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "a"
 							},
 							{
-								"scorer": "css-class",
+								"scorer": "cssClass",
 								"value": ["button", "btn"]
 							}
 						],
@@ -238,11 +238,11 @@ export let settings = {
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "img"
 							},
 							{
-								"scorer": "css-class",
+								"scorer": "cssClass",
 								"value": ["button", "btn"]
 							}
 						],
@@ -251,116 +251,116 @@ export let settings = {
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "div"
 							},
 							{
-								"scorer": "css-class",
+								"scorer": "cssClass",
 								"value": ["button", "btn"]
 							}
 						],
 						"weight": 0.4
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "button"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "link",
 			"plan": {
 				"or": [
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "a"
 							},
 							{
-								"scorer": "html-attr-name",
+								"scorer": "htmlAttrName",
 								"value": "href"
 							}
 						]
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "link"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "checkbox",
 			"plan": {
 				"or" : [
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "input"
 							},
 							{
-								"scorer": "html-attr-name-and-val",
+								"scorer": "htmlAttrNameAndVal",
 								"value": ["type", "checkbox"]
 							}
 						]
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "checkbox"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "radio",
 			"plan": {
 				"or": [
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "input"
 							},
 							{
-								"scorer": "html-attr-name-and-val",
+								"scorer": "htmlAttrNameAndVal",
 								"value": ["type", "radio"]
 							}
 						]
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "radio"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "label",
 			"plan": {
-				"scorer": "html-tag",
+				"scorer": "htmlTag",
 				"value": "label"
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "input",
 			"plan": {
 				"or": [
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "input"
 							},
 							{
-								"scorer": "html-attr-name-and-val",
+								"scorer": "htmlAttrNameAndVal",
 								"value": ["type", "text"]
 							}
 						]
@@ -368,17 +368,17 @@ export let settings = {
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "input"
 							},
 							{
-								"scorer": "html-attr-name-and-val",
+								"scorer": "htmlAttrNameAndVal",
 								"value": ["type", "search"]
 							}
 						]
 					},
 					{
-						"scorer": "html-tag",
+						"scorer": "htmlTag",
 						"value": "textarea",
 						"weight": 0.7
 					}
@@ -386,198 +386,198 @@ export let settings = {
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "image",
 			"plan": {
 				"or": [
 					{
-						"scorer": "html-tag",
+						"scorer": "htmlTag",
 						"value": "img"
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "img"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "panel",
 			"plan": {
 				"and": [
 					{
-						"scorer": "html-tag",
+						"scorer": "htmlTag",
 						"value": "div"
 					},
 					{
-						"scorer": "elm-size",
+						"scorer": "elmSize",
 						"value": "large"
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "toolbar",
 			"plan": {
 				"or" : [
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "div"
 							},
 							{
-								"scorer": "css-class",
+								"scorer": "cssClass",
 								"value": "toolbar"
 							}
 						]
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "toolbar"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "tab",
 			"plan": {
 				"or" : [
 					{
 						"and": [
 							{
-								"scorer": "html-tag",
+								"scorer": "htmlTag",
 								"value": "div"
 							},
 							{
-								"scorer": "css-class",
+								"scorer": "cssClass",
 								"value": "tab"
 							}
 						]
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "tab"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "dropdown",
 			"plan": {
 				"or": [
 					{
-						"scorer": "html-tag",
+						"scorer": "htmlTag",
 						"value": "select"
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "combobox"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-type",
+			"type": "elmType",
 			"value": "item",
 			"plan": {
 				"or" : [
 					{
-						"scorer": "html-tag",
+						"scorer": "htmlTag",
 						"value": "option"
 					},
 					{
-						"scorer": "html-attr-name-and-val",
+						"scorer": "htmlAttrNameAndVal",
 						"value": ["role", "option"]
 					}
 				]
 			}
 		},
 		{
-			"type": "elm-ordinal",
+			"type": "elmOrdinal",
 			"plan": {
-				"scorer": "elm-ordinal",
+				"scorer": "elmOrdinal",
 				"is-ordinal": true
 			}
 		},
 		{
-			"type": "elm-size",
+			"type": "elmSize",
 			"plan": {
-				"scorer": "elm-size"
+				"scorer": "elmSize"
 			}
 		},
 		{
-			"type": "elm-color",
+			"type": "elmColor",
 			"plan": {
-				"scorer": "elm-color"
+				"scorer": "elmColor"
 			}
 		},
 		{
-			"type": "free-text",
+			"type": "freeText",
 			"plan": {
-				"scorer": "free-text"
+				"scorer": "freeText"
 			}
 		},
 		{
-			"type": "elm-location",
+			"type": "elmLocation",
 			"plan": {
-				"scorer": "elm-location"
+				"scorer": "elmLocation"
 			}
 		},
 		{
-			"type": "html-tag",
+			"type": "htmlTag",
 			"plan": {
-				"scorer": "html-tag"
+				"scorer": "htmlTag"
 			}
 		},
 		{
-			"type": "html-attr-name",
+			"type": "htmlAttrName",
 			"plan": {
-				"scorer": "html-attr-name"
+				"scorer": "htmlAttrName"
 			}
 		},
 		{
-			"type": "html-attr-val",
+			"type": "htmlAttrVal",
 			"plan": {
-				"scorer": "html-attr-val"
+				"scorer": "htmlAttrVal"
 			}
 		},
 		{
-			"type": "html-attr-name-and-val",
+			"type": "htmlAttrNameAndVal",
 			"plan": {
-				"scorer": "html-attr-name-and-val"
+				"scorer": "htmlAttrNameAndVal"
 			}
 		},
 		{
-			"type": "css-class",
+			"type": "cssClass",
 			"plan": {
-				"scorer": "css-class"
+				"scorer": "cssClass"
 			}
 		},
 		{
-			"type": "css-style-name-and-val",
+			"type": "cssStyleNameAndVal",
 			"plan": {
-				"scorer": "css-style-name-and-val"
+				"scorer": "cssStyleNameAndVal"
 			}
 		},
 		{
-			"type": "rel-position",
+			"type": "relPosition",
 			"plan": {
-				"scorer": "rel-position",
+				"scorer": "relPosition",
 				"isRelation": true
 			}
 		}
 	],
 	"scorers": {
-		"elm-size": {
+		"elmSize": {
 			"small": 1024,
 			"large": 16384
 		},
-		"elm-color": {
+		"elmColor": {
 			colors: [
 				{name: "maroon", rgb: "#800000"},
 				{name: "red",    rgb: "#FF0000"},
@@ -611,7 +611,7 @@ export let settings = {
 			},
 			"hslFactors": [1, 0.2, 0.6]
 		},
-		"elm-ordinal": {
+		"elmOrdinal": {
 			"minScore": 1
 		}
 	},
