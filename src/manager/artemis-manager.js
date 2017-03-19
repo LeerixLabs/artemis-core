@@ -109,9 +109,10 @@ export class Manager {
 				log.error('Unknown command type');
 			}
 			if (storage.hasItems()) {
+				let secondsBetweenCommands = this._settings && this._settings['commands'] && this._settings['commands']['seconds-between-commands'] || 3;
 				window.setTimeout(() => {
 					that._executeNextCommand();
-				}, 3000);
+				}, secondsBetweenCommands * 1000);
 			}
 		} else {
 			log.debug('No commands in storage');

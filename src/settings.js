@@ -2,6 +2,9 @@ export let settings = {
 	"version":	1,
 	"log-level": "WARN",
 	"language": "en",
+	"commands": {
+		"seconds-between-commands": 3,
+	},
 	"sentence-phrases" : [
 		{
 			"phrase": "^(?:wait)$",
