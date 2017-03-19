@@ -46,135 +46,135 @@ export let settings = {
 	],
 	"targetPhrases": [
 		{
-			"location": "object-type",
+			"location": "objectType",
 			"phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
 			"type": "elm-type",
 			"isObjectType": true
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "(1st|first)",
 			"type": "elm-ordinal",
 			"value": 1
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "(2nd|second)",
 			"type": "elm-ordinal",
 			"value": 2
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "(3rd|third)",
 			"type": "elm-ordinal",
 			"value": 3
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "([0-9]+)th",
 			"type": "elm-ordinal"
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "(small|medium|large)",
 			"type": "elm-size"
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "(maroon|red|brown|orange|yellow|olive|lime|green|teal|aqua|blue|navy|pink|purple|black|white|gray)",
 			"type": "elm-color"
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "(?:['|\"])([\\w\\s-]+)(?:['|\"])",
 			"type": "free-text"
 		},
 		{
-			"location": "pre-object-type",
+			"location": "preObjectType",
 			"phrase": "([\\w-]+)",
 			"type": "free-text"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "at the top",
 			"type": "elm-location",
 			"value": "top"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "at the bottom",
 			"type": "elm-location",
 			"value": "bottom"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "on the left",
 			"type": "elm-location",
 			"value": "left"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "on the right",
 			"type": "elm-location",
 			"value": "right"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "at the middle",
 			"type": "elm-location",
 			"value": "middle"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(?:with|and) tag ([\\w-]+)",
 			"type": "html-tag"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(?:with|and) attribute value ([\\w-]+)",
 			"type": "html-attr-val"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(?:with|and) attribute ([\\w-]+)=([\\w-]+)",
 			"type": "html-attr-name-and-val"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(?:with|and) attribute ([\\w-]+)",
 			"type": "html-attr-name"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(?:with|and) class ([\\w-]+)",
 			"type": "css-class"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(?:with|and) style ([\\w-]+):([\\w-]+)",
 			"type": "css-style-name-and-val"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(?:with|and) style ([\\w-]+)=([\\w-]+)",
 			"type": "css-style-name-and-val"
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "left of",
 			"type": "rel-position",
 			"value": "left",
 			"isObjectRelation": true
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "right of",
 			"type": "rel-position",
 			"value": "right",
 			"isObjectRelation": true
 		},
 		{
-			"location": "post-object-type",
+			"location": "postObjectType",
 			"phrase": "(above|below|near|inside)",
 			"type": "rel-position",
 			"isObjectRelation": true

@@ -7,9 +7,9 @@ export class Parser {
 		this._settings = settings;
 		this._isDebug = log.isDebug();
 		this._actionPhrases = this._settings.actionPhrases;
-		this._preObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'pre-object-type');
-		this._objectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'object-type');
-		this._postObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'post-object-type');
+		this._preObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'preObjectType');
+		this._objectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'objectType');
+		this._postObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'postObjectType');
 	}
 
 	_parseSentence(sentence) {
@@ -54,7 +54,7 @@ export class Parser {
 		if (this._isDebug){log.debug(`Get next match in text: ${sentence}`)}
 		if (this._isDebug){log.debug(`state: ${state}`)}
 		let matchResult = null;
-		let relevantPhrases = (state === 'pre-object-type')? this._objectTypePhrases.concat(this._preObjectTypePhrases) : this._postObjectTypePhrases;
+		let relevantPhrases = (state === 'preObjectType')? this._objectTypePhrases.concat(this._preObjectTypePhrases) : this._postObjectTypePhrases;
 		relevantPhrases.forEach( p => {
 			if (!matchResult) {
 				let matches = new RegExp(`^${p.phrase}`, `i`).exec(sentence);
@@ -108,7 +108,7 @@ export class Parser {
 			object: {}
 		};
 		let objectNode = modeledElmDesc.object;
-		let state = 'pre-object-type';
+		let state = 'preObjectType';
 		let shouldRemoveTheWordTheIfExists = true;
 		let sentence = Parser._trimSentence(elmDescStr, shouldRemoveTheWordTheIfExists);
 
@@ -128,9 +128,9 @@ export class Parser {
 				if (matchResult.isObjectRelation) {
 					propertyNode.object = {};
 					objectNode = propertyNode.object;
-					state = 'object-type';
+					state = 'objectType';
 				}
-				state = matchResult.isObjectType || state === 'post-object-type' ? 'post-object-type' : 'pre-object-type';
+				state = matchResult.isObjectType || state === 'postObjectType' ? 'postObjectType' : 'preObjectType';
 				sentence = sentence.substring(matchResult.matchedStrLength);
 				shouldRemoveTheWordTheIfExists = matchResult.isObjectRelation;
 				sentence = Parser._trimSentence(sentence, shouldRemoveTheWordTheIfExists);
