@@ -1,5 +1,5 @@
 import {settings} from '../../src/settings';
-import {Parser} from '../../src/parser/artemis-parser'
+import Parser from '../../src/parser/artemis-parser'
 
 describe('Target Parser Test', () => {
 	let parser = new Parser(settings);

@@ -1,7 +1,7 @@
 import {log} from '../common/logger';
 import Helper from  '../common/common-helper';
 
-export class Parser {
+export default class Parser {
 
 	constructor(settings) {
 		this._settings = settings;
@@ -12,7 +12,7 @@ export class Parser {
 		this._postObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'postObjectType');
 	}
 
-	_parseSentence(sentence) {
+	_parseAction(sentence) {
 		let found = false;
 		let actionInfo = {
 			action: '',
@@ -155,7 +155,7 @@ export class Parser {
 	parse(sentence) {
 		if (this._isDebug){log.debug('Parser.parse() - start')}
 		if (this._isDebug){log.debug(`sentence: ${sentence}`)}
-		let actionInfo = this._parseSentence(sentence);
+		let actionInfo = this._parseAction(sentence);
 		let targetInfo = actionInfo.target ? this.parseDescription(actionInfo.target) : null;
 		let parserOutput = {
 			actionInfo: actionInfo,

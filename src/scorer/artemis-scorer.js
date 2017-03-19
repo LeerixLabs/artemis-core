@@ -15,7 +15,7 @@ import HtmlAttrValScorer from './scorers/html-attr-val-scorer.js';
 import HtmlTagScorer from './scorers/html-tag-scorer.js';
 import RelPositionScorer from './scorers/rel-position-scorer.js';
 
-export class Scorer{
+export default class Scorer{
 
 	constructor(settings, htmlDom){
 		this._settings = settings;

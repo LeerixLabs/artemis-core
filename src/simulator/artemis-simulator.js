@@ -2,9 +2,10 @@ import {log} from '../common/logger';
 import Constants from '../common/common-constants';
 import Helper from '../common/common-helper';
 
-class Simulator {
+export default class Simulator {
 
-	constructor() {
+	constructor(settings) {
+		this._settings = settings;
 		this._eventMatchers = [
 			{
 				eventType: 'HTMLEvents',
@@ -88,5 +89,3 @@ class Simulator {
 		log.debug('Simulator.simulate() - end');
 	}
 }
-
-module.exports.simulator = new Simulator();

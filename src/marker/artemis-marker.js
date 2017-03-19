@@ -2,7 +2,7 @@ import Constants from '../common/common-constants';
 import HtmlDOM from '../common/html-dom';
 import {log} from '../common/logger';
 
-export class Marker {
+export default class Marker {
 
 	constructor(settings, htmlDom){
 		this._settings = settings;

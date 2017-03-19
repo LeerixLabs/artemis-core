@@ -1,7 +1,7 @@
 import {log} from '../common/logger';
 import Helper from  '../common/common-helper';
 
-export class Planner {
+export default class Planner {
 
 	constructor(settings) {
 		this._settings = settings;

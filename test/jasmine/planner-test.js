@@ -1,6 +1,6 @@
 import {settings} from '../../src/settings';
-import {Parser} from '../../src/parser/artemis-parser';
-import {Planner} from '../../src/planner/artemis-planner';
+import Parser from '../../src/parser/artemis-parser';
+import Planner from '../../src/planner/artemis-planner';
 
 describe('Planner Test: ', function(){
 

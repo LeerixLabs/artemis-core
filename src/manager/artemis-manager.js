@@ -1,15 +1,15 @@
 import {settings} from '../settings';
-import Constants from '../common/common-constants';
 import {log} from '../common/logger';
 import {storage} from '../storage/artemis-storage';
+import Constants from '../common/common-constants';
 import HtmlDOM from '../common/html-dom';
-import {Parser} from '../parser/artemis-parser';
-import {Planner} from '../planner/artemis-planner';
-import {Scorer} from '../scorer/artemis-scorer';
-import {Marker} from '../marker/artemis-marker';
-import {simulator} from '../simulator/artemis-simulator';
+import Parser from '../parser/artemis-parser';
+import Planner from '../planner/artemis-planner';
+import Scorer from '../scorer/artemis-scorer';
+import Marker from '../marker/artemis-marker';
+import Simulator from '../simulator/artemis-simulator';
 
-export class Manager {
+export default class Manager {
 
 	constructor() {
 		this._msgFieldName = {
@@ -24,34 +24,37 @@ export class Manager {
 	}
 
 	_init(config) {
-		this._htmlDom = new HtmlDOM();
-		this._htmlDom.cleanDom(true);
+		let that = this;
+		that._htmlDom = new HtmlDOM();
+		that._htmlDom.cleanDom(true);
 		if (!config) {
-			this._settings = settings;
+			that._settings = settings;
 		} else if (typeof config == 'string' || config instanceof String) {
-			this._settings = JSON.parse(config);
+			that._settings = JSON.parse(config);
 		} else {
-			this._settings = config;
+			that._settings = config;
 		}
-		if (this._settings && this._settings.logLevel) {
-			log.setLogLevel(this._settings.logLevel);
+		if (that._settings && that._settings.logLevel) {
+			log.setLogLevel(that._settings.logLevel);
 		}
 		log.debug('Manager.init() - start');
-		this._parser = new Parser(this._settings);
-		this._planner = new Planner(this._settings);
-		this._scorer = new Scorer(this._settings, this._htmlDom);
-		this._marker = new Marker(this._settings, this._htmlDom);
+		that._parser = new Parser(that._settings);
+		that._planner = new Planner(that._settings);
+		that._scorer = new Scorer(that._settings, that._htmlDom);
+		that._marker = new Marker(that._settings, that._htmlDom);
+		that._simulator = new Simulator(that._settings);
 		log.debug('Manager.init() - end');
 	}
 
 	_find(targetInfo) {
 		log.debug('Manager.find() - start');
+		let that = this;
 		if (!targetInfo) {
 			return {};
 		}
-		let scoringPlan = this._planner.plan(targetInfo);
-		let scoringResult = this._scorer.score(scoringPlan);
-		this._marker.mark(scoringResult);
+		let scoringPlan = that._planner.plan(targetInfo);
+		let scoringResult = that._scorer.score(scoringPlan);
+		that._marker.mark(scoringResult);
 		log.debug('Manager.find() - end');
 		return scoringResult;
 	}
@@ -85,7 +88,7 @@ export class Manager {
 			if (info.targetInfo) {
 				let locateResult = that._find(info.targetInfo);
 				if (locateResult.perfects.length > 0) {
-					simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
+					that._simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
 				}
 			}
 		}
@@ -109,7 +112,7 @@ export class Manager {
 				log.error('Unknown command type');
 			}
 			if (storage.hasItems()) {
-				let secondsBetweenCommands = this._settings && this._settings.commands && this._settings.commands.secondsBetweenCommands || 3;
+				let secondsBetweenCommands = that._settings && that._settings.commands && that._settings.commands.secondsBetweenCommands || 3;
 				window.setTimeout(() => {
 					that._executeNextCommand();
 				}, secondsBetweenCommands * 1000);
@@ -152,9 +155,10 @@ export class Manager {
 	}
 
 	onLoad() {
+		let that = this;
 		storage.removeOldItems();
 		if (storage.hasItems()) {
-			this._executeNextCommand();
+			that._executeNextCommand();
 		}
 	}
 
