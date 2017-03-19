@@ -12,8 +12,8 @@ export class Marker {
 
 	_ensureColorClassesExistOnHtmlDom() {
 		if (!this._htmlDom.artemisColorClassesExistOnHtmlDom) {
-			let singleMatchColor = this._settings.colors['single-match-color'];
-			let scoreColors = this._settings.colors['score-colors'];
+			let singleMatchColor = this._settings.colors.singleMatchColor;
+			let scoreColors = this._settings.colors.scoreColors;
 			this._htmlDom.addColorClassesToHtmlDom(singleMatchColor, scoreColors);
 			this._htmlDom.artemisColorClassesExistOnHtmlDom = true;
 		}

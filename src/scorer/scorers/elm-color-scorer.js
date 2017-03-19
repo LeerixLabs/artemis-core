@@ -39,7 +39,7 @@ export default class ElmColorScorer {
 				rgb: '#808080',
 				value: 0.1
 			};
-		this._config['hsl-factors'] = this._settings['hsl-factors'] || [1, 0.2, 0.6];
+		this._config.hslFactors = this._settings.hslFactors || [1, 0.2, 0.6];
 		for (let i = 0; i < this._config.colors.length; i++) {
 			let rgb = ElmColorScorer.strToRgb(this._config.colors[i].rgb);
 			let hsl = ElmColorScorer.rgbToHsl(rgb[0], rgb[1], rgb[2]);
@@ -88,9 +88,9 @@ export default class ElmColorScorer {
 		closestDiff = Number.MAX_VALUE;
 		for (let i = 0; i < config.colors.length; i++) {
 			diff =
-			config['hsl-factors'][0]*Math.abs(config.colors[i].hsl[0] - hsl[0]) +
-			config['hsl-factors'][1]*Math.abs(config.colors[i].hsl[1] - hsl[1]) +
-			config['hsl-factors'][2]*Math.abs(config.colors[i].hsl[2] - hsl[2]);
+			config.hslFactors[0]*Math.abs(config.colors[i].hsl[0] - hsl[0]) +
+			config.hslFactors[1]*Math.abs(config.colors[i].hsl[1] - hsl[1]) +
+			config.hslFactors[2]*Math.abs(config.colors[i].hsl[2] - hsl[2]);
 			if (diff < closestDiff) {
 				closestDiff = diff;
 				closestColorIndex = i;

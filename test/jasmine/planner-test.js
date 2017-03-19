@@ -51,7 +51,7 @@ describe('Planner Test: ', function(){
                          },
                          {
                               scorer: 'rel-position',
-                              'is-relation': true,
+                              isRelation: true,
                               value: 'below',
                               object : {
                                    scorer: 'html-tag',

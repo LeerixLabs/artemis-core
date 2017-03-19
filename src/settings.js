@@ -49,7 +49,7 @@ export let settings = {
 			"location": "object-type",
 			"phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
 			"type": "elm-type",
-			"is-object-type": true
+			"isObjectType": true
 		},
 		{
 			"location": "pre-object-type",
@@ -164,20 +164,20 @@ export let settings = {
 			"phrase": "left of",
 			"type": "rel-position",
 			"value": "left",
-			"is-object-relation": true
+			"isObjectRelation": true
 		},
 		{
 			"location": "post-object-type",
 			"phrase": "right of",
 			"type": "rel-position",
 			"value": "right",
-			"is-object-relation": true
+			"isObjectRelation": true
 		},
 		{
 			"location": "post-object-type",
 			"phrase": "(above|below|near|inside)",
 			"type": "rel-position",
-			"is-object-relation": true
+			"isObjectRelation": true
 		}
 	],
 	"plans": [
@@ -568,7 +568,7 @@ export let settings = {
 			"type": "rel-position",
 			"plan": {
 				"scorer": "rel-position",
-				"is-relation": true
+				"isRelation": true
 			}
 		}
 	],
@@ -609,18 +609,18 @@ export let settings = {
 				rgb: "#808080",
 				value: 0.1
 			},
-			"hsl-factors": [1, 0.2, 0.6]
+			"hslFactors": [1, 0.2, 0.6]
 		},
 		"elm-ordinal": {
-			"min-score": 1
+			"minScore": 1
 		}
 	},
 	"scoring": {
-		"prune-score": 0.01
+		"pruneScore": 0.01
 	},
 	"colors": {
-		"single-match-color": "#339933",
-		"score-colors": [
+		"singleMatchColor": "#339933",
+		"scoreColors": [
 			'#FFFFCC',
 			'#FFFFB3',
 			'#FFFF99',

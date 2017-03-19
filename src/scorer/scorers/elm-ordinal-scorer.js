@@ -3,7 +3,7 @@ export default class ElmOrdinalScorer {
   constructor(name, settings){
     this.name = name;
     this._settings = settings;
-    this._minScore = settings['min-score'] || 1;
+    this._minScore = settings.minScore || 1;
   }
 
   score(elm, val) {

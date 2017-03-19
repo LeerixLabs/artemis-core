@@ -72,8 +72,8 @@ export class Parser {
 					matchResult = {
 						type: p.type,
 						value: p.value !== undefined ? p.value : matches.length === 1 ? matches[0] : matches,
-						isObjectType: !!p['is-object-type'],
-						isObjectRelation: !!p['is-object-relation'],
+						isObjectType: !!p.isObjectType,
+						isObjectRelation: !!p.isObjectRelation,
 						matchedStrLength: matchedStrLength
 					};
 					if (this._isDebug){log.debug(`matchResult: ${Helper.toJSON(matchResult)}`)}
