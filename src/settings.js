@@ -1,11 +1,11 @@
 export let settings = {
 	"version":	1,
-	"log-level": "WARN",
+	"logLevel": "WARN",
 	"language": "en",
 	"commands": {
-		"seconds-between-commands": 3,
+		"secondsBetweenCommands": 3,
 	},
-	"sentence-phrases" : [
+	"actionPhrases" : [
 		{
 			"phrase": "^(?:wait)$",
 			"action": "wait"
@@ -13,38 +13,38 @@ export let settings = {
 		{
 			"phrase": "^(?:find |locate )([\\S\\s]+)$",
 			"action": "locate",
-			"num-of-groups": 1,
-			"group-index-target": 1
+			"numOfGroups": 1,
+			"groupIndexTarget": 1
 		},
 		{
 			"phrase": "^(?:click |push |press |select )([\\S\\s]+)$",
 			"action": "click",
-			"num-of-groups": 1,
-			"group-index-target": 1
+			"numOfGroups": 1,
+			"groupIndexTarget": 1
 		},
 		{
 			"phrase": "^(?:enter )(?:\")([\\S\\s]+)(?:\")(?: in )([\\S\\s]+)$",
 			"action": "write",
-			"num-of-groups": 2,
-			"group-index-value": 1,
-			"group-index-target": 2
+			"numOfGroups": 2,
+			"groupIndexValue": 1,
+			"groupIndexTarget": 2
 		},
 		{
 			"phrase": "^(?:enter )(?:\')([\\S\\s]+)(?:\')(?: in )([\\S\\s]+)$",
 			"action": "write",
-			"num-of-groups": 2,
-			"group-index-value": 1,
-			"group-index-target": 2
+			"numOfGroups": 2,
+			"groupIndexValue": 1,
+			"groupIndexTarget": 2
 		},
 		{
 			"phrase": "^(?:enter )([\\S\\s]+)(?: in )([\\S\\s]+)$",
 			"action": "write",
-			"num-of-groups": 2,
-			"group-index-value": 1,
-			"group-index-target": 2
+			"numOfGroups": 2,
+			"groupIndexValue": 1,
+			"groupIndexTarget": 2
 		}
 	],
-	"target-phrases": [
+	"targetPhrases": [
 		{
 			"location": "object-type",
 			"phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",

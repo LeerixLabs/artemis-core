@@ -6,34 +6,34 @@ export class Parser {
 	constructor(settings) {
 		this._settings = settings;
 		this._isDebug = log.isDebug();
-		this._sentencePhrases = this._settings['sentence-phrases'];
-		this._preObjectTypePhrases = this._settings['target-phrases'].filter( p => p.location === 'pre-object-type');
-		this._objectTypePhrases = this._settings['target-phrases'].filter( p => p.location === 'object-type');
-		this._postObjectTypePhrases = this._settings['target-phrases'].filter( p => p.location === 'post-object-type');
+		this._actionPhrases = this._settings.actionPhrases;
+		this._preObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'pre-object-type');
+		this._objectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'object-type');
+		this._postObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'post-object-type');
 	}
 
 	_parseSentence(sentence) {
 		let found = false;
-		let sentenceInfo = {
+		let actionInfo = {
 			action: '',
 			value: '',
 			target: ''
 		};
-		for (let rule of this._sentencePhrases) {
+		for (let rule of this._actionPhrases) {
 			if (!found) {
-				let match = (new RegExp(rule['phrase'], 'i')).exec(sentence);
+				let match = (new RegExp(rule.phrase, 'i')).exec(sentence);
 				if (match) {
-					let numOfGroups = rule['num-of-groups'] || 0;
+					let numOfGroups = rule.numOfGroups || 0;
 					if (numOfGroups === 0 || match.length === numOfGroups + 1) {
 						found = true;
-						sentenceInfo.action = rule['action'];
-						sentenceInfo.value = rule['group-index-value'] && rule['group-index-value'] >= 0 ? match[rule['group-index-value']] : '';
-						sentenceInfo.target = rule['group-index-target'] && rule['group-index-target'] >= 0 ? match[rule['group-index-target']] : '';
+						actionInfo.action = rule.action;
+						actionInfo.value = rule.groupIndexValue && rule.groupIndexValue >= 0 ? match[rule.groupIndexValue] : '';
+						actionInfo.target = rule.groupIndexTarget && rule.groupIndexTarget >= 0 ? match[rule.groupIndexTarget] : '';
 					}
 				}
 			}
 		}
-		return sentenceInfo;
+		return actionInfo;
 	}
 
 	static _trimSentence(sentence, shouldRemoveTheWordThe) {
@@ -155,10 +155,10 @@ export class Parser {
 	parse(sentence) {
 		if (this._isDebug){log.debug('Parser.parse() - start')}
 		if (this._isDebug){log.debug(`sentence: ${sentence}`)}
-		let sentenceInfo = this._parseSentence(sentence);
-		let targetInfo = sentenceInfo.target ? this.parseDescription(sentenceInfo.target) : null;
+		let actionInfo = this._parseSentence(sentence);
+		let targetInfo = actionInfo.target ? this.parseDescription(actionInfo.target) : null;
 		let parserOutput = {
-			sentenceInfo: sentenceInfo,
+			actionInfo: actionInfo,
 			targetInfo: targetInfo
 		};
 		if (this._isDebug){log.debug(`Parser output: ${Helper.toJSON(parserOutput)}`)}

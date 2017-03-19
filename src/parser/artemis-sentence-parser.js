@@ -77,7 +77,7 @@ export class SentenceParser {
 
 	_parseSentence(sentence) {
 		let found = false;
-		let sentenceInfo = {
+		let actionInfo = {
 			action: '',
 			value: '',
 			target: ''
@@ -87,13 +87,13 @@ export class SentenceParser {
 				let match = (new RegExp(rule.regStr, 'i')).exec(sentence);
 				if (match && match.length === rule.numOfGroups + 1) {
 					found = true;
-					sentenceInfo.action = rule.action;
-					sentenceInfo.target = rule.groupIndexTarget === -1 ? '' : match[rule.groupIndexTarget];
-					sentenceInfo.value = rule.groupIndexValue === -1 ? '' : match[rule.groupIndexValue];
+					actionInfo.action = rule.action;
+					actionInfo.target = rule.groupIndexTarget === -1 ? '' : match[rule.groupIndexTarget];
+					actionInfo.value = rule.groupIndexValue === -1 ? '' : match[rule.groupIndexValue];
 				}
 			}
 		}
-		return sentenceInfo;
+		return actionInfo;
 	}
 
 	parse(sentence) {

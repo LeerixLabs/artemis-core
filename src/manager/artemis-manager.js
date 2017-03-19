@@ -33,8 +33,8 @@ export class Manager {
 		} else {
 			this._settings = config;
 		}
-		if (this._settings && this._settings['log-level']) {
-			log.setLogLevel(this._settings['log-level']);
+		if (this._settings && this._settings.logLevel) {
+			log.setLogLevel(this._settings.logLevel);
 		}
 		log.debug('Manager.init() - start');
 		this._parser = new Parser(this._settings);
@@ -71,7 +71,7 @@ export class Manager {
 		log.debug('Manager.debug() - start');
 		let that = this;
 		let info = that._parser.parse(cmd.data);
-		if (info.sentenceInfo.action !== Constants.actionType.WAIT) {
+		if (info.actionInfo.action !== Constants.actionType.WAIT) {
 			that._find(info.targetInfo);
 		}
 		log.debug('Manager.debug() - end');
@@ -81,11 +81,11 @@ export class Manager {
 		log.debug('Manager.run() - start');
 		let that = this;
 		let info = that._parser.parse(cmd.data);
-		if (info.sentenceInfo.action !== Constants.actionType.WAIT) {
+		if (info.actionInfo.action !== Constants.actionType.WAIT) {
 			if (info.targetInfo) {
 				let locateResult = that._find(info.targetInfo);
 				if (locateResult.perfects.length > 0) {
-					simulator.simulate(locateResult.perfects[0], info.sentenceInfo.action, info.sentenceInfo.value);
+					simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
 				}
 			}
 		}
@@ -109,7 +109,7 @@ export class Manager {
 				log.error('Unknown command type');
 			}
 			if (storage.hasItems()) {
-				let secondsBetweenCommands = this._settings && this._settings['commands'] && this._settings['commands']['seconds-between-commands'] || 3;
+				let secondsBetweenCommands = this._settings && this._settings.commands && this._settings.commands.secondsBetweenCommands || 3;
 				window.setTimeout(() => {
 					that._executeNextCommand();
 				}, secondsBetweenCommands * 1000);
