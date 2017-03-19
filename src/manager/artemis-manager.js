@@ -1,12 +1,13 @@
 import {settings} from '../settings';
+import Constants from '../common/common-constants';
 import {log} from '../common/logger';
 import {storage} from '../storage/artemis-storage';
-import {simulator} from '../simulator/artemis-simulator';
 import HtmlDOM from '../common/html-dom';
 import {Parser} from '../parser/artemis-parser';
 import {Planner} from '../planner/artemis-planner';
 import {Scorer} from '../scorer/artemis-scorer';
 import {Marker} from '../marker/artemis-marker';
+import {simulator} from '../simulator/artemis-simulator';
 
 export class Manager {
 
@@ -70,7 +71,9 @@ export class Manager {
 		log.debug('Manager.debug() - start');
 		let that = this;
 		let info = that._parser.parse(cmd.data);
-		that._find(info.targetInfo);
+		if (info.sentenceInfo.action !== Constants.actionType.WAIT) {
+			that._find(info.targetInfo);
+		}
 		log.debug('Manager.debug() - end');
 	}
 
@@ -78,10 +81,12 @@ export class Manager {
 		log.debug('Manager.run() - start');
 		let that = this;
 		let info = that._parser.parse(cmd.data);
-		if (info.targetInfo) {
-			let locateResult = that._find(info.targetInfo);
-			if (locateResult.perfects.length > 0) {
-				simulator.simulate(locateResult.perfects[0], info.sentenceInfo.action, info.sentenceInfo.value);
+		if (info.sentenceInfo.action !== Constants.actionType.WAIT) {
+			if (info.targetInfo) {
+				let locateResult = that._find(info.targetInfo);
+				if (locateResult.perfects.length > 0) {
+					simulator.simulate(locateResult.perfects[0], info.sentenceInfo.action, info.sentenceInfo.value);
+				}
 			}
 		}
 		log.debug('Manager.run() - end');

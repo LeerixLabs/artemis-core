@@ -1,14 +1,10 @@
 import {log} from '../common/logger';
-import Helper from  '../common/common-helper';
+import Constants from '../common/common-constants';
+import Helper from '../common/common-helper';
 
 class Simulator {
 
 	constructor() {
-		this._actionType = {
-			LOCATE: 'locate',
-			CLICK: 'click',
-			WRITE: 'write'
-		};
 		this._eventMatchers = [
 			{
 				eventType: 'HTMLEvents',
@@ -82,11 +78,11 @@ class Simulator {
 	simulate(elm, action, value) {
 		log.debug('Simulator.simulate() - start');
 		log.debug(`elmId: ${elm.id}, elmTag: ${elm.tagName}, action: ${action}, value: ${value}`);
-		if (action === this._actionType.CLICK) {
+		if (action === Constants.actionType.CLICK) {
 			this._click(elm);
-		} else if (action === this._actionType.WRITE) {
+		} else if (action === Constants.actionType.WRITE) {
 			this._write(elm, value);
-		} else if (action !== this._actionType.LOCATE) {
+		} else if (action !== Constants.actionType.LOCATE && action !== Constants.actionType.WAIT) {
 			log.error('Unsupported action');
 		}
 		log.debug('Simulator.simulate() - end');

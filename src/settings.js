@@ -4,6 +4,10 @@ export let settings = {
 	"language": "en",
 	"sentence-phrases" : [
 		{
+			"phrase": "^(?:wait)$",
+			"action": "wait"
+		},
+		{
 			"phrase": "^(?:find |locate )([\\S\\s]+)$",
 			"action": "locate",
 			"num-of-groups": 1,

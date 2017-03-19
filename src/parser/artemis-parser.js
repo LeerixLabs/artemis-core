@@ -22,11 +22,14 @@ export class Parser {
 		for (let rule of this._sentencePhrases) {
 			if (!found) {
 				let match = (new RegExp(rule['phrase'], 'i')).exec(sentence);
-				if (match && match.length === rule['num-of-groups'] + 1) {
-					found = true;
-					sentenceInfo.action = rule['action'];
-					sentenceInfo.value = rule['group-index-value'] && rule['group-index-value'] >= 0 ? match[rule['group-index-value']] : '';
-					sentenceInfo.target = rule['group-index-target'] && rule['group-index-target'] >= 0 ? match[rule['group-index-target']] : '';
+				if (match) {
+					let numOfGroups = rule['num-of-groups'] || 0;
+					if (numOfGroups === 0 || match.length === numOfGroups + 1) {
+						found = true;
+						sentenceInfo.action = rule['action'];
+						sentenceInfo.value = rule['group-index-value'] && rule['group-index-value'] >= 0 ? match[rule['group-index-value']] : '';
+						sentenceInfo.target = rule['group-index-target'] && rule['group-index-target'] >= 0 ? match[rule['group-index-target']] : '';
+					}
 				}
 			}
 		}

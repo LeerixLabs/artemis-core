@@ -1,35 +1,44 @@
 export default class Constants {
 
-  static get artemisColorClassesExistAttr() {
-    return 'artemis-color-classes-exist';
-  }
+	static get actionType() {
+		return {
+			LOCATE: 'locate',
+			CLICK: 'click',
+			WRITE: 'write',
+			WAIT: 'wait'
+		}
+	};
 
-  static get artemisElmIdsExistAttr() {
-    return 'artemis-elm-ids-exist';
-  }
+	static get artemisColorClassesExistAttr() {
+		return 'artemis-color-classes-exist';
+	}
 
-  static get artemisElmScoresExistAttr() {
-    return 'artemis-elm-scores-exist';
-  }
+	static get artemisElmIdsExistAttr() {
+		return 'artemis-elm-ids-exist';
+	}
 
-  static get artemisElmClassesExistAttr() {
-    return 'artemis-elm-classes-exist';
-  }
+	static get artemisElmScoresExistAttr() {
+		return 'artemis-elm-scores-exist';
+	}
 
-  static get artemisElmIdAttr() {
-    return 'artemis-id';
-  }
+	static get artemisElmClassesExistAttr() {
+		return 'artemis-elm-classes-exist';
+	}
 
-  static get artemisElmScoreAttr() {
-    return 'artemis-score';
-  }
+	static get artemisElmIdAttr() {
+		return 'artemis-id';
+	}
 
-  static get artemisElmClassPrefix() {
-    return 'artemis-class-';
-  }
+	static get artemisElmScoreAttr() {
+		return 'artemis-score';
+	}
 
-  static get artemisElmClassSingleMatchSuffix() {
-    return 'single-match';
-  }
+	static get artemisElmClassPrefix() {
+		return 'artemis-class-';
+	}
+
+	static get artemisElmClassSingleMatchSuffix() {
+		return 'single-match';
+	}
 
 }
