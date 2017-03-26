@@ -1,13 +1,13 @@
 import {settings} from '../settings';
 import {log} from '../common/logger';
 import {storage} from '../storage/artemis-storage';
+import {simulator} from '../simulator/artemis-simulator';
 import Constants from '../common/common-constants';
 import HtmlDOM from '../common/html-dom';
 import Parser from '../parser/artemis-parser';
 import Planner from '../planner/artemis-planner';
 import Scorer from '../scorer/artemis-scorer';
 import Marker from '../marker/artemis-marker';
-import Simulator from '../simulator/artemis-simulator';
 
 export default class Manager {
 
@@ -42,7 +42,6 @@ export default class Manager {
 		that._planner = new Planner(that._settings);
 		that._scorer = new Scorer(that._settings, that._htmlDom);
 		that._marker = new Marker(that._settings, that._htmlDom);
-		that._simulator = new Simulator(that._settings);
 		log.debug('Manager.init() - end');
 	}
 
@@ -88,7 +87,7 @@ export default class Manager {
 			if (info.targetInfo) {
 				let locateResult = that._find(info.targetInfo);
 				if (locateResult.perfects.length > 0) {
-					that._simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
+					simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
 				}
 			}
 		}

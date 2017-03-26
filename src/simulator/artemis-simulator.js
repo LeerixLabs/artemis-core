@@ -2,7 +2,7 @@ import {log} from '../common/logger';
 import Constants from '../common/common-constants';
 import Helper from '../common/common-helper';
 
-export default class Simulator {
+class Simulator {
 
 	constructor(settings) {
 		this._settings = settings;
@@ -89,3 +89,5 @@ export default class Simulator {
 		log.debug('Simulator.simulate() - end');
 	}
 }
+
+module.exports.simulator= new Simulator();
