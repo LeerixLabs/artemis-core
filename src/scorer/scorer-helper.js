@@ -1,4 +1,4 @@
-export class ScorerHelper {
+export default class ScorerHelper {
 
   static isArray(variable) {
     return variable.constructor === Array;

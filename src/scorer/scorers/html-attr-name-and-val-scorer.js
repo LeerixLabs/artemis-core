@@ -1,4 +1,4 @@
-import {ScorerHelper} from './../scorer-helper';
+import ScorerHelper from './../scorer-helper';
 
 export default class HtmlAttrNameAndValScorer {
 
