@@ -70,7 +70,8 @@ class Simulator {
 
 	_write(elm, value) {
 		log.debug('Simulator.write() - start');
-		elm.domElm.focus();
+		//elm.domElm.focus();
+		this._click(elm);
 		elm.domElm.value = value;
 		this._simulate(elm.domElm, 'change');
 		log.debug('Simulator.write() - end');
