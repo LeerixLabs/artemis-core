@@ -110,13 +110,17 @@ describe('Target Parser Test', () => {
 			'green',
 			'teal',
 			'aqua',
+			'turquoise',
 			'blue',
 			'navy',
+			'fuchsia',
 			'pink',
 			'purple',
 			'black',
 			'white',
-			'gray'
+			'gray',
+			'grey',
+			'silver'
 		];
 		elmColors.forEach( ec => {
 			let modeledElmDesc = parser._buildElementDescriptionModel(ec);

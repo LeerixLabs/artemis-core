@@ -5,37 +5,37 @@ export default class ElmColorScorer {
 		this._settings = settings;
 		this._config = {};
 		this._config.colors = this._settings.colors ||
-			[
-				{name: 'maroon', rgb: '#800000'},
-				{name: 'red',    rgb: '#FF0000'},
-				{name: 'brown',  rgb: '#994C00'},
-				{name: 'orange', rgb: '#FF9900'},
-				{name: 'yellow', rgb: '#FFFF00'},
-				{name: 'olive',  rgb: '#808000'},
-				{name: 'lime',   rgb: '#00FF00'},
-				{name: 'green',  rgb: '#008000'},
-				{name: 'teal',   rgb: '#008080'},
-				{name: 'aqua',   rgb: '#00FFFF'},
-				{name: 'blue',   rgb: '#0000FF'},
-				{name: 'navy',   rgb: '#000080'},
-				{name: 'pink',   rgb: '#FF00FF'},
-				{name: 'purple', rgb: '#800080'}
-			];
+		[
+			{names: ['maroon', 'red'], rgb: '#800000'},
+			{names: ['red'], rgb: '#FF0000'},
+			{names: ['brown'], rgb: '#994C00'},
+			{names: ['orange'], rgb: '#FF9900'},
+			{names: ['yellow'], rgb: '#FFFF00'},
+			{names: ['olive', 'green'], rgb: '#808000'},
+			{names: ['lime', 'green'], rgb: '#00FF00'},
+			{names: ['green'], rgb: '#008000'},
+			{names: ['teal', 'turquoise', 'blue'], rgb: '#008080'},
+			{names: ['aqua', 'turquoise', 'blue'], rgb: '#00FFFF'},
+			{names: ['blue'], rgb: '#0000FF'},
+			{names: ['navy', 'blue'], rgb: '#000080'},
+			{names: ['fuchsia', 'pink'], rgb: '#FF00FF'},
+			{names: ['purple'], rgb: '#800080'}
+		];
 		this._config.black = this._settings.black ||
 			{
-				name: 'black',
+				names: ['black'],
 				rgb: '#000000',
 				value: 0.1
 			};
 		this._config.white = this._settings.white ||
 			{
-				name: 'white',
+				names: ['white'],
 				rgb: '#FFFFFF',
 				value: 0.9
 			};
 		this._config.gray = this._settings.gray ||
 			{
-				name: 'gray',
+				names: ['gray', 'grey', 'silver'],
 				rgb: '#808080',
 				value: 0.1
 			};
@@ -53,18 +53,13 @@ export default class ElmColorScorer {
 			return 0;
 		}
 		let computedStyle = elm.window.getComputedStyle(elm.domElm);
-		let colorStr = computedStyle['background-color'];
-		if (colorStr) {
-			let closestColor = this._getClosestColor(colorStr, this._colors, this._factors);
-			if (closestColor.name === val) {
-				return 1;
-			}
-		}
-		colorStr = computedStyle['color'];
-		if (colorStr) {
-			let closestColor = this._getClosestColor(colorStr, this._colors, this._factors);
-			if (closestColor.name === val) {
-				return 1;
+		for (let i = 0; i < 2; i++) {
+			let colorStr = (i == 0) ? computedStyle['background-color'] : computedStyle['color'];
+			if (colorStr) {
+				let closestColor = this._getClosestColor(colorStr, this._colors, this._factors);
+				if (closestColor.names.indexOf(val) !== -1) {
+					return 1;
+				}
 			}
 		}
 		return 0;
