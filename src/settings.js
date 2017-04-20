@@ -9,7 +9,6 @@ export let settings = {
 		{
 			"phrase": "^(?:wait )([0-9.]+)(?: second)(?:s)?$",
 			"action": "wait",
-			"numOfGroups": 1,
 			"groupIndexValue": 1
 		},
 		{
@@ -19,33 +18,28 @@ export let settings = {
 		{
 			"phrase": "^(?:find |locate )([\\S\\s]+)$",
 			"action": "locate",
-			"numOfGroups": 1,
 			"groupIndexTarget": 1
 		},
 		{
 			"phrase": "^(?:click |push |press |select )([\\S\\s]+)$",
 			"action": "click",
-			"numOfGroups": 1,
 			"groupIndexTarget": 1
 		},
 		{
 			"phrase": "^(?:enter )(?:\")([\\S\\s]+)(?:\")(?: in )([\\S\\s]+)$",
 			"action": "write",
-			"numOfGroups": 2,
 			"groupIndexValue": 1,
 			"groupIndexTarget": 2
 		},
 		{
 			"phrase": "^(?:enter )(?:\')([\\S\\s]+)(?:\')(?: in )([\\S\\s]+)$",
 			"action": "write",
-			"numOfGroups": 2,
 			"groupIndexValue": 1,
 			"groupIndexTarget": 2
 		},
 		{
 			"phrase": "^(?:enter )([\\S\\s]+)(?: in )([\\S\\s]+)$",
 			"action": "write",
-			"numOfGroups": 2,
 			"groupIndexValue": 1,
 			"groupIndexTarget": 2
 		}

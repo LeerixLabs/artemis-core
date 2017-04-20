@@ -23,12 +23,18 @@ export default class Parser {
 			if (!found) {
 				let match = (new RegExp(rule.phrase, 'i')).exec(sentence);
 				if (match) {
-					let numOfGroups = rule.numOfGroups || 0;
+					let numOfGroups = 0;
+					if (rule.groupIndexValue) {
+						numOfGroups++;
+					}
+					if (rule.groupIndexTarget) {
+						numOfGroups++;
+					}
 					if (numOfGroups === 0 || match.length === numOfGroups + 1) {
 						found = true;
 						actionInfo.action = rule.action;
-						actionInfo.value = rule.groupIndexValue && rule.groupIndexValue >= 0 ? match[rule.groupIndexValue] : '';
-						actionInfo.target = rule.groupIndexTarget && rule.groupIndexTarget >= 0 ? match[rule.groupIndexTarget] : '';
+						actionInfo.value = rule.groupIndexValue && rule.groupIndexValue >= 1 ? match[rule.groupIndexValue] : '';
+						actionInfo.target = rule.groupIndexTarget && rule.groupIndexTarget >= 1 ? match[rule.groupIndexTarget] : '';
 					}
 				}
 			}
