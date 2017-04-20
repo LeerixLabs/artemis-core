@@ -58,43 +58,33 @@ export default class Manager {
 		return scoringResult;
 	}
 
-	_reset() {
+	_reset(info) {
 		log.debug('Manager.reset() - start');
 		let that = this;
-		let info = that._parser.parse('find element');
 		that._find(info.targetInfo);
 		setTimeout(function () {
 			that._init();
 		}, 100);
 		log.debug('Manager.reset() - end');
-		return info;
 	}
 
-	_debug(cmd) {
+	_debug(info) {
 		log.debug('Manager.debug() - start');
 		let that = this;
-		let info = that._parser.parse(cmd.data);
-		if (info.actionInfo.action !== Constants.actionType.WAIT) {
-			that._find(info.targetInfo);
-		}
+		that._find(info.targetInfo);
 		log.debug('Manager.debug() - end');
-		return info;
 	}
 
-	_run(cmd) {
+	_run(info) {
 		log.debug('Manager.run() - start');
 		let that = this;
-		let info = that._parser.parse(cmd.data);
-		if (info.actionInfo.action !== Constants.actionType.WAIT) {
-			if (info.targetInfo) {
-				let locateResult = that._find(info.targetInfo);
-				if (locateResult.perfects.length > 0) {
-					simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
-				}
+		if (info.targetInfo) {
+			let locateResult = that._find(info.targetInfo);
+			if (locateResult.perfects.length > 0) {
+				simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
 			}
 		}
 		log.debug('Manager.run() - end');
-		return info;
 	}
 
 	_executeNextCommand() {
@@ -107,11 +97,18 @@ export default class Manager {
 		log.debug('cmd: ' + cmd);
 		if (cmd) {
 			if (cmd[that._msgFieldName.COMMAND] === that._commandType.RESET) {
-				that._reset();
+				info = that._parser.parse('find element');
+				that._reset(info);
 			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
-				info = that._debug(cmd);
+				info = that._parser.parse(cmd.data);
+				if (info.actionInfo.action !== Constants.actionType.WAIT) {
+					that._debug(info);
+				}
 			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.RUN) {
-				info = that._run(cmd);
+				info = that._parser.parse(cmd.data);
+				if (info.actionInfo.action !== Constants.actionType.WAIT) {
+					that._run(info);
+				}
 			} else {
 				log.error('Unknown command type');
 			}
