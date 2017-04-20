@@ -67,6 +67,7 @@ export default class Manager {
 			that._init();
 		}, 100);
 		log.debug('Manager.reset() - end');
+		return info;
 	}
 
 	_debug(cmd) {
@@ -77,6 +78,7 @@ export default class Manager {
 			that._find(info.targetInfo);
 		}
 		log.debug('Manager.debug() - end');
+		return info;
 	}
 
 	_run(cmd) {
@@ -92,11 +94,14 @@ export default class Manager {
 			}
 		}
 		log.debug('Manager.run() - end');
+		return info;
 	}
 
 	_executeNextCommand() {
 		log.debug('Manager.executeNextCommand() - start');
 		let that = this;
+		let secondsToWaitBetweenCommandsStr = that._settings && that._settings.commands && that._settings.commands.defaultSecondsToWaitBetweenCommands || '1';
+		let info = null;
 		that._init(null);
 		let cmd = storage.extractNextItem();
 		log.debug('cmd: ' + cmd);
@@ -104,17 +109,19 @@ export default class Manager {
 			if (cmd[that._msgFieldName.COMMAND] === that._commandType.RESET) {
 				that._reset();
 			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
-				that._debug(cmd);
+				info = that._debug(cmd);
 			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.RUN) {
-				that._run(cmd);
+				info = that._run(cmd);
 			} else {
 				log.error('Unknown command type');
 			}
 			if (storage.hasItems()) {
-				let secondsBetweenCommands = that._settings && that._settings.commands && that._settings.commands.secondsBetweenCommands || 3;
+				if (info.actionInfo.action === Constants.actionType.WAIT && info.actionInfo.value) {
+					secondsToWaitBetweenCommandsStr = info.actionInfo.value;
+				}
 				window.setTimeout(() => {
 					that._executeNextCommand();
-				}, secondsBetweenCommands * 1000);
+				}, parseFloat(secondsToWaitBetweenCommandsStr) * 1000);
 			}
 		} else {
 			log.debug('No commands in storage');

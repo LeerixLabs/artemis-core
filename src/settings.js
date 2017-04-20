@@ -3,9 +3,15 @@ export let settings = {
 	"logLevel": "WARN",
 	"language": "en",
 	"commands": {
-		"secondsBetweenCommands": 3,
+		"defaultSecondsToWaitBetweenCommands": 1,
 	},
 	"actionPhrases" : [
+		{
+			"phrase": "^(?:wait )([0-9.]+)(?: second)(?:s)?$",
+			"action": "wait",
+			"numOfGroups": 1,
+			"groupIndexValue": 1
+		},
 		{
 			"phrase": "^(?:wait)$",
 			"action": "wait"
