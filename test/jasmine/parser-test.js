@@ -39,6 +39,7 @@ describe('Target Parser Test', () => {
 			'button',
 			'link',
 			'input',
+			'password',
 			'checkbox',
 			'radio',
 			'label',

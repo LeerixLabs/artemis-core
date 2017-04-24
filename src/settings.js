@@ -47,7 +47,7 @@ export let settings = {
 	"targetPhrases": [
 		{
 			"location": "objectType",
-			"phrase": "(element|button|link|input|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
+			"phrase": "(element|button|link|input|password|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
 			"type": "elmType",
 			"isObjectType": true
 		},
@@ -381,6 +381,26 @@ export let settings = {
 						"scorer": "htmlTag",
 						"value": "textarea",
 						"weight": 0.7
+					}
+				]
+			}
+		},
+		{
+			"type": "elmType",
+			"value": "password",
+			"plan": {
+				"or": [
+					{
+						"and": [
+							{
+								"scorer": "htmlTag",
+								"value": "input"
+							},
+							{
+								"scorer": "htmlAttrNameAndVal",
+								"value": ["type", "password"]
+							}
+						]
 					}
 				]
 			}
