@@ -1,4 +1,5 @@
 import {log} from '../common/logger';
+import Constants from '../common/common-constants';
 import Helper from  '../common/common-helper';
 
 export default class Parser {
@@ -117,7 +118,6 @@ export default class Parser {
 		let state = 'preObjectType';
 		let shouldRemoveTheWordTheIfExists = true;
 		let sentence = Parser._trimSentence(elmDescStr, shouldRemoveTheWordTheIfExists);
-
 		while (sentence.length > 0) {
 			let matchResult = this._getMatch(sentence, state);
 			if (matchResult) {
@@ -144,7 +144,6 @@ export default class Parser {
 				sentence = '';
 			}
 		}
-
 		Parser._recursiveRemoveExtraAndNodes(modeledElmDesc);
 		return modeledElmDesc;
 	};
@@ -158,10 +157,14 @@ export default class Parser {
 		return targetInfo;
 	}
 
-	parse(sentence) {
+	parse(command, sentence) {
 		if (this._isDebug){log.debug('Parser.parse() - start')}
 		if (this._isDebug){log.debug(`sentence: ${sentence}`)}
 		let actionInfo = this._parseAction(sentence);
+		if (!actionInfo.action && command === Constants.commandType.DEBUG) {
+			actionInfo.action = Constants.actionType.LOCATE;
+			actionInfo.target = sentence;
+		}
 		let targetInfo = actionInfo.target ? this.parseDescription(actionInfo.target) : null;
 		let parserOutput = {
 			actionInfo: actionInfo,

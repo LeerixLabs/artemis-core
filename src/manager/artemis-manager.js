@@ -11,18 +11,6 @@ import Marker from '../marker/artemis-marker';
 
 export default class Manager {
 
-	constructor() {
-		this._msgFieldName = {
-			COMMAND: 'command',
-			DATA: 'data'
-		};
-		this._commandType = {
-			RESET: 'reset',
-			DEBUG: 'debug',
-			RUN: 'run'
-		};
-	}
-
 	_init(config) {
 		let that = this;
 		that._htmlDom = new HtmlDOM();
@@ -58,10 +46,10 @@ export default class Manager {
 		return scoringResult;
 	}
 
-	_reset(info) {
+	_reset() {
 		log.debug('Manager.reset() - start');
 		let that = this;
-		that._find(info.targetInfo);
+		that._find(that._parser.parseDescription('element'));
 		setTimeout(function () {
 			that._init();
 		}, 100);
@@ -96,16 +84,16 @@ export default class Manager {
 		let cmd = storage.extractNextItem();
 		log.debug('cmd: ' + cmd);
 		if (cmd) {
-			if (cmd[that._msgFieldName.COMMAND] === that._commandType.RESET) {
-				info = that._parser.parse('find element');
-				that._reset(info);
-			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
-				info = that._parser.parse(cmd.data);
+			let commandType = cmd[Constants.msgFieldName.COMMAND];
+			if (commandType === Constants.commandType.RESET) {
+				that._reset();
+			} else if (commandType === Constants.commandType.DEBUG) {
+				info = that._parser.parse(commandType, cmd.data);
 				if (info.actionInfo.action !== Constants.actionType.WAIT) {
 					that._debug(info);
 				}
-			} else if (cmd[that._msgFieldName.COMMAND] === that._commandType.RUN) {
-				info = that._parser.parse(cmd.data);
+			} else if (commandType === Constants.commandType.RUN) {
+				info = that._parser.parse(commandType, cmd.data);
 				if (info.actionInfo.action !== Constants.actionType.WAIT) {
 					that._run(info);
 				}
@@ -131,16 +119,15 @@ export default class Manager {
 		log.debug('commands: ' + JSON.stringify(commands));
 		let that = this;
 		storage.removeOldItems();
-		commands.forEach(function(c) {
-			if (c[that._msgFieldName.COMMAND] === that._commandType.RESET) {
+		commands.forEach(function(cmd) {
+			let commandType = cmd[Constants.msgFieldName.COMMAND];
+			if (commandType === Constants.commandType.RESET) {
 				storage.clear();
-				storage.append(c);
-			} else if (c[that._msgFieldName.COMMAND] === that._commandType.DEBUG) {
-				storage.append(c);
-			} else if (c[that._msgFieldName.COMMAND] === that._commandType.RUN) {
-				storage.append(c);
+			}
+			if (commandType === Constants.commandType.RESET || commandType === Constants.commandType.DEBUG || commandType === Constants.commandType.RUN) {
+				storage.append(cmd);
 			} else {
-				log.error('Unknown command type');
+				log.error('Unknown command type: ' + commandType);
 			}
 		});
 		that._executeNextCommand();

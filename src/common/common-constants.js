@@ -1,11 +1,26 @@
 export default class Constants {
 
+	static get msgFieldName() {
+		return {
+			COMMAND: 	'command',
+			DATA: 		'data'
+		}
+	};
+
+	static get commandType() {
+		return {
+			RESET: 	'reset',
+			DEBUG: 	'debug',
+			RUN: 	'run'
+		}
+	};
+
 	static get actionType() {
 		return {
-			LOCATE: 'locate',
-			CLICK: 'click',
-			WRITE: 'write',
-			WAIT: 'wait'
+			LOCATE:	'locate',
+			CLICK: 	'click',
+			WRITE: 	'write',
+			WAIT: 	'wait'
 		}
 	};
 
