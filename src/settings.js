@@ -47,6 +47,13 @@ export let settings = {
 	"targetPhrases": [
 		{
 			"location": "objectType",
+			"phrase": "\\*",
+			"type": "elmType",
+			"value": "element",
+			"isObjectType": true
+		},
+		{
+			"location": "objectType",
 			"phrase": "(element|button|link|input|password|checkbox|radio|label|image|panel|toolbar|tab|dropdown|item)",
 			"type": "elmType",
 			"isObjectType": true
