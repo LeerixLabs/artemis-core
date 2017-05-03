@@ -3,7 +3,7 @@ export let settings = {
 	"logLevel": "WARN",
 	"language": "en",
 	"commands": {
-		"defaultSecondsToWaitBetweenCommands": 1,
+		"defaultSecondsToWaitBetweenCommands": 2,
 	},
 	"actionPhrases" : [
 		{

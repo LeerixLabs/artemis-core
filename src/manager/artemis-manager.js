@@ -78,7 +78,7 @@ export default class Manager {
 	_executeNextCommand() {
 		log.debug('Manager.executeNextCommand() - start');
 		let that = this;
-		let secondsToWaitBetweenCommandsStr = that._settings && that._settings.commands && that._settings.commands.defaultSecondsToWaitBetweenCommands || '1';
+		let secondsToWaitBetweenCommandsStr = that._settings && that._settings.commands && that._settings.commands.defaultSecondsToWaitBetweenCommands || '2';
 		let info = null;
 		that._init(null);
 		let cmd = storage.extractNextItem();
