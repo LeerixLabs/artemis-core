@@ -93,12 +93,17 @@ export let settings = {
 		},
 		{
 			"location": "preObjectType",
-			"phrase": "(?:['|\"])([\\w\\s-]+)(?:['|\"])",
+			"phrase": "(?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
 			"type": "freeText"
 		},
 		{
 			"location": "preObjectType",
-			"phrase": "([\\w-]+)",
+			"phrase": "(?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+			"type": "freeText"
+		},
+		{
+			"location": "preObjectType",
+			"phrase": "([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
 			"type": "freeText"
 		},
 		{
