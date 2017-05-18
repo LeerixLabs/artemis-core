@@ -57,27 +57,20 @@ describe('Target Parser Test', () => {
 		});
 	});
 
-	it('test 1st, 2nd, and 3rd element ordinals', () => {
+	it('test element ordinals', () => {
 		let elmOrdinals = [
-			{s: '1st',    v: 1},
-			{s: 'first',  v: 1},
-			{s: '2nd',    v: 2},
-			{s: 'second', v: 2},
-			{s: '3rd',    v: 3},
-			{s: 'third',  v: 3}
-		];
-		elmOrdinals.forEach( eo => {
-			let modeledElmDesc = parser._buildElementDescriptionModel(eo.s);
-			expect(modeledElmDesc.object.type).toEqual('elmOrdinal');
-			expect(modeledElmDesc.object.value).toEqual(eo.v);
-		});
-	});
-
-	it('test n-th element ordinals', () => {
-		let elmOrdinals = [
+			{s: '1st',  v: '1'},
+			{s: '2nd',  v: '2'},
+			{s: '3rd',  v: '3'},
 			{s: '4th',  v: '4'},
-			{s: '5th',  v: '5'},
-			{s: '10th', v: '10'}
+			{s: '11th',	v: '11'},
+			{s: '12th', v: '12'},
+			{s: '13th', v: '13'},
+			{s: '14th', v: '14'},
+			{s: '21st', v: '21'},
+			{s: '22nd', v: '22'},
+			{s: '23rd', v: '23'},
+			{s: '24th', v: '24'}
 		];
 		elmOrdinals.forEach( eo => {
 			let modeledElmDesc = parser._buildElementDescriptionModel(eo.s);
@@ -178,7 +171,7 @@ describe('Target Parser Test', () => {
 			{s: 'at the bottom', v: 'bottom'},
 			{s: 'on the left',   v: 'left'},
 			{s: 'on the right',  v: 'right'},
-			{s: 'at the middle', v: 'middle'}
+			{s: 'in the middle', v: 'middle'}
 		];
 		elmLocations.forEach( el => {
 			let modeledElmDesc = parser._buildElementDescriptionModel('element ' + el.s);
@@ -324,7 +317,7 @@ describe('Target Parser Test', () => {
 							and: [
 								{
 									type: 'elmOrdinal',
-									value: 2
+									value: '2'
 								},
 								{
 									type: 'freeText',
