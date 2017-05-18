@@ -16,12 +16,12 @@ export let settings = {
 			"action": "wait"
 		},
 		{
-			"phrase": "^(?:find |locate )([\\S\\s]+)$",
+			"phrase": "^(?:find )([\\S\\s]+)$",
 			"action": "locate",
 			"groupIndexTarget": 1
 		},
 		{
-			"phrase": "^(?:click |push |press |select )([\\S\\s]+)$",
+			"phrase": "^(?:click )([\\S\\s]+)$",
 			"action": "click",
 			"groupIndexTarget": 1
 		},
@@ -60,26 +60,28 @@ export let settings = {
 		},
 		{
 			"location": "preObjectType",
-			"phrase": "(1st|first)",
+			"phrase": "([0-9]?1)st",
 			"type": "elmOrdinal",
-			"value": 1
 		},
 		{
 			"location": "preObjectType",
-			"phrase": "(2nd|second)",
+			"phrase": "([0-9]?2)nd",
 			"type": "elmOrdinal",
-			"value": 2
 		},
 		{
 			"location": "preObjectType",
-			"phrase": "(3rd|third)",
+			"phrase": "([0-9]?3)rd",
 			"type": "elmOrdinal",
-			"value": 3
 		},
 		{
 			"location": "preObjectType",
-			"phrase": "([0-9]+)th",
-			"type": "elmOrdinal"
+			"phrase": "(11|12|13)th",
+			"type": "elmOrdinal",
+		},
+		{
+			"location": "preObjectType",
+			"phrase": "([0-9]?[0456789])th",
+			"type": "elmOrdinal",
 		},
 		{
 			"location": "preObjectType",
@@ -132,7 +134,7 @@ export let settings = {
 		},
 		{
 			"location": "postObjectType",
-			"phrase": "at the middle",
+			"phrase": "in the middle",
 			"type": "elmLocation",
 			"value": "middle"
 		},
@@ -173,14 +175,14 @@ export let settings = {
 		},
 		{
 			"location": "postObjectType",
-			"phrase": "left of",
+			"phrase": "(?:to the )?left of",
 			"type": "relPosition",
 			"value": "left",
 			"isObjectRelation": true
 		},
 		{
 			"location": "postObjectType",
-			"phrase": "right of",
+			"phrase": "(?:to the )?right of",
 			"type": "relPosition",
 			"value": "right",
 			"isObjectRelation": true
