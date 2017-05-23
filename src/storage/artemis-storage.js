@@ -9,6 +9,7 @@ class Storage {
 			return JSON.parse(si);
 		} else {
 			return {
+				'settings': null,
 				'commands': []
 			};
 		}
@@ -59,6 +60,17 @@ class Storage {
 			this.save(storageItem);
 		}
 		return cmd;
+	}
+
+	getSettings() {
+		let storageItem = this.load();
+		return storageItem.settings;
+	}
+
+	saveSettings(settings) {
+		let storageItem = this.load();
+		storageItem.settings = settings;
+		this.save(storageItem);
 	}
 }
 

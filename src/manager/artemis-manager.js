@@ -11,16 +11,15 @@ import Marker from '../marker/artemis-marker';
 
 export default class Manager {
 
-	_init(config) {
+	_init() {
 		let that = this;
 		that._htmlDom = new HtmlDOM();
 		that._htmlDom.cleanDom(true);
+		let config = storage.getSettings();
 		if (!config) {
 			that._settings = settings;
 		} else if (typeof config == 'string' || config instanceof String) {
 			that._settings = JSON.parse(config);
-		} else {
-			that._settings = config;
 		}
 		if (that._settings && that._settings.logLevel) {
 			log.setLogLevel(that._settings.logLevel);
@@ -79,7 +78,7 @@ export default class Manager {
 		log.debug('Manager.executeNextCommand() - start');
 		let that = this;
 		let info = null;
-		that._init(null);
+		that._init();
 		let cmd = storage.extractNextItem();
 		log.debug('cmd: ' + cmd);
 		if (cmd) {
@@ -121,7 +120,11 @@ export default class Manager {
 		storage.removeOldItems();
 		commands.forEach(function(cmd) {
 			let commandType = cmd[Constants.msgFieldName.COMMAND];
+			let commandData = cmd[Constants.msgFieldName.DATA];
 			if (commandType === Constants.commandType.RESET) {
+				if (commandData) {
+					storage.saveSettings(commandData)
+				}
 				storage.clear();
 			}
 			if (commandType === Constants.commandType.RESET || commandType === Constants.commandType.DEBUG || commandType === Constants.commandType.RUN) {
