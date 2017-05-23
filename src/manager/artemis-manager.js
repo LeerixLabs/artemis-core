@@ -78,7 +78,6 @@ export default class Manager {
 	_executeNextCommand() {
 		log.debug('Manager.executeNextCommand() - start');
 		let that = this;
-		let secondsToWaitBetweenCommandsStr = that._settings && that._settings.commands && that._settings.commands.defaultSecondsToWaitBetweenCommands || '2';
 		let info = null;
 		that._init(null);
 		let cmd = storage.extractNextItem();
@@ -101,6 +100,7 @@ export default class Manager {
 				log.error('Unknown command type');
 			}
 			if (storage.hasItems()) {
+				let secondsToWaitBetweenCommandsStr = that._settings && that._settings.commands && that._settings.commands.defaultSecondsToWaitBetweenCommands || '2';
 				if (info.actionInfo.action === Constants.actionType.WAIT && info.actionInfo.value) {
 					secondsToWaitBetweenCommandsStr = info.actionInfo.value;
 				}
@@ -135,12 +135,12 @@ export default class Manager {
 	}
 
 	locate(description) {
-		log.debug('Parser.locate() - start');
+		log.debug('Manager.locate() - start');
 		log.debug(`description: ${description}`);
 		let that = this;
 		let targetInfo = that._parser.parseDescription(description);
 		let scoringResult = that._find(targetInfo);
-		log.debug('Parser.locate() - end');
+		log.debug('Manager.locate() - end');
 		return scoringResult;
 	}
 
