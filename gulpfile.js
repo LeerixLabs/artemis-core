@@ -1,7 +1,6 @@
 require('./gulp/gulp-webpack.js');
 require('./gulp/gulp-webpack-min.js');
 require('./gulp/gulp-test.js');
-require('./gulp/gulp-dev-server.js');
 
 var gulp = require('gulp');
 
@@ -15,9 +14,6 @@ gulp.task('pack', ['webpack', 'webpack-min'], function() {
 });
 
 gulp.task('test', ['gulp-test'], function() {
-});
-
-gulp.task('serve', ['gulp-dev-server'], function() {
 });
 
 gulp.task('default', ['pack', 'test'], function() {

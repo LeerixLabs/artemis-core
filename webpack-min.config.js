@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var PACKAGE = require('./package.json');
-var banner = `/**\n* LeerixLabs, ${PACKAGE.name} v${PACKAGE.version}\n* ${PACKAGE.description}\n* Date: ${new Date()}\n**/`;
+var banner = `/* ${PACKAGE.description} v${PACKAGE.version} */`;
 
 module.exports = {
   entry: {
@@ -12,7 +12,6 @@ module.exports = {
     filename: 'dist/[name].min.js',
     library: "artemisCore"
   },
-  debug:'true',
   module: {
     loaders: [
       {
@@ -25,13 +24,20 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    contentBase: "./src"
-  },
-  plugins:[
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false, drop_console: true }
-    }),
-    new webpack.BannerPlugin(banner, { raw: true, entryOnly: true })
-  ]
+	plugins: [
+		new webpack.LoaderOptionsPlugin({
+			debug: true
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false,
+				drop_console: true
+			}
+		}),
+		new webpack.BannerPlugin({
+			banner: banner,
+			raw: true,
+			entryOnly: true
+		})
+	]
 };
