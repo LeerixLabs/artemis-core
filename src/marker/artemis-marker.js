@@ -42,4 +42,16 @@ export default class Marker {
 		if (this._isDebug){log.debug('Marker.mark() - end')}
 	}
 
+	markEverything() {
+		if (this._isDebug){log.debug('Marker.markAll() - start')}
+		this._ensureColorClassesExistOnHtmlDom();
+		let className = `${Constants.artemisElmClassPrefix}20`;
+		let domElms = this._htmlDom.getRelevantDomElms();
+		domElms.forEach(domElm => {
+			HtmlDOM.addElmClassToHtmlDom(domElm, className);
+		});
+		this._htmlDom.artemisElmClassesExistOnHtmlDom = true;
+		if (this._isDebug){log.debug('Marker.markAll() - end')}
+	}
+
 }

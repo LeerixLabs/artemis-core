@@ -48,7 +48,7 @@ export default class Manager {
 	_reset() {
 		log.debug('Manager.reset() - start');
 		let that = this;
-		that._find(that._parser.parseDescription('*'));
+		that._marker.markEverything();
 		setTimeout(function () {
 			that._init();
 		}, 100);
