@@ -6,15 +6,33 @@ export default class Marker {
 
 	constructor(settings, htmlDom){
 		this._settings = settings;
+		this._singleMatchColor = this._settings.colors.singleMatchColor;
+		this._singleMatchTextColor = this._getTextColor(this._singleMatchColor);
+		this._scoreColors = this._settings.colors.scoreColors;
+		this._scoreTextColors = [];
+		this._scoreColors.forEach(colorHex => {
+			this._scoreTextColors.push(this._getTextColor(colorHex));
+		});
 		this._htmlDom = htmlDom;
 		this._isDebug = log.isDebug();
 	}
 
+	_getBrightness(colorHex) {
+		let r = parseInt(colorHex.substring(1, 3), 16);
+		let g = parseInt(colorHex.substring(3, 5), 16);
+		let b = parseInt(colorHex.substring(5, 7), 16);
+		let brightness = Math.sqrt(r * r * .241 + g * g * .691 + b * b * .068);
+		return brightness|0;
+	}
+
+	_getTextColor(colorHex) {
+		let brightness = this._getBrightness(colorHex);
+		return brightness > 136 ? '#000000' : '#FFFFFF';
+	}
+
 	_ensureColorClassesExistOnHtmlDom() {
 		if (!this._htmlDom.artemisColorClassesExistOnHtmlDom) {
-			let singleMatchColor = this._settings.colors.singleMatchColor;
-			let scoreColors = this._settings.colors.scoreColors;
-			this._htmlDom.addColorClassesToHtmlDom(singleMatchColor, scoreColors);
+			this._htmlDom.addColorClassesToHtmlDom(this._singleMatchColor, this._singleMatchTextColor, this._scoreColors, this._scoreTextColors);
 			this._htmlDom.artemisColorClassesExistOnHtmlDom = true;
 		}
 	}
