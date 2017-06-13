@@ -18,13 +18,12 @@ export default class ElmSizeScorer {
     if (!val || !elm) {
       return 0;
     }
-    let rect = elm.rect;
-    if (!rect || rect.width === 0 || rect.height === 0) {
+    let size = elm.size;
+    if (size === 0) {
       return 0;
     }
     let score = 0;
     let sizeType = this._sizeType[val.toUpperCase()] || this._sizeType.UNKNOWN;
-    let size = rect.width * rect.height;
     if (sizeType === this._sizeType.SMALL) {
       if (size < this._small) {
         score = 1;
