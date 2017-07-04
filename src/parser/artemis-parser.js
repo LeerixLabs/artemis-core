@@ -8,6 +8,7 @@ export default class Parser {
 		this._settings = settings;
 		this._isDebug = log.isDebug();
 		this._actionPhrases = this._settings.actionPhrases;
+		this._targetReplacements = this._settings.targetReplacements;
 		this._preObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'preObjectType');
 		this._objectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'objectType');
 		this._postObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'postObjectType');
@@ -55,6 +56,32 @@ export default class Parser {
 			if (this._isDebug){log.debug(`New sentence: ${newSentence}`)}
 		}
 		return newSentence;
+	}
+
+	_replaceTargetPhrase(targetPhrase) {
+		let newTargetPhrase = targetPhrase;
+		if (this._targetReplacements && this._targetReplacements.length > 0) {
+			this._targetReplacements.forEach(p => {
+				let regExp = new RegExp(`${p.phrase}`, `ig`);
+				if (regExp.test(targetPhrase)) {
+					newTargetPhrase = targetPhrase.replace(regExp, p.replace);
+				}
+			});
+			if (newTargetPhrase !== targetPhrase) {
+				if (this._isDebug) {
+					log.debug(`Target phrase changed`)
+				}
+				if (this._isDebug) {
+					log.debug(`Old phrase: ${targetPhrase}`)
+				}
+				if (this._isDebug) {
+					log.debug(`New phrase: ${newTargetPhrase}`)
+				}
+			}
+			return newTargetPhrase.trim();
+		} else {
+			return newTargetPhrase;
+		}
 	}
 
 	_getMatch(sentence, state) {
@@ -118,6 +145,7 @@ export default class Parser {
 		let state = 'preObjectType';
 		let shouldRemoveTheWordTheIfExists = true;
 		let sentence = Parser._trimSentence(elmDescStr, shouldRemoveTheWordTheIfExists);
+		sentence = this._replaceTargetPhrase(sentence);
 		while (sentence.length > 0) {
 			let matchResult = this._getMatch(sentence, state);
 			if (matchResult) {

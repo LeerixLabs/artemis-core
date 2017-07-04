@@ -44,6 +44,12 @@ export let settings = {
 			"groupIndexTarget": 2
 		}
 	],
+	"targetReplacements": [
+		// {
+		// 	"phrase": "([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)( octane-input)",
+		// 	"replace": "input inside $1 label"
+		// }
+	],
 	"targetPhrases": [
 		{
 			"location": "objectType",
