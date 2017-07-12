@@ -6,7 +6,6 @@
     "npm": "^2.15.0"
   },
   "description": "Artemis Core",
-  "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack-production.config.js --progress --profile --colors",
     "test": "node_modules/karma/bin/karma start"
