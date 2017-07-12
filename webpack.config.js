@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
-var PACKAGE = require('../package.json');
-var banner = `/* ${PACKAGE.description} v${PACKAGE.version} */`;
+var PACKAGE = require('./package.json');
+var banner = `/**\n* ${PACKAGE.description} v${PACKAGE.version}\n* Date: ${new Date()}\n**/`;
 
 module.exports = {
 	entry: {
@@ -9,10 +9,11 @@ module.exports = {
 	},
 	output:{
 		publicPath: '/',
-		filename: 'dist/[name].min.js',
-		libraryTarget: 'var',
+		filename: 'dist/[name].js',
+		libraryTarget: "var",
 		library: 'artemisCore'
 	},
+	devtool: 'source-map',
 	module: {
 		loaders: [
 			{
@@ -29,17 +30,10 @@ module.exports = {
 		new webpack.LoaderOptionsPlugin({
 			debug: true
 		}),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				drop_console: true
-			}
-		}),
 		new webpack.BannerPlugin({
 			banner: banner,
 			raw: true,
 			entryOnly: true
 		})
-	],
-	devtool: 'source-map'
+	]
 };
