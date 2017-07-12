@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
-var PACKAGE = require('./package.json');
+var PACKAGE = require('../package.json');
 var banner = `/**\n* ${PACKAGE.description} v${PACKAGE.version}\n* Date: ${new Date()}\n**/`;
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
 	output:{
 		publicPath: '/',
 		filename: 'dist/[name].js',
-		libraryTarget: "var",
+		libraryTarget: 'var',
 		library: 'artemisCore'
 	},
 	devtool: 'source-map',
