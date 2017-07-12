@@ -13,7 +13,6 @@ module.exports = {
 		libraryTarget: 'var',
 		library: 'artemisCore'
 	},
-	devtool: 'source-map',
 	module: {
 		loaders: [
 			{
