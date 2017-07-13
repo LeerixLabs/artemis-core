@@ -9,7 +9,7 @@ module.exports = {
 	},
 	output:{
 		publicPath: '/',
-		filename: 'dist/[name].js',
+		filename: 'out/[name].js',
 		libraryTarget: 'var',
 		library: 'artemisCore'
 	},
