@@ -11,7 +11,9 @@
     "test": "node_modules/karma/bin/karma start"
   },
   "files": [
-    "dist/artemis.core.min.js"
+    "dist/artemis.core.js",
+    "dist/artemis.core.min.js",
+    "dist/artemis.core.js.map"
   ],
   "keywords": [
     "Artemis"
