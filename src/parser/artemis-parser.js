@@ -8,6 +8,7 @@ export default class Parser {
 		this._settings = settings;
 		this._isDebug = log.isDebug();
 		this._actionPhrases = this._settings.actionPhrases;
+		this._definiteArticles = this._settings.definiteArticles;
 		this._targetReplacements = this._settings.targetReplacements;
 		this._preObjectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'preObjectType');
 		this._objectTypePhrases = this._settings.targetPhrases.filter( p => p.location === 'objectType');
@@ -44,11 +45,15 @@ export default class Parser {
 		return actionInfo;
 	}
 
-	static _trimSentence(sentence, shouldRemoveTheWordThe) {
+	_trimSentence(sentence, shouldRemoveDefiniteArticlesIfExists) {
 		let newSentence = sentence.trim();
-		if (shouldRemoveTheWordThe && newSentence.toLowerCase().indexOf('the ') === 0) {
-			newSentence = newSentence.substring(4);
-			newSentence = newSentence.trim();
+		if (shouldRemoveDefiniteArticlesIfExists && this._definiteArticles && this._definiteArticles.length > 0) {
+			this._definiteArticles.forEach(da => {
+				if (newSentence.toLowerCase().indexOf(da + ' ') === 0) {
+					newSentence = newSentence.substring(da.length + 1);
+					newSentence = newSentence.trim();
+				}
+			});
 		}
 		if (newSentence !== sentence) {
 			if (this._isDebug){log.debug(`Sentence trimmed`)}
@@ -143,8 +148,8 @@ export default class Parser {
 		};
 		let objectNode = modeledElmDesc.object;
 		let state = 'preObjectType';
-		let shouldRemoveTheWordTheIfExists = true;
-		let sentence = Parser._trimSentence(elmDescStr, shouldRemoveTheWordTheIfExists);
+		let shouldRemoveDefiniteArticlesIfExists = true;
+		let sentence = this._trimSentence(elmDescStr, shouldRemoveDefiniteArticlesIfExists);
 		sentence = this._replaceTargetPhrase(sentence);
 		while (sentence.length > 0) {
 			let matchResult = this._getMatch(sentence, state);
@@ -166,8 +171,8 @@ export default class Parser {
 				}
 				state = matchResult.isObjectType || state === 'postObjectType' ? 'postObjectType' : 'preObjectType';
 				sentence = sentence.substring(matchResult.matchedStrLength);
-				shouldRemoveTheWordTheIfExists = matchResult.isObjectRelation;
-				sentence = Parser._trimSentence(sentence, shouldRemoveTheWordTheIfExists);
+				shouldRemoveDefiniteArticlesIfExists = matchResult.isObjectRelation;
+				sentence = this._trimSentence(sentence, shouldRemoveDefiniteArticlesIfExists);
 			} else {
 				sentence = '';
 			}

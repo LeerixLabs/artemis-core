@@ -44,6 +44,9 @@ export let settings = {
 			"groupIndexTarget": 2
 		}
 	],
+	"definiteArticles": [
+		"the"
+	],
 	"targetReplacements": [
 		// {
 		// 	"phrase": "([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)( octane-input)",
