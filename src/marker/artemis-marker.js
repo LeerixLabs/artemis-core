@@ -52,7 +52,7 @@ export default class Marker {
 			if (elm.primaryScore === 1 &&  perfectScoreCount === 1) {
 				className = `${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix}`;
 			} else {
-				className = `${Constants.artemisElmClassPrefix}${(elm.primaryScore*20|0)}`;
+				className = `${Constants.artemisElmClassPrefix}${(elm.primaryScore*(this._scoreColors.length-1)|0)}`;
 			}
 			HtmlDOM.addElmClassToHtmlDom(elm.domElm, className);
 		});
@@ -63,7 +63,7 @@ export default class Marker {
 	markEverything() {
 		if (this._isDebug){log.debug('Marker.markAll() - start')}
 		this._ensureColorClassesExistOnHtmlDom();
-		let className = `${Constants.artemisElmClassPrefix}20`;
+		let className = `${Constants.artemisElmClassPrefix}${this._scoreColors.length-1}`;
 		let domElms = this._htmlDom.getRelevantDomElms();
 		domElms.forEach(domElm => {
 			HtmlDOM.addElmClassToHtmlDom(domElm, className);
