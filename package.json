@@ -13,7 +13,7 @@
   "files": [
     "dist/artemis.core.js",
     "dist/artemis.core.min.js",
-    "dist/artemis.core.js.map"
+    "dist/default-settings.json"
   ],
   "keywords": [
     "Artemis"
