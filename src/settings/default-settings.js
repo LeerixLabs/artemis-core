@@ -319,16 +319,8 @@ export let defaultSettings =
       "plan": {
         "or": [
           {
-            "and": [
-              {
-                "scorer": "htmlTag",
-                "value": "a"
-              },
-              {
-                "scorer": "htmlAttrName",
-                "value": "href"
-              }
-            ]
+            "scorer": "htmlTag",
+            "value": "a"
           },
           {
             "scorer": "htmlAttrNameAndVal",
@@ -589,11 +581,16 @@ export let defaultSettings =
         "or": [
           {
             "scorer": "htmlTag",
+            "value": "li"
+          },
+          {
+            "scorer": "htmlTag",
             "value": "option"
           },
           {
             "scorer": "htmlAttrNameAndVal",
             "value": [
+              "role",
               "role",
               "option"
             ]
@@ -707,6 +704,13 @@ export let defaultSettings =
             "orange"
           ],
           "rgb": "#FF9900"
+        },
+        {
+          "names": [
+            "orange",
+            "yellow"
+          ],
+          "rgb": "#FFCC33"
         },
         {
           "names": [

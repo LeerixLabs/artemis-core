@@ -10,6 +10,7 @@ export default class ElmColorScorer {
 			{names: ['red'], rgb: '#FF0000'},
 			{names: ['brown'], rgb: '#994C00'},
 			{names: ['orange'], rgb: '#FF9900'},
+			{names: ['orange', 'yellow'], rgb: '#FFCC33'},
 			{names: ['yellow'], rgb: '#FFFF00'},
 			{names: ['olive', 'green'], rgb: '#808000'},
 			{names: ['lime', 'green'], rgb: '#00FF00'},
