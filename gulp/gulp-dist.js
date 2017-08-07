@@ -13,11 +13,11 @@ gulp.task('gulp-dist', function (cb) {
 			src: 'out/artemis.core.min.js',
 			dst: 'dist'
 		}
-		// ,
-		// {
-		// 	src: 'out/artemis.core.js.map',
-		// 	dst: 'dist'
-		// }
+		,
+		{
+			src: 'src/settings/default-settings.json',
+			dst: 'dist'
+		}
 	];
 	for (i = 0; i < items.length; i++) {
 		if (items[i].ren) {

@@ -1,4 +1,4 @@
-import {settings} from '../settings';
+import {defaultSettings} from '../../src/settings/default-settings';
 import {log} from '../common/logger';
 import {storage} from '../storage/artemis-storage';
 import {simulator} from '../simulator/artemis-simulator';
@@ -15,11 +15,11 @@ export default class Manager {
 		let that = this;
 		that._htmlDom = new HtmlDOM();
 		that._htmlDom.cleanDom(true);
-		let config = storage.getSettings();
-		if (!config) {
-			that._settings = settings;
-		} else if (typeof config == 'string' || config instanceof String) {
-			that._settings = JSON.parse(config);
+		let storedSettings = storage.getSettings();
+		if (storedSettings && (typeof storedSettings == 'string' || storedSettings instanceof String)) {
+			that._settings = JSON.parse(storedSettings);
+		} else {
+			that._settings = defaultSettings;
 		}
 		if (that._settings && that._settings.logLevel) {
 			log.setLogLevel(that._settings.logLevel);

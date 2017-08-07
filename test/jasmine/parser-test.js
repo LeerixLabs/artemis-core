@@ -1,8 +1,8 @@
-import {settings} from '../../src/settings';
+import {defaultSettings} from '../../src/settings/default-settings';
 import Parser from '../../src/parser/artemis-parser'
 
 describe('Target Parser Test', () => {
-	let parser = new Parser(settings);
+	let parser = new Parser(defaultSettings);
 
 	it('test basic output structure', () => {
 		let modeledElmDesc = parser._buildElementDescriptionModel('element');

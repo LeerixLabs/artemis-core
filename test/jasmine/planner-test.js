@@ -1,11 +1,11 @@
-import {settings} from '../../src/settings';
+import {defaultSettings} from '../../src/settings/default-settings';
 import Parser from '../../src/parser/artemis-parser';
 import Planner from '../../src/planner/artemis-planner';
 
 describe('Planner Test: ', function(){
 
-     let parser = new Parser(settings);
-     let planner = new Planner(settings);
+     let parser = new Parser(defaultSettings);
+     let planner = new Planner(defaultSettings);
 
      it('test basic output structure', () => {
           let modeledElmDesc = parser._buildElementDescriptionModel('element');

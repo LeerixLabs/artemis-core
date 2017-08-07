@@ -1,3 +1,4 @@
+require('./gulp/gulp-prep.js');
 require('./gulp/gulp-webpack.js');
 require('./gulp/gulp-webpack-min.js');
 require('./gulp/gulp-dist.js');
@@ -5,6 +6,9 @@ require('./gulp/gulp-test.js');
 
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
+
+gulp.task('prep', ['gulp-prep'], function() {
+});
 
 gulp.task('webpack', ['gulp-webpack'], function() {
 });
