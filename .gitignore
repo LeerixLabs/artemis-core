@@ -4,4 +4,3 @@ dist/
 node_modules/
 npm-debug.log
 out/
-src/settings/default-settings.js
