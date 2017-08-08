@@ -1,6 +1,3 @@
-/**
-* This file is auto-generated from default-settings.json by gulp-prep.js
-**/
 export let defaultSettings = 
 {
   "version": 1,

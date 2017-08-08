@@ -6,7 +6,7 @@ gulp.task('gulp-prep', function (cb) {
 		if (err) {
 			return console.log(err);
 		}
-		let fileText = '/**\n* This file is auto-generated from default-settings.json by gulp-prep.js\n**/\nexport let defaultSettings = \n' + data + ';';
+		let fileText = 'export let defaultSettings = \n' + data + ';';
 		fs.writeFile('./src/settings/default-settings.js', fileText, 'utf8', function (err) {
 			if (err) {
 				return console.log(err);
