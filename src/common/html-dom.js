@@ -105,12 +105,13 @@ export default class HtmlDOM {
 
   addColorClassesToHtmlDom(singleMatchColor, singleMatchTextColor, scoreColors, scoreTextColors) {
     let colorClassesText = [];
-    colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {background-color: ${singleMatchColor} !important; background-image: none !important; outline: 1px solid ${singleMatchColor} !important; color: ${singleMatchTextColor} !important; fill: ${singleMatchTextColor} !important;}`);
     for (let i = 0; i < scoreColors.length; i++) {
       colorClassesText.push(`.${Constants.artemisElmClassPrefix}${i} {background-color: ${scoreColors[i]} !important; background-image: none !important; outline: 1px solid ${scoreColors[i]} !important; color: ${scoreTextColors[i]} !important; fill: ${scoreTextColors[i]} !important;}`);
     }
+    colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {background-color: ${singleMatchColor} !important; background-image: none !important; outline: 1px solid ${singleMatchColor} !important; color: ${singleMatchTextColor} !important; fill: ${singleMatchTextColor} !important;}`);
     let style = this.document.createElement('style');
     style.type = 'text/css';
+    style.id = Constants.artemisStyleId;
     let cssText = colorClassesText.join('\n');
     if (style.styleSheet) {
       style.styleSheet.cssText = cssText;

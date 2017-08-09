@@ -40,6 +40,10 @@ export default class Constants {
 		return 'artemis-elm-classes-exist';
 	}
 
+	static get artemisStyleId() {
+		return 'artemis-classes';
+	}
+
 	static get artemisElmIdAttr() {
 		return 'artemis-id';
 	}
