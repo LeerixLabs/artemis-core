@@ -11,6 +11,10 @@ import Marker from '../marker/artemis-marker';
 
 export default class Manager {
 
+	_postFindResult(msg) {
+		window.postMessage({type: 'artemis-msg-find-result-artemis-core', msg: '' + msg}, '*');
+	}
+
 	_init() {
 		let that = this;
 		that._htmlDom = new HtmlDOM();
@@ -35,13 +39,15 @@ export default class Manager {
 	_find(targetInfo) {
 		log.debug('Manager.find() - start');
 		let that = this;
-		if (!targetInfo) {
-			return {};
+		let scoringResult = null;
+		if (targetInfo) {
+			let scoringPlan = that._planner.plan(targetInfo);
+			scoringResult = that._scorer.score(scoringPlan);
+			that._marker.mark(scoringResult);
+			that._postFindResult(scoringResult.perfects.length);
+		} else {
+			that._postFindResult(0);
 		}
-		let scoringPlan = that._planner.plan(targetInfo);
-		let scoringResult = that._scorer.score(scoringPlan);
-		that._marker.mark(scoringResult);
-		window.postMessage({type: 'artemis-msg-find-result-artemis-core', msg: '' + scoringResult.perfects.length}, '*');
 		log.debug('Manager.find() - end');
 		return scoringResult;
 	}
@@ -79,6 +85,7 @@ export default class Manager {
 		log.debug('Manager.executeNextCommand() - start');
 		let that = this;
 		let info = null;
+		that._postFindResult('');
 		that._init();
 		let cmd = storage.extractNextItem();
 		log.debug('cmd: ' + cmd);
@@ -150,6 +157,7 @@ export default class Manager {
 
 	onLoad() {
 		let that = this;
+		that._postFindResult('');
 		storage.removeOldItems();
 		if (storage.hasItems()) {
 			that._executeNextCommand();
