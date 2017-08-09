@@ -41,6 +41,7 @@ export default class Manager {
 		let scoringPlan = that._planner.plan(targetInfo);
 		let scoringResult = that._scorer.score(scoringPlan);
 		that._marker.mark(scoringResult);
+		window.postMessage({type: 'artemis-msg-find-result-artemis-core', msg: '' + scoringResult.perfects.length}, '*');
 		log.debug('Manager.find() - end');
 		return scoringResult;
 	}
