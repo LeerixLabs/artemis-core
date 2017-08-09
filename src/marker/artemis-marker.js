@@ -27,7 +27,7 @@ export default class Marker {
 
 	_getTextColor(colorHex) {
 		let brightness = this._getBrightness(colorHex);
-		return brightness > 136 ? '#000000' : '#FFFFFF';
+		return brightness > 128 ? '#000000' : '#FFFFFF';
 	}
 
 	_ensureColorClassesExistOnHtmlDom() {
