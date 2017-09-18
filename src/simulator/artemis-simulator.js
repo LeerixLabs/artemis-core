@@ -1,6 +1,7 @@
 import {log} from '../common/logger';
 import Constants from '../common/common-constants';
 import Helper from '../common/common-helper';
+import ScorerHelper from '../scorer/scorer-helper';
 
 class Simulator {
 
@@ -64,9 +65,12 @@ class Simulator {
 		if (domElm.children && domElm.children.length) {
 			for (let i = 0; i < domElm.children.length; i++) {
 				let child = domElm.children[i];
-				if (!retVal && child && child.tagName && child.tagName.toLowerCase() === 'option'
-				&& (child.value === value || child.text === value || child.innerText === value || child.textContent === value)) {
-					retVal = child.value;
+				if (!retVal && child && child.tagName && child.tagName.toLowerCase() === 'option') {
+					let checkedValuesArray = [child.value, child.text, child.innerText, child.textContent];
+					let score = ScorerHelper.multiStringMatchScore(checkedValuesArray, value, false);
+					if (score === 1) {
+						retVal = child.value;
+					}
 				}
 			}
 		}
