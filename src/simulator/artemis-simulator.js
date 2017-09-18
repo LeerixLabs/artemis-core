@@ -59,6 +59,31 @@ class Simulator {
 		}
 	}
 
+	_getSelectOptionValue(domElm, value) {
+		let retVal = null;
+		if (domElm.children && domElm.children.length) {
+			for (let i = 0; i < domElm.children.length; i++) {
+				let child = domElm.children[i];
+				if (!retVal && child && child.tagName && child.tagName.toLowerCase() === 'option'
+				&& (child.value === value || child.text === value || child.innerText === value || child.textContent === value)) {
+					retVal = child.value;
+				}
+			}
+		}
+		return retVal;
+	}
+
+	_set(domElm, value) {
+		log.debug('Simulator.set() - start');
+		this._click(domElm);
+		let valueToSet = (domElm.tagName.toLowerCase() === 'select') ? this._getSelectOptionValue(domElm, value) : value;
+		if (valueToSet) {
+			domElm.value = valueToSet;
+			this._triggerEvent(domElm, 'change');
+		}
+		log.debug('Simulator.set() - end');
+	}
+
 	_click(domElm) {
 		log.debug('Simulator.click() - start');
 		this._triggerEvent(domElm, 'mouseover');
@@ -66,14 +91,6 @@ class Simulator {
 		this._triggerEvent(domElm, 'click');
 		this._triggerEvent(domElm, 'mouseup');
 		log.debug('Simulator.click() - end');
-	}
-
-	_set(domElm, value) {
-		log.debug('Simulator.set() - start');
-		this._click(domElm);
-		domElm.value = value;
-		this._triggerEvent(domElm, 'change');
-		log.debug('Simulator.set() - end');
 	}
 
 	simulate(elm, action, value) {
