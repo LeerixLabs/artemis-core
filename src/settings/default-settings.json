@@ -26,22 +26,22 @@
       "groupIndexTarget": 1
     },
     {
-      "phrase": "^(?:enter )(?:\")([\\S\\s]+)(?:\")(?: in )([\\S\\s]+)$",
-      "action": "write",
-      "groupIndexValue": 1,
-      "groupIndexTarget": 2
+      "phrase": "^(?:set )([\\S\\s]+)(?: to )(?:\")([\\S\\s]+)(?:\")$",
+      "action": "set",
+      "groupIndexTarget": 1,
+      "groupIndexValue": 2
     },
     {
-      "phrase": "^(?:enter )(?:')([\\S\\s]+)(?:')(?: in )([\\S\\s]+)$",
-      "action": "write",
-      "groupIndexValue": 1,
-      "groupIndexTarget": 2
+      "phrase": "^(?:set )([\\S\\s]+)(?: to )(?:')([\\S\\s]+)(?:')$",
+      "action": "set",
+      "groupIndexTarget": 1,
+      "groupIndexValue": 2
     },
     {
-      "phrase": "^(?:enter )([\\S\\s]+)(?: in )([\\S\\s]+)$",
-      "action": "write",
-      "groupIndexValue": 1,
-      "groupIndexTarget": 2
+      "phrase": "^(?:set )([\\S\\s]+)(?: to )([\\S\\s]+)$",
+      "action": "set",
+      "groupIndexTarget": 1,
+      "groupIndexValue": 2
     }
   ],
   "definiteArticles": [

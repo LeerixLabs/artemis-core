@@ -68,21 +68,22 @@ class Simulator {
 		log.debug('Simulator.click() - end');
 	}
 
-	_write(domElm, value) {
-		log.debug('Simulator.write() - start');
+	_set(domElm, value) {
+		log.debug('Simulator.set() - start');
 		this._click(domElm);
 		domElm.value = value;
 		this._triggerEvent(domElm, 'change');
-		log.debug('Simulator.write() - end');
+		log.debug('Simulator.set() - end');
 	}
 
 	simulate(elm, action, value) {
 		log.debug('Simulator.simulate() - start');
 		log.debug(`elmId: ${elm.id}, elmTag: ${elm.tagName}, action: ${action}, value: ${value}`);
+		let domElm = elm.domElm;
 		if (action === Constants.actionType.CLICK) {
-			this._click(elm.domElm);
-		} else if (action === Constants.actionType.WRITE) {
-			this._write(elm.domElm, value);
+			this._click(domElm);
+		} else if (action === Constants.actionType.SET) {
+			this._set(domElm, value);
 		} else if (action !== Constants.actionType.LOCATE && action !== Constants.actionType.WAIT) {
 			log.error('Unsupported action');
 		}

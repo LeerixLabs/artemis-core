@@ -19,7 +19,7 @@ export default class Constants {
 		return {
 			LOCATE:	'locate',
 			CLICK: 	'click',
-			WRITE: 	'write',
+			SET: 	'set',
 			WAIT: 	'wait'
 		}
 	};
