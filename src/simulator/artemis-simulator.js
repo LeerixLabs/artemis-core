@@ -29,7 +29,7 @@ class Simulator {
 		};
 	}
 
-	_simulate(element, eventName, specialOptions) {
+	_triggerEvent(domElm, eventName, specialOptions) {
 		let eventType = null;
 		this._eventMatchers.forEach(function(em) {
 			if (em.eventNames.test(eventName)) {
@@ -43,37 +43,36 @@ class Simulator {
 		let options = specialOptions ? Helper.extend(this._defaultOptions, specialOptions) : this._defaultOptions;
 		let oEvent = null;
 		if (document.createEvent) {
-			oEvent = document.createEvent(eventType);
 			if (eventType == 'HTMLEvents') {
+				oEvent = document.createEvent(eventType);
 				oEvent.initEvent(eventName, options.bubbles, options.cancelable);
 			} else if (eventType == 'MouseEvents') {
 				oEvent = new MouseEvent(eventName, options);
 			}
-			element.dispatchEvent(oEvent);
+			domElm.dispatchEvent(oEvent);
 		} else {
 			options.clientX = options.pointerX;
 			options.clientY = options.pointerY;
 			let evt = document.createEventObject();
 			oEvent = Helper.extend(evt, options);
-			element.fireEvent('on' + eventName, oEvent);
+			domElm.fireEvent('on' + eventName, oEvent);
 		}
 	}
 
-	_click(elm) {
+	_click(domElm) {
 		log.debug('Simulator.click() - start');
-		this._simulate(elm.domElm, 'mouseover');
-		this._simulate(elm.domElm, 'mousedown');
-		this._simulate(elm.domElm, 'click');
-		this._simulate(elm.domElm, 'mouseup');
+		this._triggerEvent(domElm, 'mouseover');
+		this._triggerEvent(domElm, 'mousedown');
+		this._triggerEvent(domElm, 'click');
+		this._triggerEvent(domElm, 'mouseup');
 		log.debug('Simulator.click() - end');
 	}
 
-	_write(elm, value) {
+	_write(domElm, value) {
 		log.debug('Simulator.write() - start');
-		//elm.domElm.focus();
-		this._click(elm);
-		elm.domElm.value = value;
-		this._simulate(elm.domElm, 'change');
+		this._click(domElm);
+		domElm.value = value;
+		this._triggerEvent(domElm, 'change');
 		log.debug('Simulator.write() - end');
 	}
 
@@ -81,9 +80,9 @@ class Simulator {
 		log.debug('Simulator.simulate() - start');
 		log.debug(`elmId: ${elm.id}, elmTag: ${elm.tagName}, action: ${action}, value: ${value}`);
 		if (action === Constants.actionType.CLICK) {
-			this._click(elm);
+			this._click(elm.domElm);
 		} else if (action === Constants.actionType.WRITE) {
-			this._write(elm, value);
+			this._write(elm.domElm, value);
 		} else if (action !== Constants.actionType.LOCATE && action !== Constants.actionType.WAIT) {
 			log.error('Unsupported action');
 		}
