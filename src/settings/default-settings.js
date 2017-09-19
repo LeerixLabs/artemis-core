@@ -43,6 +43,11 @@ export let defaultSettings =
       "action": "set",
       "groupIndexTarget": 1,
       "groupIndexValue": 2
+    },
+    {
+      "phrase": "^(?:set )([\\S\\s]+)$",
+      "action": "locate",
+      "groupIndexTarget": 1
     }
   ],
   "definiteArticles": [
