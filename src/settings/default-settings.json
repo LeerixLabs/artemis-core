@@ -17,7 +17,7 @@
     },
     {
       "phrase": "^(?:find )([\\S\\s]+)$",
-      "action": "locate",
+      "action": "find",
       "groupIndexTarget": 1
     },
     {
@@ -45,7 +45,7 @@
     },
     {
       "phrase": "^(?:set )([\\S\\s]+)$",
-      "action": "locate",
+      "action": "find",
       "groupIndexTarget": 1
     }
   ],

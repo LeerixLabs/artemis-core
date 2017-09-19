@@ -73,9 +73,9 @@ export default class Manager {
 		log.debug('Manager.run() - start');
 		let that = this;
 		if (info.targetInfo) {
-			let locateResult = that._find(info.targetInfo);
-			if (locateResult.perfects.length > 0) {
-				simulator.simulate(locateResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
+			let findResult = that._find(info.targetInfo);
+			if (findResult.perfects.length > 0) {
+				simulator.simulate(findResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
 			}
 		}
 		log.debug('Manager.run() - end');

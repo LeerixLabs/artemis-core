@@ -18,7 +18,7 @@ export let defaultSettings =
     },
     {
       "phrase": "^(?:find )([\\S\\s]+)$",
-      "action": "locate",
+      "action": "find",
       "groupIndexTarget": 1
     },
     {
@@ -46,7 +46,7 @@ export let defaultSettings =
     },
     {
       "phrase": "^(?:set )([\\S\\s]+)$",
-      "action": "locate",
+      "action": "find",
       "groupIndexTarget": 1
     }
   ],

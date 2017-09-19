@@ -195,7 +195,7 @@ export default class Parser {
 		if (this._isDebug){log.debug(`sentence: ${sentence}`)}
 		let actionInfo = this._parseAction(sentence);
 		if (!actionInfo.action && command === Constants.commandType.DEBUG) {
-			actionInfo.action = Constants.actionType.LOCATE;
+			actionInfo.action = Constants.actionType.FIND;
 			actionInfo.target = sentence;
 		}
 		let targetInfo = actionInfo.target ? this.parseDescription(actionInfo.target) : null;

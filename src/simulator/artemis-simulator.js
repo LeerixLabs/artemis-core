@@ -105,7 +105,7 @@ class Simulator {
 			this._click(domElm);
 		} else if (action === Constants.actionType.SET) {
 			this._set(domElm, value);
-		} else if (action !== Constants.actionType.LOCATE && action !== Constants.actionType.WAIT) {
+		} else if (action !== Constants.actionType.FIND && action !== Constants.actionType.WAIT) {
 			log.error('Unsupported action');
 		}
 		log.debug('Simulator.simulate() - end');

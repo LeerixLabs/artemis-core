@@ -17,7 +17,7 @@ export default class Constants {
 
 	static get actionType() {
 		return {
-			LOCATE:	'locate',
+			FIND:	'find',
 			CLICK: 	'click',
 			SET: 	'set',
 			WAIT: 	'wait'
