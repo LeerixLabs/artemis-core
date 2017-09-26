@@ -477,6 +477,10 @@
             "value": "img"
           },
           {
+            "scorer": "htmlTag",
+            "value": "svg"
+          },
+          {
             "scorer": "htmlAttrNameAndVal",
             "value": [
               "role",

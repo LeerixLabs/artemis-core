@@ -478,6 +478,10 @@ export let defaultSettings =
             "value": "img"
           },
           {
+            "scorer": "htmlTag",
+            "value": "svg"
+          },
+          {
             "scorer": "htmlAttrNameAndVal",
             "value": [
               "role",
