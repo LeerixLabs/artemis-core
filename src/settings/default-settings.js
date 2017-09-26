@@ -8,6 +8,11 @@ export let defaultSettings =
   },
   "actionPhrases": [
     {
+      "phrase": "^(?:navigate to )(\\S*)$",
+      "action": "navigate",
+      "groupIndexValue": 1
+    },
+    {
       "phrase": "^(?:wait )([0-9.]+)(?: second)(?:s)?$",
       "action": "wait",
       "groupIndexValue": 1

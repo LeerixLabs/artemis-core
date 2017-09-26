@@ -62,6 +62,13 @@ export default class Manager {
 		log.debug('Manager.reset() - end');
 	}
 
+	_navigate(info) {
+		log.debug('Manager.navigate() - start');
+		//let that = this;
+		window.location = info.actionInfo.value;
+		log.debug('Manager.navigate() - end');
+	}
+
 	_debug(info) {
 		log.debug('Manager.debug() - start');
 		let that = this;
@@ -92,15 +99,28 @@ export default class Manager {
 		if (cmd) {
 			let commandType = cmd[Constants.msgFieldName.COMMAND];
 			if (commandType === Constants.commandType.RESET) {
+				log.debug('Reset');
 				that._reset();
 			} else if (commandType === Constants.commandType.DEBUG) {
 				info = that._parser.parse(commandType, cmd.data);
-				if (info.actionInfo.action !== Constants.actionType.WAIT) {
+				if (info.actionInfo.action === Constants.actionType.WAIT) {
+					log.debug('Debug-wait');
+				} else if (info.actionInfo.action === Constants.actionType.NAVIGATE) {
+					log.debug('Debug-navigate');
+					that._navigate(info);
+				} else {
+					log.debug('Debug');
 					that._debug(info);
 				}
 			} else if (commandType === Constants.commandType.RUN) {
 				info = that._parser.parse(commandType, cmd.data);
-				if (info.actionInfo.action !== Constants.actionType.WAIT) {
+				if (info.actionInfo.action === Constants.actionType.NAVIGATE) {
+					log.debug('Run-navigate');
+					that._navigate(info);
+				} else if (info.actionInfo.action === Constants.actionType.WAIT) {
+					log.debug('Run-wait');
+				} else {
+					log.debug('Run');
 					that._run(info);
 				}
 			} else {

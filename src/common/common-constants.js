@@ -17,10 +17,11 @@ export default class Constants {
 
 	static get actionType() {
 		return {
-			FIND:	'find',
-			CLICK: 	'click',
-			SET: 	'set',
-			WAIT: 	'wait'
+			NAVIGATE:	'navigate',
+			WAIT: 		'wait',
+			FIND:		'find',
+			CLICK: 		'click',
+			SET: 		'set'
 		}
 	};
 
