@@ -11,7 +11,7 @@ export default class FreeTextScorer {
         if (!val || !elm || !elm.domElm) {
             return 0;
         }
-        let checkedValuesArray = [elm.domElm.text, elm.domElm.innerText, elm.domElm.textContent];
+        let checkedValuesArray = [elm.domElm.tagName, elm.domElm.text, elm.domElm.innerText, elm.domElm.textContent];
         for (let c = 0; c < elm.classList.length; c++) {
             checkedValuesArray.push(elm.classList.item(c));
         }
