@@ -82,7 +82,11 @@ class Simulator {
 		this._click(domElm);
 		let valueToSet = (domElm.tagName.toLowerCase() === 'select') ? this._getSelectOptionValue(domElm, value) : value;
 		if (valueToSet) {
-			domElm.value = valueToSet;
+			if (domElm.tagName.toLowerCase() === 'textarea') {
+				domElm.innerHTML = valueToSet;
+			} else {
+				domElm.value = valueToSet;
+			}
 			this._triggerEvent(domElm, 'change');
 		}
 		log.debug('Simulator.set() - end');
