@@ -107,7 +107,6 @@ export default class Manager {
 					log.debug('Debug-wait');
 				} else if (info.actionInfo.action === Constants.actionType.NAVIGATE) {
 					log.debug('Debug-navigate');
-					that._navigate(info);
 				} else {
 					log.debug('Debug');
 					that._debug(info);
