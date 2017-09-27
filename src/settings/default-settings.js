@@ -829,8 +829,12 @@ export let defaultSettings =
     "pruneScore": 0.01
   },
   "colors": {
-    "singleMatchColor": "#33AA33",
+    "singleMatchColor": "#0079EF",
     "scoreColors": [
+      "#F48B34"
+    ],
+    "__singleMatchColor": "#0079EF",
+    "__scoreColors": [
       "#FFFFCC",
       "#FFFFAA",
       "#FFFF99",
