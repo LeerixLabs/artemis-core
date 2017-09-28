@@ -103,10 +103,12 @@ export default class HtmlDOM {
     }
   }
 
-  addColorClassesToHtmlDom(singleMatchColor, singleMatchTextColor, multiMatchColor, multiMatchTextColor) {
+  addColorClassesToHtmlDom(singleMatchColor, multiMatchColor) {
     let colorClassesText = [];
-    colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {background-color: ${singleMatchColor} !important; background-image: none !important; outline: 1px solid ${singleMatchColor} !important; color: ${singleMatchTextColor} !important; fill: ${singleMatchTextColor} !important;}`);
-	colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix} {background-color: ${multiMatchColor} !important; background-image: none !important; outline: 1px solid ${multiMatchColor} !important; color: ${multiMatchTextColor} !important; fill: ${multiMatchTextColor} !important;}`);
+    //colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {background-color: ${singleMatchColor} !important; background-image: none !important; outline: 1px solid ${singleMatchColor} !important; color: ${singleMatchTextColor} !important; fill: ${singleMatchTextColor} !important;}`);
+	//colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix} {background-color: ${multiMatchColor} !important; background-image: none !important; outline: 1px solid ${multiMatchColor} !important; color: ${multiMatchTextColor} !important; fill: ${multiMatchTextColor} !important;}`);
+    colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {outline: 5px solid ${singleMatchColor} !important;}`);
+	colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix} {outline: 5px solid ${multiMatchColor} !important}`);
     let style = this.document.createElement('style');
     style.type = 'text/css';
     style.id = Constants.artemisStyleId;

@@ -9,29 +9,29 @@ export default class Marker {
 		//this._singleMatchColor = "#0079EF";
 		//this._scoreColors = ["#FFFFCC", "#FFFFAA", "#FFFF99", "#FFFF66", "#FFFF33", "#FFFF00", "#FFCC00", "#FFAA00", "#FF9900", "#FF6600", "#FF3300"];
 		this._singleMatchColor = this._settings.colors.singleMatchColor;
-		this._singleMatchTextColor = this._getTextColor(this._singleMatchColor);
+		//this._singleMatchTextColor = this._getTextColor(this._singleMatchColor);
 		this._multiMatchColor = this._settings.colors.multiMatchColor;
-		this._multiMatchTextColor = this._getTextColor(this._multiMatchColor);
+		//this._multiMatchTextColor = this._getTextColor(this._multiMatchColor);
 		this._htmlDom = htmlDom;
 		this._isDebug = log.isDebug();
 	}
 
-	_getBrightness(colorHex) {
-		let r = parseInt(colorHex.substring(1, 3), 16);
-		let g = parseInt(colorHex.substring(3, 5), 16);
-		let b = parseInt(colorHex.substring(5, 7), 16);
-		let brightness = Math.sqrt(r * r * .241 + g * g * .691 + b * b * .068);
-		return brightness|0;
-	}
+	// _getBrightness(colorHex) {
+	// 	let r = parseInt(colorHex.substring(1, 3), 16);
+	// 	let g = parseInt(colorHex.substring(3, 5), 16);
+	// 	let b = parseInt(colorHex.substring(5, 7), 16);
+	// 	let brightness = Math.sqrt(r * r * .241 + g * g * .691 + b * b * .068);
+	// 	return brightness|0;
+	// }
 
-	_getTextColor(colorHex) {
-		let brightness = this._getBrightness(colorHex);
-		return brightness >= 128 ? '#000000' : '#FFFFFF';
-	}
+	// _getTextColor(colorHex) {
+	// 	let brightness = this._getBrightness(colorHex);
+	// 	return brightness >= 128 ? '#000000' : '#FFFFFF';
+	// }
 
 	_ensureColorClassesExistOnHtmlDom() {
 		if (!this._htmlDom.artemisColorClassesExistOnHtmlDom) {
-			this._htmlDom.addColorClassesToHtmlDom(this._singleMatchColor, this._singleMatchTextColor, this._multiMatchColor, this._multiMatchTextColor,);
+			this._htmlDom.addColorClassesToHtmlDom(this._singleMatchColor, this._multiMatchColor);
 			this._htmlDom.artemisColorClassesExistOnHtmlDom = true;
 		}
 	}
