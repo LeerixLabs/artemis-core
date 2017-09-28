@@ -103,12 +103,10 @@ export default class HtmlDOM {
     }
   }
 
-  addColorClassesToHtmlDom(singleMatchColor, singleMatchTextColor, scoreColors, scoreTextColors) {
+  addColorClassesToHtmlDom(singleMatchColor, singleMatchTextColor, multiMatchColor, multiMatchTextColor) {
     let colorClassesText = [];
-    for (let i = 0; i < scoreColors.length; i++) {
-      colorClassesText.push(`.${Constants.artemisElmClassPrefix}${i} {background-color: ${scoreColors[i]} !important; background-image: none !important; outline: 1px solid ${scoreColors[i]} !important; color: ${scoreTextColors[i]} !important; fill: ${scoreTextColors[i]} !important;}`);
-    }
     colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {background-color: ${singleMatchColor} !important; background-image: none !important; outline: 1px solid ${singleMatchColor} !important; color: ${singleMatchTextColor} !important; fill: ${singleMatchTextColor} !important;}`);
+	colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix} {background-color: ${multiMatchColor} !important; background-image: none !important; outline: 1px solid ${multiMatchColor} !important; color: ${multiMatchTextColor} !important; fill: ${multiMatchTextColor} !important;}`);
     let style = this.document.createElement('style');
     style.type = 'text/css';
     style.id = Constants.artemisStyleId;

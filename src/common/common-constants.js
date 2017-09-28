@@ -61,4 +61,8 @@ export default class Constants {
 		return 'single-match';
 	}
 
+	static get artemisElmClassMultiMatchSuffix() {
+		return 'multi-match';
+	}
+
 }

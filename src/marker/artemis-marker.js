@@ -6,13 +6,12 @@ export default class Marker {
 
 	constructor(settings, htmlDom){
 		this._settings = settings;
+		//this._singleMatchColor = "#0079EF";
+		//this._scoreColors = ["#FFFFCC", "#FFFFAA", "#FFFF99", "#FFFF66", "#FFFF33", "#FFFF00", "#FFCC00", "#FFAA00", "#FF9900", "#FF6600", "#FF3300"];
 		this._singleMatchColor = this._settings.colors.singleMatchColor;
 		this._singleMatchTextColor = this._getTextColor(this._singleMatchColor);
-		this._scoreColors = this._settings.colors.scoreColors;
-		this._scoreTextColors = [];
-		this._scoreColors.forEach(colorHex => {
-			this._scoreTextColors.push(this._getTextColor(colorHex));
-		});
+		this._multiMatchColor = this._settings.colors.multiMatchColor;
+		this._multiMatchTextColor = this._getTextColor(this._multiMatchColor);
 		this._htmlDom = htmlDom;
 		this._isDebug = log.isDebug();
 	}
@@ -27,12 +26,12 @@ export default class Marker {
 
 	_getTextColor(colorHex) {
 		let brightness = this._getBrightness(colorHex);
-		return brightness > 128 ? '#000000' : '#FFFFFF';
+		return brightness >= 128 ? '#000000' : '#FFFFFF';
 	}
 
 	_ensureColorClassesExistOnHtmlDom() {
 		if (!this._htmlDom.artemisColorClassesExistOnHtmlDom) {
-			this._htmlDom.addColorClassesToHtmlDom(this._singleMatchColor, this._singleMatchTextColor, this._scoreColors, this._scoreTextColors);
+			this._htmlDom.addColorClassesToHtmlDom(this._singleMatchColor, this._singleMatchTextColor, this._multiMatchColor, this._multiMatchTextColor,);
 			this._htmlDom.artemisColorClassesExistOnHtmlDom = true;
 		}
 	}
@@ -49,12 +48,10 @@ export default class Marker {
 		if (this._isDebug){log.debug('perfectScoreCount: ${perfectScoreCount}')}
 		let className = '';
 		scoringResult.elements.forEach(elm => {
-			if (elm.primaryScore === 1 &&  perfectScoreCount === 1) {
-				className = `${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix}`;
-			} else {
-				className = `${Constants.artemisElmClassPrefix}${(elm.primaryScore*(this._scoreColors.length-1)|0)}`;
+			if (elm.primaryScore === 1) {
+				className = `${Constants.artemisElmClassPrefix}${(perfectScoreCount === 1) ? Constants.artemisElmClassSingleMatchSuffix : Constants.artemisElmClassMultiMatchSuffix}`;
+				HtmlDOM.addElmClassToHtmlDom(elm.domElm, className);
 			}
-			HtmlDOM.addElmClassToHtmlDom(elm.domElm, className);
 		});
 		this._htmlDom.artemisElmClassesExistOnHtmlDom = true;
 		if (this._isDebug){log.debug('Marker.mark() - end')}
@@ -63,7 +60,7 @@ export default class Marker {
 	markEverything() {
 		if (this._isDebug){log.debug('Marker.markAll() - start')}
 		this._ensureColorClassesExistOnHtmlDom();
-		let className = `${Constants.artemisElmClassPrefix}${this._scoreColors.length-1}`;
+		let className = `${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix}`;
 		let domElms = this._htmlDom.getRelevantDomElms();
 		domElms.forEach(domElm => {
 			HtmlDOM.addElmClassToHtmlDom(domElm, className);

@@ -830,23 +830,7 @@ export let defaultSettings =
   },
   "colors": {
     "singleMatchColor": "#0079EF",
-    "scoreColors": [
-      "#F48B34"
-    ],
-    "__singleMatchColor": "#0079EF",
-    "__scoreColors": [
-      "#FFFFCC",
-      "#FFFFAA",
-      "#FFFF99",
-      "#FFFF66",
-      "#FFFF33",
-      "#FFFF00",
-      "#FFCC00",
-      "#FFAA00",
-      "#FF9900",
-      "#FF6600",
-      "#FF3300"
-    ]
+    "multiMatchColor": "#F48B34"
   }
 }
 ;
