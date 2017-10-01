@@ -165,18 +165,38 @@ export let defaultSettings =
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute value ([\\w-]+)",
+      "phrase": "(?:with|and) attribute name ([\\w-]+)",
+      "type": "htmlAttrName"
+    },
+    {
+      "location": "postObjectType",
+      "phrase": "(?:with|and) attribute value (?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
       "type": "htmlAttrVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute ([\\w-]+)=([\\w-]+)",
+      "phrase": "(?:with|and) attribute value (?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+      "type": "htmlAttrVal"
+    },
+    {
+      "location": "postObjectType",
+      "phrase": "(?:with|and) attribute value ([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
+      "type": "htmlAttrVal"
+    },
+    {
+      "location": "postObjectType",
+      "phrase": "(?:with|and) attribute ([\\w-]+)=(?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
       "type": "htmlAttrNameAndVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute ([\\w-]+)",
-      "type": "htmlAttrName"
+      "phrase": "(?:with|and) attribute ([\\w-]+)=(?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+      "type": "htmlAttrNameAndVal"
+    },
+    {
+      "location": "postObjectType",
+      "phrase": "(?:with|and) attribute ([\\w-]+)=([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
+      "type": "htmlAttrNameAndVal"
     },
     {
       "location": "postObjectType",

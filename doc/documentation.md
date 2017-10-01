@@ -10,8 +10,6 @@ URL_ADDRESS can be a full http/https url, or a url suffix part relative to the w
 ### Examples
 ```sh
 navigate to http://www.advantageonlineshopping.com
-```
-```sh
 navigate to /#/shoppingCart
 ```
 
@@ -26,8 +24,6 @@ A valid value is any number greater than 0.
 ### Examples
 ```sh
 wait 1 second
-```
-```sh
 wait 3 seconds
 ```
 
@@ -77,14 +73,8 @@ set password input to 123456
 ### Examples
 ```sh
 click the link 
-```
-```sh
 click link 
-```
-```sh
 click the button 
-```
-```sh
 click button 
 ```
 
@@ -99,20 +89,10 @@ click button
 ### Examples
 ```sh
 click home link 
-```
-```sh
 click the home link 
-```
-```sh
 click the "Add to Cart" button
-```
-```sh
 click the 'Add to Cart' button
-```
-```sh
 click the add-to-cart button
-```
-```sh
 click add-to-cart button
 ```
 
@@ -124,8 +104,6 @@ click add-to-cart button
 ### Examples
 ```sh
 click the 1st link
-```
-```sh
 click the 4th button
 ```
 
@@ -137,11 +115,7 @@ click the 4th button
 ### Examples
 ```sh
 click the small refresh button
-```
-```sh
 click the medium logo image
-```
-```sh
 set the large email input to johndoe@acme.com
 ```
 
@@ -153,8 +127,6 @@ set the large email input to johndoe@acme.com
 ### Examples
 ```sh
 click the blue login button
-```
-```sh
 click the red delete image
 ```
 
@@ -166,11 +138,7 @@ click the red delete image
 ### Examples
 ```sh
 click the home link at the top
-```
-```sh
 click the save button at the bottom
-```
-```sh
 click the cancel button at the bottom on the right
 ```
 
@@ -187,31 +155,39 @@ click the element with tag li
 ## HTML ATTRIBUTE NAME
 ### Syntax
 ```sh
-[the] <OBJECT_TYPE> [with|and] attribute <HTML_ATTR_NAME>
+[the] <OBJECT_TYPE> [with|and] attribute name <HTML_ATTR_NAME>
 ```
 ### Examples
 ```sh
-click the item with attribute selected 
+click the item with attribute name selected 
 ```
 
 ## HTML ATTRIBUTE VALUE
 ### Syntax
 ```sh
 [the] <OBJECT_TYPE> [with|and] attribute value <HTML_ATTR_VALUE>
+[the] <OBJECT_TYPE> [with|and] attribute value "<HTML_ATTR_VALUE>"
+[the] <OBJECT_TYPE> [with|and] attribute value '<HTML_ATTR_VALUE>'
 ```
 ### Examples
 ```sh
-click the button with attribute value onCancel() 
+click the button with attribute value onCancel()
+click the button with attribute value "onCancel()"
+click the button with attribute value 'onCancel()' 
 ```
 
 ## HTML ATTRIBUTE NAME AND VALUE
 ### Syntax
 ```sh
 [the] <OBJECT_TYPE> [with|and] attribute <HTML_ATTR_NAME>=<HTML_ATTR_VALUE>
+[the] <OBJECT_TYPE> [with|and] attribute <HTML_ATTR_NAME>="<HTML_ATTR_VALUE>"
+[the] <OBJECT_TYPE> [with|and] attribute <HTML_ATTR_NAME>='<HTML_ATTR_VALUE>'
 ```
 ### Examples
 ```sh
-click the element with attribute id=123 
+click the element with attribute id=1234
+click the element with attribute id="12 34"
+click the element with attribute id='12 34' 
 ```
 
 ## CSS CLASS
@@ -222,8 +198,6 @@ click the element with attribute id=123
 ### Examples
 ```sh
 click the element with class my-legend 
-```
-```sh
 click the element with class my-legend and attribute active 
 ```
 
@@ -231,21 +205,13 @@ click the element with class my-legend and attribute active
 ### Syntax
 ```sh
 [the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME>:<CSS_STYLE_VALUE>
-```
-```sh
 [the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME>:"<CSS_STYLE_VALUE>"
-```
-```sh
 [the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME>:'<CSS_STYLE_VALUE>'
 ```
 ### Examples
 ```sh
 click the element with style height:400px 
-```
-```sh
 click the element with style flex:"0 0 auto" 
-```
-```sh
 click the element with style flex:'1 1 auto' 
 ```
 
@@ -253,14 +219,10 @@ click the element with style flex:'1 1 auto'
 ### Syntax
 ```sh
 [the] <OBJECT_TYPE> [to the] [left of|right of] <ANOTHER_OBJECT_DESCRIPTION>
-```
-```sh
 [the] <OBJECT_TYPE> [above|below|near|inside] <ANOTHER_OBJECT_DESCRIPTION>
 ```
 ### Examples
 ```sh
 click the link left of the refresh button 
-```
-```sh
 click the button below the home link 
 ```

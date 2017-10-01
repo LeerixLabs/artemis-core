@@ -199,7 +199,7 @@ describe('Target Parser Test', () => {
 	});
 
 	it('test html attribute name', () => {
-		let modeledElmDesc = parser._buildElementDescriptionModel('element with attribute aaa');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with attribute name aaa');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('htmlAttrName');
@@ -214,14 +214,50 @@ describe('Target Parser Test', () => {
 		expect(modeledElmDesc.object.and[1].value).toEqual('bbb');
 	});
 
+	it('test html attribute value with single quotes', () => {
+		let modeledElmDesc = parser._buildElementDescriptionModel(`element with attribute value 'bbb bbb'`);
+		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
+		expect(modeledElmDesc.object.and[0].value).toEqual('element');
+		expect(modeledElmDesc.object.and[1].type).toEqual('htmlAttrVal');
+		expect(modeledElmDesc.object.and[1].value).toEqual('bbb bbb');
+	});
+
+	it('test html attribute value with double quotes', () => {
+		let modeledElmDesc = parser._buildElementDescriptionModel(`element with attribute value "bbb bbb"`);
+		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
+		expect(modeledElmDesc.object.and[0].value).toEqual('element');
+		expect(modeledElmDesc.object.and[1].type).toEqual('htmlAttrVal');
+		expect(modeledElmDesc.object.and[1].value).toEqual('bbb bbb');
+	});
+
 	it('test html attribute name and value', () => {
-		let modeledElmDesc = parser._buildElementDescriptionModel('element with attribute aaa=bbb');
+		let modeledElmDesc = parser._buildElementDescriptionModel('element with attribute ccc=ddd');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
 		expect(modeledElmDesc.object.and[0].value).toEqual('element');
 		expect(modeledElmDesc.object.and[1].type).toEqual('htmlAttrNameAndVal');
 		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
-		expect(modeledElmDesc.object.and[1].value[0]).toEqual('aaa');
-		expect(modeledElmDesc.object.and[1].value[1]).toEqual('bbb');
+		expect(modeledElmDesc.object.and[1].value[0]).toEqual('ccc');
+		expect(modeledElmDesc.object.and[1].value[1]).toEqual('ddd');
+	});
+
+	it('test html attribute name and value with single quotes', () => {
+		let modeledElmDesc = parser._buildElementDescriptionModel(`element with attribute ccc="1 2"`);
+		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
+		expect(modeledElmDesc.object.and[0].value).toEqual('element');
+		expect(modeledElmDesc.object.and[1].type).toEqual('htmlAttrNameAndVal');
+		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
+		expect(modeledElmDesc.object.and[1].value[0]).toEqual('ccc');
+		expect(modeledElmDesc.object.and[1].value[1]).toEqual('1 2');
+	});
+
+	it('test html attribute name and value with double quotes', () => {
+		let modeledElmDesc = parser._buildElementDescriptionModel(`element with attribute ccc="1 2"`);
+		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
+		expect(modeledElmDesc.object.and[0].value).toEqual('element');
+		expect(modeledElmDesc.object.and[1].type).toEqual('htmlAttrNameAndVal');
+		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
+		expect(modeledElmDesc.object.and[1].value[0]).toEqual('ccc');
+		expect(modeledElmDesc.object.and[1].value[1]).toEqual('1 2');
 	});
 
 	it('test css class', () => {
@@ -242,16 +278,6 @@ describe('Target Parser Test', () => {
 		expect(modeledElmDesc.object.and[1].value[1]).toEqual('10px');
 	});
 
-	it('test css style with double quotes', () => {
-		let modeledElmDesc = parser._buildElementDescriptionModel(`element with style flex:"0 0 auto"`);
-		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
-		expect(modeledElmDesc.object.and[0].value).toEqual('element');
-		expect(modeledElmDesc.object.and[1].type).toEqual('cssStyleNameAndVal');
-		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
-		expect(modeledElmDesc.object.and[1].value[0]).toEqual('flex');
-		expect(modeledElmDesc.object.and[1].value[1]).toEqual('0 0 auto');
-	});
-
 	it('test css style with single quotes', () => {
 		let modeledElmDesc = parser._buildElementDescriptionModel(`element with style flex:'1 1 auto'`);
 		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
@@ -260,6 +286,16 @@ describe('Target Parser Test', () => {
 		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
 		expect(modeledElmDesc.object.and[1].value[0]).toEqual('flex');
 		expect(modeledElmDesc.object.and[1].value[1]).toEqual('1 1 auto');
+	});
+
+	it('test css style with double quotes', () => {
+		let modeledElmDesc = parser._buildElementDescriptionModel(`element with style flex:"0 0 auto"`);
+		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
+		expect(modeledElmDesc.object.and[0].value).toEqual('element');
+		expect(modeledElmDesc.object.and[1].type).toEqual('cssStyleNameAndVal');
+		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
+		expect(modeledElmDesc.object.and[1].value[0]).toEqual('flex');
+		expect(modeledElmDesc.object.and[1].value[1]).toEqual('0 0 auto');
 	});
 
 	it('test multiple post object type properties added with the word "with"', () => {
