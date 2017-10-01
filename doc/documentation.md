@@ -55,7 +55,7 @@ See documentation for a valid object description.
 click the "Add to Cart" button
 ```
 
-## SET
+## SET VALUE
 Sets the value of an input object on a web page.
 ### Syntax
 ```sh
