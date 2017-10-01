@@ -148,7 +148,7 @@ set the large email input to johndoe@acme.com
 ## COLOR
 ### Syntax
 ```sh
-[the][maroon|red|brown|orange|yellow|olive|lime|green|teal|aqua|turquoise|blue|navy|fuchsia|pink|purple|black|white|gray|grey|silver] <OBJECT_TYPE>
+[the] [maroon|red|brown|orange|yellow|olive|lime|green|teal|aqua|turquoise|blue|navy|fuchsia|pink|purple|black|white|gray|grey|silver] <OBJECT_TYPE>
 ```
 ### Examples
 ```sh
