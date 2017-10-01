@@ -24,7 +24,7 @@ export default class Parser {
 		};
 		for (let rule of this._actionPhrases) {
 			if (!found) {
-				let match = (new RegExp(rule.phrase, 'i')).exec(sentence);
+				let match = (new RegExp(`^${rule.phrase}$`, 'i')).exec(sentence);
 				if (match) {
 					let numOfGroups = 0;
 					if (rule.groupIndexValue) {

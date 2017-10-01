@@ -7,49 +7,49 @@
   },
   "actionPhrases": [
     {
-      "phrase": "^(?:navigate to )(\\S*)$",
+      "phrase": "(?:navigate to )(\\S*)",
       "action": "navigate",
       "groupIndexValue": 1
     },
     {
-      "phrase": "^(?:wait )([0-9.]+)(?: second)(?:s)?$",
+      "phrase": "(?:wait )([0-9.]+)(?: second)(?:s)?",
       "action": "wait",
       "groupIndexValue": 1
     },
     {
-      "phrase": "^(?:wait)$",
+      "phrase": "(?:wait)",
       "action": "wait"
     },
     {
-      "phrase": "^(?:find )([\\S\\s]+)$",
+      "phrase": "(?:find )([\\S\\s]+)",
       "action": "find",
       "groupIndexTarget": 1
     },
     {
-      "phrase": "^(?:click )([\\S\\s]+)$",
+      "phrase": "(?:click )([\\S\\s]+)",
       "action": "click",
       "groupIndexTarget": 1
     },
     {
-      "phrase": "^(?:set )([\\S\\s]+)(?: to )(?:\")([\\S\\s]+)(?:\")$",
+      "phrase": "(?:set )([\\S\\s]+)(?: to )(?:\")([\\S\\s]+)(?:\")",
       "action": "set",
       "groupIndexTarget": 1,
       "groupIndexValue": 2
     },
     {
-      "phrase": "^(?:set )([\\S\\s]+)(?: to )(?:')([\\S\\s]+)(?:')$",
+      "phrase": "(?:set )([\\S\\s]+)(?: to )(?:')([\\S\\s]+)(?:')",
       "action": "set",
       "groupIndexTarget": 1,
       "groupIndexValue": 2
     },
     {
-      "phrase": "^(?:set )([\\S\\s]+)(?: to )([\\S\\s]+)$",
+      "phrase": "(?:set )([\\S\\s]+)(?: to )([\\S\\s]+)",
       "action": "set",
       "groupIndexTarget": 1,
       "groupIndexValue": 2
     },
     {
-      "phrase": "^(?:set )([\\S\\s]+)$",
+      "phrase": "(?:set )([\\S\\s]+)",
       "action": "find",
       "groupIndexTarget": 1
     }
