@@ -197,8 +197,8 @@ click the element with attribute id='12 34'
 ```
 ### Examples
 ```sh
-click the element with class my-legend 
-click the element with class my-legend and attribute active 
+click the element with class my-legend
+click the element with tag div and class my-legend 
 ```
 
 ## CSS STYLE NAME AND VALUE
