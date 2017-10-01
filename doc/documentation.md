@@ -1,13 +1,13 @@
 # Actions
 
-##NAVIGATE
+## NAVIGATE
 Changes the location of an HTML document.
-###Syntax
+### Syntax
 ```sh
 navigate to <URL_ADDRESS>
 ```
 URL_ADDRESS can be a full http/https url, or a url suffix part relative to the website root.
-###Examples
+### Examples
 ```sh
 navigate to http://www.advantageonlineshopping.com
 ```
@@ -15,15 +15,15 @@ navigate to http://www.advantageonlineshopping.com
 navigate to /#/shoppingCart
 ```
 
-##WAIT
+## WAIT
 Delays the next command execution.
 
-###Syntax
+### Syntax
 ```sh
 wait <NUMBER> [second|seconds]
 ```
 A valid value is any number greater than 0.
-###Examples
+### Examples
 ```sh
 wait 1 second
 ```
@@ -31,38 +31,38 @@ wait 1 second
 wait 3 seconds
 ```
 
-##FIND
+## FIND
 Locates and marks an object on a web page. Used mainly for debugging.
-###Syntax
+### Syntax
 ```sh
 find <OBJECT_DESCRIPTION>
 ```
 See documentation for a valid object description.
-###Examples
+### Examples
 ```sh
 find the "Add to Cart" button
 ```
 
-##CLICK
+## CLICK
 Clicks an object on a web page.
-###Syntax
+### Syntax
 ```sh
 click <OBJECT_DESCRIPTION>
 ```
 See documentation for a valid object description.
-###Examples
+### Examples
 ```sh
 click the "Add to Cart" button
 ```
 
-##SET
+## SET
 Sets the value of an input object on a web page.
-###Syntax
+### Syntax
 ```sh
 set <OBJECT_DESCRIPTION> to <VALUE>
 ```
 See documentation for a valid object description.
-###Examples
+### Examples
 ```sh
 set password input to 123456 
 ```
