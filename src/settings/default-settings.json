@@ -184,12 +184,17 @@
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) style ([\\w-]+):([\\w-]+)",
+      "phrase": "(?:with|and) style ([\\w-]+):(?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
       "type": "cssStyleNameAndVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) style ([\\w-]+)=([\\w-]+)",
+      "phrase": "(?:with|and) style ([\\w-]+):(?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+      "type": "cssStyleNameAndVal"
+    },
+    {
+      "location": "postObjectType",
+      "phrase": "(?:with|and) style ([\\w-]+):([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
       "type": "cssStyleNameAndVal"
     },
     {

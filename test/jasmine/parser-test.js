@@ -242,6 +242,26 @@ describe('Target Parser Test', () => {
 		expect(modeledElmDesc.object.and[1].value[1]).toEqual('10px');
 	});
 
+	it('test css style with double quotes', () => {
+		let modeledElmDesc = parser._buildElementDescriptionModel(`element with style flex:"0 0 auto"`);
+		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
+		expect(modeledElmDesc.object.and[0].value).toEqual('element');
+		expect(modeledElmDesc.object.and[1].type).toEqual('cssStyleNameAndVal');
+		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
+		expect(modeledElmDesc.object.and[1].value[0]).toEqual('flex');
+		expect(modeledElmDesc.object.and[1].value[1]).toEqual('0 0 auto');
+	});
+
+	it('test css style with single quotes', () => {
+		let modeledElmDesc = parser._buildElementDescriptionModel(`element with style flex:'1 1 auto'`);
+		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
+		expect(modeledElmDesc.object.and[0].value).toEqual('element');
+		expect(modeledElmDesc.object.and[1].type).toEqual('cssStyleNameAndVal');
+		expect(modeledElmDesc.object.and[1].value.length).toEqual(2);
+		expect(modeledElmDesc.object.and[1].value[0]).toEqual('flex');
+		expect(modeledElmDesc.object.and[1].value[1]).toEqual('1 1 auto');
+	});
+
 	it('test multiple post object type properties added with the word "with"', () => {
 		let modeledElmDesc = parser._buildElementDescriptionModel('element with tag my-tag with class my-class');
 		expect(modeledElmDesc.object.and[0].type).toEqual('elmType');
@@ -286,7 +306,7 @@ describe('Target Parser Test', () => {
 		let elm1 = `small blue log-in button with attribute type=submit`;
 		let elm2 = `2nd "password" input with class secret-field and style margin-left:10px`;
 		let elm3 = `'user profile' panel with tag div`;
-		let modeledElmDesc = parser._buildElementDescriptionModel(` ${elm1}  below   the ${elm2}  inside   the ${elm3} `);
+		let modeledElmDesc = parser._buildElementDescriptionModel(` ${elm1} below the ${elm2} inside the ${elm3} `);
 		let expectedModel = {
 			object: {
 				and: [

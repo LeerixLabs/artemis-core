@@ -230,17 +230,23 @@ click the element with class my-legend and attribute active
 ## CSS STYLE NAME AND VALUE
 ### Syntax
 ```sh
-[the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME:CSS_STYLE_VALUE>
+[the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME>:<CSS_STYLE_VALUE>
 ```
 ```sh
-[the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME=CSS_STYLE_VALUE>
+[the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME>:"<CSS_STYLE_VALUE>"
+```
+```sh
+[the] <OBJECT_TYPE> [with|and] style <CSS_STYLE_NAME>:'<CSS_STYLE_VALUE>'
 ```
 ### Examples
 ```sh
 click the element with style height:400px 
 ```
 ```sh
-click the element with style height=400px 
+click the element with style flex:"0 0 auto" 
+```
+```sh
+click the element with style flex:'1 1 auto' 
 ```
 
 ## RELATIVE POSITION TO ANOTHER OBJECT
