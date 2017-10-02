@@ -8,7 +8,7 @@ export let defaultSettings =
   },
   "actionPhrases": [
     {
-      "phrase": "(?:navigate to )(\\S*)",
+      "phrase": "(?:navigate to )(.*)",
       "action": "navigate",
       "groupIndexValue": 1
     },
@@ -22,35 +22,35 @@ export let defaultSettings =
       "action": "wait"
     },
     {
-      "phrase": "(?:find )([\\S\\s]+)",
+      "phrase": "(?:find )(.+)",
       "action": "find",
       "groupIndexTarget": 1
     },
     {
-      "phrase": "(?:click )([\\S\\s]+)",
+      "phrase": "(?:click )(.+)",
       "action": "click",
       "groupIndexTarget": 1
     },
     {
-      "phrase": "(?:set )([\\S\\s]+)(?: to )(?:\")([\\S\\s]+)(?:\")",
+      "phrase": "(?:set )(.+)(?: to )(?:\")(.+)(?:\")",
       "action": "set",
       "groupIndexTarget": 1,
       "groupIndexValue": 2
     },
     {
-      "phrase": "(?:set )([\\S\\s]+)(?: to )(?:')([\\S\\s]+)(?:')",
+      "phrase": "(?:set )(.+)(?: to )(?:')(.+)(?:')",
       "action": "set",
       "groupIndexTarget": 1,
       "groupIndexValue": 2
     },
     {
-      "phrase": "(?:set )([\\S\\s]+)(?: to )([\\S\\s]+)",
+      "phrase": "(?:set )(.+)(?: to )(.+)",
       "action": "set",
       "groupIndexTarget": 1,
       "groupIndexValue": 2
     },
     {
-      "phrase": "(?:set )([\\S\\s]+)",
+      "phrase": "(?:set )(.+)",
       "action": "find",
       "groupIndexTarget": 1
     }
