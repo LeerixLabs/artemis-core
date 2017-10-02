@@ -125,7 +125,7 @@ export let defaultSettings =
     },
     {
       "location": "preObjectType",
-      "phrase": "([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
+      "phrase": "(\\S+)",
       "type": "freeText"
     },
     {
@@ -170,32 +170,32 @@ export let defaultSettings =
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute value (?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
+      "phrase": "(?:with|and) attribute value (?:[\"])(.+?)(?:[\"])",
       "type": "htmlAttrVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute value (?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+      "phrase": "(?:with|and) attribute value (?:['])(.+?)(?:['])",
       "type": "htmlAttrVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute value ([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
+      "phrase": "(?:with|and) attribute value (\\S+)",
       "type": "htmlAttrVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute ([\\w-]+)=(?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
+      "phrase": "(?:with|and) attribute ([\\w-]+)=(?:[\"])(.+?)(?:[\"])",
       "type": "htmlAttrNameAndVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute ([\\w-]+)=(?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+      "phrase": "(?:with|and) attribute ([\\w-]+)=(?:['])(.+?)(?:['])",
       "type": "htmlAttrNameAndVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) attribute ([\\w-]+)=([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
+      "phrase": "(?:with|and) attribute ([\\w-]+)=(\\S+)",
       "type": "htmlAttrNameAndVal"
     },
     {
@@ -205,17 +205,17 @@ export let defaultSettings =
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) style ([\\w-]+):(?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
+      "phrase": "(?:with|and) style ([\\w-]+):(?:[\"])(.+?)(?:[\"])",
       "type": "cssStyleNameAndVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) style ([\\w-]+):(?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+      "phrase": "(?:with|and) style ([\\w-]+):(?:['])(.+?)(?:['])",
       "type": "cssStyleNameAndVal"
     },
     {
       "location": "postObjectType",
-      "phrase": "(?:with|and) style ([\\w-]+):([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)",
+      "phrase": "(?:with|and) style ([\\w-]+):(\\S+)",
       "type": "cssStyleNameAndVal"
     },
     {
