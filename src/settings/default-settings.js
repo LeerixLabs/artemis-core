@@ -60,7 +60,7 @@ export let defaultSettings =
   ],
   "___targetReplacements": [
     {
-      "phrase": "([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?]+)( octane-input)",
+      "phrase": "(.+)( octane-input)",
       "replace": "input inside $1 label"
     }
   ],
@@ -115,12 +115,12 @@ export let defaultSettings =
     },
     {
       "location": "preObjectType",
-      "phrase": "(?:[\"])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:[\"])",
+      "phrase": "(?:[\"])(.+?)(?:[\"])",
       "type": "freeText"
     },
     {
       "location": "preObjectType",
-      "phrase": "(?:['])([a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\\\\|,.<>\\/?\\s]+)(?:['])",
+      "phrase": "(?:['])(.+?)(?:['])",
       "type": "freeText"
     },
     {
