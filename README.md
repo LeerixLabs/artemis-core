@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/LeerixLabs/artemis-core.svg?branch=master)](https://travis-ci.org/LeerixLabs/artemis-core)
 [![NPM version](http://img.shields.io/npm/v/artemis-core.svg)](https://www.npmjs.org/package/artemis-core)
+[![Github Release](https://img.shields.io/github/release/LeerixLabs/artemis-core/all.svg)](https://github.com/LeerixLabs/artemis-core/releases)
 
 ## Description
 
