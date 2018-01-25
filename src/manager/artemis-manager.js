@@ -20,7 +20,7 @@ export default class Manager {
 		that._htmlDom = new HtmlDOM();
 		that._htmlDom.cleanDom(true);
 		let storedSettings = storage.getSettings();
-		if (storedSettings && (typeof storedSettings == 'string' || storedSettings instanceof String)) {
+		if (storedSettings && (typeof storedSettings === 'string' || storedSettings instanceof String)) {
 			that._settings = JSON.parse(storedSettings);
 		} else {
 			that._settings = defaultSettings;
