@@ -20,11 +20,9 @@ class Storage {
 	}
 
 	clear() {
-		if (this.hasItems()) {
-			let storageItem = this.load();
-			storageItem.commands = [];
-			this.save(storageItem);
-		}
+		let storageItem = this.load();
+		storageItem.commands = [];
+		this.save(storageItem);
 	}
 
 	append(msg) {
