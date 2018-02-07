@@ -107,8 +107,8 @@ export default class HtmlDOM {
     let colorClassesText = [];
     //colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {background-color: ${singleMatchColor} !important; background-image: none !important; outline: 1px solid ${singleMatchColor} !important; color: ${singleMatchTextColor} !important; fill: ${singleMatchTextColor} !important;}`);
 	//colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix} {background-color: ${multiMatchColor} !important; background-image: none !important; outline: 1px solid ${multiMatchColor} !important; color: ${multiMatchTextColor} !important; fill: ${multiMatchTextColor} !important;}`);
-    colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {outline: 3px solid ${singleMatchColor} !important; outline-offset: -3px !important;}`);
-	colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix} {outline: 3px solid ${multiMatchColor} !important; outline-offset: -3px !important;}`);
+    colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassSingleMatchSuffix} {outline: 2px solid ${singleMatchColor} !important; outline-offset: -2px !important; background-color: ${singleMatchColor} !important; background-image: none !important;}`);
+	colorClassesText.push(`.${Constants.artemisElmClassPrefix}${Constants.artemisElmClassMultiMatchSuffix} {outline: 2px solid ${multiMatchColor} !important; outline-offset: -2px !important; background-color: ${multiMatchColor} !important; background-image: none !important;}`);
     let style = this.document.createElement('style');
     style.type = 'text/css';
     style.id = Constants.artemisStyleId;

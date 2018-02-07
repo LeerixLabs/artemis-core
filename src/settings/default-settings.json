@@ -853,7 +853,7 @@
     "pruneScore": 0.01
   },
   "colors": {
-    "singleMatchColor": "rgba(0, 121, 239, 0.5)",
-    "multiMatchColor": "rgba(244, 139, 52, 0.5)"
+    "singleMatchColor": "rgba(102, 153, 102, 0.5)",
+    "multiMatchColor": "rgba(187, 119, 102, 0.5)"
   }
 }
