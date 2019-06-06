@@ -20,6 +20,14 @@ export default class HtmlDOM {
     return domElm.nodeName.toLowerCase() === 'body';
   }
 
+  static isFather(fatherDomElm, sonDomElm) {
+	return sonDomElm.parentNode && (sonDomElm.parentNode === fatherDomElm);
+  }
+
+  static isGrandfather(grandfatherDomElm, grandsonDomElm) {
+	return grandsonDomElm.parentNode && grandsonDomElm.parentNode.parentNode && (grandsonDomElm.parentNode.parentNode === grandfatherDomElm);
+  }
+
   getRelevantDomElms() {
     let relevantDomElms = [];
     let allDomElms = this.body.getElementsByTagName('*');
