@@ -53,14 +53,6 @@ gulp test
 ```
 This will execute all the tests inside the ./test/jasmine/ directory
 
-### Launching the Dev Server
-```sh
-gulp serve
-```
-This will launch the dev server with a dummy site on http://localhost:8082/
-
-If needed, the port can be changed in ./gulp/gulp-dev-server.js
-
 ## Publishing
 
 1) Validate that everything is okay by running cmd:
