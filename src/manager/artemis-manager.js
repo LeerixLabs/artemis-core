@@ -82,11 +82,14 @@ export default class Manager {
 		if (info.targetInfo) {
 			let findResult = that._find(info.targetInfo);
 			if (findResult.perfects.length === 2
-				&& (HtmlDOM.isFather(findResult.perfects[0].domElm, findResult.perfects[1].domElm)
-					|| HtmlDOM.isGrandfather(findResult.perfects[0].domElm, findResult.perfects[1].domElm))) {
-				simulator.simulate(findResult.perfects[1], info.actionInfo.action, info.actionInfo.value);
+				&& HtmlDOM.isCloselyRelated(findResult.perfects[0].domElm, findResult.perfects[1].domElm)) {
+					simulator.simulate(findResult.perfects[1], info.actionInfo.action, info.actionInfo.value);
+			} else if (findResult.perfects.length === 3
+				&& HtmlDOM.isCloselyRelated(findResult.perfects[0].domElm, findResult.perfects[1].domElm)
+				&& HtmlDOM.isCloselyRelated(findResult.perfects[1].domElm, findResult.perfects[2].domElm)) {
+					simulator.simulate(findResult.perfects[1], info.actionInfo.action, info.actionInfo.value);
 			} else if (findResult.perfects.length > 0) {
-				simulator.simulate(findResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
+					simulator.simulate(findResult.perfects[0], info.actionInfo.action, info.actionInfo.value);
 			}
 		}
 		log.debug('Manager.run() - end');

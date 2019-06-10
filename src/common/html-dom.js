@@ -28,6 +28,10 @@ export default class HtmlDOM {
 	return grandsonDomElm.parentNode && grandsonDomElm.parentNode.parentNode && (grandsonDomElm.parentNode.parentNode === grandfatherDomElm);
   }
 
+  static isCloselyRelated(ancestorDomElm, offspringDomElm) {
+	return HtmlDOM.isFather(ancestorDomElm, offspringDomElm) || HtmlDOM.isGrandfather(ancestorDomElm, offspringDomElm);
+  }
+
   getRelevantDomElms() {
     let relevantDomElms = [];
     let allDomElms = this.body.getElementsByTagName('*');
