@@ -34,7 +34,7 @@
     "gulp-rename": "~1.2.2",
     "gulp-zip": "~4.0.0",
     "jasmine-core": "~2.6.3",
-    "karma": "~1.7.0",
+    "karma": "~6.4.1",
     "karma-jasmine": "~1.1.0",
     "karma-phantomjs-launcher": "~1.0.4",
     "karma-webpack": "~2.0.3",
